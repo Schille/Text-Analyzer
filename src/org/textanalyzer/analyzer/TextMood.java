@@ -7,8 +7,7 @@ package org.textanalyzer.analyzer;
  * @author Andreas Neumann
  *
  */
-public interface IAnalyzer {
+public enum TextMood {
 
-	
 	
 }

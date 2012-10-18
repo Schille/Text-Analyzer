@@ -9,4 +9,6 @@ package org.textanalyzer.frontend;
  */
 public interface IFrontendProfileViewer {
 
+	void showFrontendProfileViewer(int myUserID);
+	
 }

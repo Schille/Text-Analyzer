@@ -8,5 +8,6 @@ package org.textanalyzer.profileviewer;
  *
  */
 public interface IProfileViewer {
+		
 
 }

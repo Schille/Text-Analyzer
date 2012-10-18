@@ -7,8 +7,10 @@ package org.textanalyzer.analyzer.dictionary;
  * @author Fabian Brabänder
  *
  */
-public interface IDictionary {
-
-	WordStatus getWordStatus(String myWord);
-	
+public enum WordStatus {
+	WRONG,
+	NOMEN,
+	ARTICLE,
+	FILLER,
+	OTHER,
 }
