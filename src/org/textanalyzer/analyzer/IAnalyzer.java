@@ -9,6 +9,6 @@ package org.textanalyzer.analyzer;
  */
 public interface IAnalyzer {
 
-	
+	public IResultSet analyzeText(IAnalyzeTaskInformation myTask);
 	
 }
