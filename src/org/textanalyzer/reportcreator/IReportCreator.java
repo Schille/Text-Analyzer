@@ -8,7 +8,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import org.textanalyzer.analyzer.IResultSet;
-import org.textanalyzer.profileviewer.IProfileInformation;
+import org.textanalyzer.database.IProfileInformation;
 
 /**
  * @author Robert Stein

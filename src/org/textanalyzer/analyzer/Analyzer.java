@@ -7,9 +7,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.textanalyzer.database.IProfileInformation;
 import org.textanalyzer.documentimporter.DocumentFormat;
 import org.textanalyzer.documentimporter.IDocument;
-import org.textanalyzer.profileviewer.IProfileInformation;
 
 public class Analyzer implements IAnalyzer {
 
@@ -47,7 +47,7 @@ public class Analyzer implements IAnalyzer {
 			@Override
 			public IDocument getDocument() {return new IDocument() {
 				@Override
-				public String getText() {return "Hallo Welt! Dies ist ein Test für mich";}
+				public String getText() {return "Hallo Welt! Dies ist ein Test fï¿½r mich";}
 				@Override
 				public Date getImportDate() {return new Date();}
 				@Override

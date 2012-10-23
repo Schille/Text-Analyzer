@@ -4,10 +4,10 @@
 package org.textanalyzer.profileviewer;
 
 /**
- * @author Any Author
+ * @author Michael Schilonka
  *
  */
 public interface IProfileViewer {
-		
+
 
 }
