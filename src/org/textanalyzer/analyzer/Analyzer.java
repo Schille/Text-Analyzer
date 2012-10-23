@@ -42,6 +42,21 @@ public class Analyzer implements IAnalyzer {
 				public String getFirstName() {return "Test";}
 				@Override
 				public int getAge() {return 20;}
+				@Override
+				public List<IResultSet> getAnalyzedDocuments() {
+					// TODO Auto-generated method stub
+					return null;
+				}
+				@Override
+				public void setAnalyzedDocuments(List<IResultSet> myResultSet) {
+					// TODO Auto-generated method stub
+					
+				}
+				@Override
+				public void addToAnalyzedDocuments(IResultSet myResultSet) {
+					// TODO Auto-generated method stub
+					
+				}
 			};}
 			
 			@Override
