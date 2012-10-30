@@ -8,6 +8,7 @@ import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.ChartFactory;
 import org.jfree.data.general.DefaultPieDataset;
 
+import java.awt.Dimension;
 import java.awt.Font;
 import java.io.File;
 
@@ -40,6 +41,7 @@ public class ReportCreator implements IReportCreator {
 		JLabel profession = new JLabel();
 		JLabel headline = new JLabel();
 		JLabel wordmistakes = new JLabel();
+		JPanel piechartupper = new JPanel();
 		
 		
 		
@@ -50,14 +52,29 @@ public class ReportCreator implements IReportCreator {
 		wordmistakes.setText("Verhältnis Rechtschreibfehler/Wortanzahl");
 		DefaultPieDataset pieMistakes = new DefaultPieDataset();
 		pieMistakes.setValue("Rechtschreibfehler", myResultset.getWrongWordCount());
-		pieMistakes.setValue("Gesamtanzahl der Worte", myResultset.getWordCount());
+		pieMistakes.setValue("Wortanzahl", myResultset.getWordCount());
+		
+		JFreeChart chart = ChartFactory.createPieChart
+				(" ",pieMistakes,true,true,false );
+		
+		
+		
 		
 		name.setText("Nachname: "+myProfile.getLastName());
 		surname.setText("Vorname: "+myProfile.getFirstName());
 		age.setText("Alter: "+String.valueOf(myProfile.getAge()));
 		profession.setText("Profession: " +myProfile.getProfession());
 		
+		ChartPanel pieChart = new ChartPanel(chart);
+		pieChart.setPreferredSize(new Dimension(300,200));
 		
+		
+		
+		piechartupper.setSize(100, 200);
+		piechartupper.add(pieChart);
+		
+		
+		reportpanel.setLayout(new java.awt.GridBagLayout());
 		reportpanel.setSize(400, 400);
 		
 		reportpanel.add(headline);
@@ -65,6 +82,7 @@ public class ReportCreator implements IReportCreator {
        reportpanel.add(surname);
        reportpanel.add(age);
        reportpanel.add(profession);
+       reportpanel.add(piechartupper);
 		
 		return reportpanel;
 	}
