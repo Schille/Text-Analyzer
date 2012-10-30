@@ -3,44 +3,45 @@ package org.textanalyzer.analyzer;
 import java.util.List;
 
 import org.textanalyzer.database.IProfileInformation;
+import org.textanalyzer.documentimporter.Document;
 import org.textanalyzer.documentimporter.IDocument;
 
 public class AnalyzeTaskInformation implements IAnalyzeTaskInformation {
+	IDocument document;
+	IProfileInformation profile;
+	List<String> wordList;
 
 	@Override
 	public void setDocument(IDocument myDocument) {
-		// TODO Auto-generated method stub setDocument
-
+		this.document = myDocument;
 	}
 
 	@Override
 	public void setProfile(IProfileInformation myProfile) {
-		// TODO Auto-generated method stub setProfile
-
+		this.profile = myProfile;
 	}
 
 	@Override
 	public void setWordList(List<String> myWordList) {
-		// TODO Auto-generated method stub setWordList
-
+		this.wordList = myWordList;
 	}
 
 	@Override
-	public List<String> getWordList() {
-		// TODO Auto-generated method stub getWordList
-		return null;
+	public List<String> getWordList(int count) {
+		return wordList;
 	}
 
 	@Override
 	public IProfileInformation getProfile() {
-		// TODO Auto-generated method stub getProfile
-		return null;
+		return profile;
 	}
 
 	@Override
 	public IDocument getDocument() {
-		// TODO Auto-generated method stub getDocument
-		return null;
+		// For Debug:
+		return new Document();
+		// Later:
+		//return document;
 	}
 
 }

@@ -1,117 +1,125 @@
 package org.textanalyzer.analyzer;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.io.StringReader;
-import java.net.URI;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 
-import org.textanalyzer.database.IProfileInformation;
+import org.textanalyzer.analyzer.AnalyzeTaskInformation;
+import org.textanalyzer.analyzer.IAnalyzeTaskInformation;
+import org.textanalyzer.analyzer.IAnalyzer;
 import org.textanalyzer.database.IResultSet;
 import org.textanalyzer.database.ResultSet;
-import org.textanalyzer.documentimporter.DocumentFormat;
-import org.textanalyzer.documentimporter.IDocument;
 
 public class Analyzer implements IAnalyzer {
 
-	// run the analysis with some Test Data
-	public static void main(String[] args) {
-		new Analyzer().analyzeText(new IAnalyzeTaskInformation() {
-			@Override
-			public void setWordList(List<String> myWordList) {}
-			@Override
-			public void setProfile(IProfileInformation myProfile) {}
-			@Override
-			public void setDocument(IDocument myDocument) {}
-			@Override
-			public List<String> getWordList() {String list[] = new String[1];list[0]="Hallo";return Arrays.asList(list);}
-			@Override
-			public IProfileInformation getProfile() {return new IProfileInformation() {
-				@Override
-				public void setProfession(String myProfession) {}
-				@Override
-				public void setLastName(String myLastName) {}
-				@Override
-				public void setFirstName(String myFirstName) {}
-				@Override
-				public void setAge(int myAge) {}
-				@Override
-				public String getProfession() {return "Student";}
-				@Override
-				public String getLastName() {return "Test";}
-				@Override
-				public String getFirstName() {return "Test";}
-				@Override
-				public int getAge() {return 20;}
-				@Override
-				public List<IResultSet> getAnalyzedDocuments() {
-					// TODO Auto-generated method stub
-					return null;
-				}
-				@Override
-				public void setAnalyzedDocuments(List<IResultSet> myResultSet) {
-					// TODO Auto-generated method stub
-					
-				}
-				@Override
-				public void addToAnalyzedDocuments(IResultSet myResultSet) {
-					// TODO Auto-generated method stub
-					
-				}
-			};}
-			
-			@Override
-			public IDocument getDocument() {return new IDocument() {
-				@Override
-				public String getText() {return "Hallo Welt! Dies ist ein Test f�r mich";}
-				@Override
-				public Date getImportDate() {return new Date();}
-				@Override
-				public String getFileName() {return "test.pdf";}
-				@Override
-				public URI getDocumentPath() {return null;};
-				@Override
-				public DocumentFormat getDocumentFormat() {return DocumentFormat.PDF;}
-			};}
-		});
+	private IResultSet analysis;
+
+	private class MyWord{
+		protected String word;
+		protected String punctuation;
+		protected boolean inputEnd;
 	}
+	private class MySentence{
+		protected String sentence;
+		protected String punctuation;
+		protected boolean inputEnd;
+	}
+	
+	// run the analysis with some Test Data
+	public static void main(String[] args) {new Analyzer().analyzeText(new AnalyzeTaskInformation());}
+	
 	@Override
 	public IResultSet analyzeText(IAnalyzeTaskInformation myTask) {
 		
 		/* Creating the Result Set */
-		IResultSet result = new ResultSet();
+		this.analysis = new ResultSet();
 		
 		/* Get the text and transform to Stream */
-		StringReader textReader = new StringReader(myTask.getDocument().getText());
+		if(myTask.getDocument() == null || myTask.getDocument().getText() == null)
+			throw new Error("No Document to analyze");
+		Reader textReader = new StringReader(myTask.getDocument().getText());
 		
-		/* Read the text char by char */
+		/* Do the analysis */
 		try {
-			String word = "";
-			int character;
-			while((character = textReader.read()) != -1){
-				// merge word
-				if(character != ' '){
-					word += (char) character;
-				}
-				// Do the Analysis
-				else{
-					if(word != ""){
-						char[] punct = new char[0];
-						//word.getChars(/*start*/, /*end*/, punct, 0);
-						if(punct[0] == '.');
-						// TODO Analyse /word/
-					}
-					word = "";
-				}
-			}
+			analyze(textReader);
+			textReader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		textReader.close();
-
-		// make the overall statistics
-		return result;
+		
+		return this.analysis;
+	}
+	
+	private MyWord analyzeWord(Reader input) throws IOException{
+		// Buffer-Variables
+		int character = input.read();
+		MyWord word = new MyWord();
+		word.inputEnd = false;
+		word.word = "";
+		
+		// read the characters of a word
+		while(character != ' ' && character != -1){
+			// merge word
+			word.word += (char) character;
+			character = input.read();
+		}
+		if(character == -1){
+			word.inputEnd = true;
+		}
+		word.punctuation = getPunctuation(word.word);
+		if(word.punctuation != null){
+			word.word = word.word.substring(0, word.word.length()-word.punctuation.length());
+			// TODO Analyze the word
+			System.out.println(word.word);
+			System.out.println(word.punctuation);
+		}
+		return word;
+	}
+	
+	private MySentence analyzeSentence(Reader input) throws IOException{
+		// Set the punctuation
+		MyWord word = analyzeWord(input);
+		MySentence sentence = new MySentence();
+		sentence.sentence = "";
+		
+		// Read the words of a sentence
+		while(!word.inputEnd && word.punctuation == ""){
+			sentence.sentence += word.word + " ";
+			word = analyzeWord(input);
+		}
+		sentence.sentence += word.word;
+		sentence.punctuation = word.punctuation;
+		sentence.inputEnd = word.inputEnd;
+		
+		// TODO Analyze the sentence
+		
+		return sentence;
+	}
+	
+	private String getPunctuation(String word){
+		char[] punctuations = {'.', '!', '?'};
+		char[] punct = new char[1];
+		
+		word.getChars(word.length()-1, word.length(), punct, 0);
+		
+		for (char c : punctuations) {
+			if(c == punct[0]){
+				return getPunctuation(word.substring(0, word.length()-1))+(new String(punct));
+			}
+		}
+		return "";
+	}
+	
+	private void analyze(Reader input) throws IOException{
+		MySentence sentence = analyzeSentence(input);
+		String text = "";
+		while(sentence != null && !sentence.inputEnd){
+			text += sentence.sentence + sentence.punctuation + " ";
+			sentence = analyzeSentence(input);
+		}
+		text += sentence.sentence + sentence.punctuation;
+		
+		System.out.println(text);
 	}
 
 }
