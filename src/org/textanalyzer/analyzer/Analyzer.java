@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.textanalyzer.database.IProfileInformation;
+import org.textanalyzer.database.IResultSet;
+import org.textanalyzer.database.ResultSet;
 import org.textanalyzer.documentimporter.DocumentFormat;
 import org.textanalyzer.documentimporter.IDocument;
 
