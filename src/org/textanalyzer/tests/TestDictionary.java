@@ -4,7 +4,7 @@
 package org.textanalyzer.tests;
 
 import static org.junit.Assert.*;
-import junit.framework.Assert;
+//import junit.framework.Assert;
 
 import org.junit.Test;
 import org.textanalyzer.analyzer.dictionary.Dictionary;
@@ -19,8 +19,9 @@ public class TestDictionary {
 	@Test
 	public void test() {
 		Dictionary test = new Dictionary();
-		for(int i=0;i<100;i++){
 		assertEquals(WordStatus.VERB, test.getWordStatus("schreiben"));
+		/*for(int i=0;i<100;i++){
+		
 		assertEquals(WordStatus.VERB, test.getWordStatus("leben"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("überleben"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("denken"));
@@ -72,7 +73,7 @@ public class TestDictionary {
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("rot"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("grün"));
 		}
-		
+		*/
 		
 	}
 
