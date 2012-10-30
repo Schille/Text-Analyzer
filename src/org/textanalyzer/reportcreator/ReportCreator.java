@@ -78,7 +78,7 @@ public class ReportCreator implements IReportCreator {
 		wordmistakes.setText("");
 		DefaultPieDataset pieMistakes = new DefaultPieDataset();
 		pieMistakes.setValue("Rechtschreibfehler", myResultset.getWrongWordCount());
-		pieMistakes.setValue("Wortanzahl", myResultset.getWordCount()-myResultset.getWrongWordCount());
+		pieMistakes.setValue("restliche Worte", myResultset.getWordCount()-myResultset.getWrongWordCount());
 		
 	
 		
@@ -117,9 +117,9 @@ public class ReportCreator implements IReportCreator {
 		wrongwords.setSize(150, 30);
 		wrongwords.setLocation(200, 60);
 		
-		relationwords.setText("<html><center><b>Verhältnis der Gesamtwortanzahl / Rechtschreibfehler</b></center></html>");
+		relationwords.setText("<html><center><b>Anzahl Rechtschreibfehler</b></center></html>");
 		relationwords.setSize(340,30);
-		relationwords.setLocation(290,275);
+		relationwords.setLocation(360,135);
 		
 		aphraselength.setText("Durschn. Satzlänge: "+String.valueOf(myResultset.getAvaragePhraseLength())+" Wörter");
 		aphraselength.setSize(250,30);
@@ -187,9 +187,9 @@ public class ReportCreator implements IReportCreator {
 		
 		
 		
-		piechartupper.setSize(300, 200);
+		piechartupper.setSize(300, 205);
 		piechartupper.add(pieChart);
-		piechartupper.setLocation(300, 300);
+		piechartupper.setLocation(300, 160);
 		
 		reportpanel.setSize(600, 700);
 		reportpanel.setBackground(new Color(255,255,255));
