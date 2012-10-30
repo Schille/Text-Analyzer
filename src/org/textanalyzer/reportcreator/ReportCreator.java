@@ -16,8 +16,8 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import org.textanalyzer.analyzer.IResultSet;
 import org.textanalyzer.database.IProfileInformation;
+import org.textanalyzer.database.IResultSet;
 
 /**
  * @author Robert Stein

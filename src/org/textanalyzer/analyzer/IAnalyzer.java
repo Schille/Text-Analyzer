@@ -3,6 +3,8 @@
  */
 package org.textanalyzer.analyzer;
 
+import org.textanalyzer.database.IResultSet;
+
 /**
  * @author Andreas Neumann
  *
