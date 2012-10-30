@@ -141,9 +141,10 @@ public class TestReportCreator {
 				// TODO Auto-generated method stub
 				return null;
 			}
-			
+
+
 			@Override
-			public int avaragePhraseLength() {
+			public int getAvaragePhraseLength() {
 				// TODO Auto-generated method stub
 				return 0;
 			}
