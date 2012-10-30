@@ -8,6 +8,7 @@ import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.ChartFactory;
 import org.jfree.data.general.DefaultPieDataset;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.io.File;
@@ -35,19 +36,26 @@ public class ReportCreator implements IReportCreator {
 	@Override
 	public JPanel getGraphPanel(IProfileInformation myProfile, IResultSet myResultset) {
 		JPanel reportpanel = new JPanel();
+		JPanel piechartupper = new JPanel();
+		
+		
 		JLabel name = new JLabel();
 		JLabel surname = new JLabel();
 		JLabel age = new JLabel();
 		JLabel profession = new JLabel();
 		JLabel headline = new JLabel();
 		JLabel wordmistakes = new JLabel();
-		JPanel piechartupper = new JPanel();
+		JLabel aphraselength = new JLabel();
+		JLabel wordcount = new JLabel();
+		JLabel wrongwords = new JLabel();
 		
-		
+		//reportpanel.setLayout(new java.awt.GridBagLayout());
+		reportpanel.setLayout(null);
 		
 		headline.setText("Report");
-		headline.setFont(new Font("Dialog", 1 ,20));
-		headline.setHorizontalAlignment(SwingConstants.CENTER);
+		headline.setFont(new Font("Dialog", 1 ,30));
+		headline.setLocation(200, 3);
+		headline.setSize(200, 100);
 		
 		wordmistakes.setText("Verhältnis Rechtschreibfehler/Wortanzahl");
 		DefaultPieDataset pieMistakes = new DefaultPieDataset();
@@ -59,30 +67,57 @@ public class ReportCreator implements IReportCreator {
 		
 		
 		
-		
 		name.setText("Nachname: "+myProfile.getLastName());
+		name.setSize(150, 30);
+		name.setLocation(10, 40);
+		
 		surname.setText("Vorname: "+myProfile.getFirstName());
+		surname.setSize(150, 30);
+		surname.setLocation(10, 60);
+		
 		age.setText("Alter: "+String.valueOf(myProfile.getAge()));
+		age.setSize(150, 30);
+		age.setLocation(10, 80);
+		
 		profession.setText("Profession: " +myProfile.getProfession());
+		profession.setSize(150, 30);
+		profession.setLocation(10, 100);
+		
+		wordcount.setText("Wortanzahl: " + String.valueOf(myResultset.getWordCount()));
+		wordcount.setSize(150,30);
+		wordcount.setLocation(200, 40);
+		
+		wrongwords.setText("Rechtschreibfehler: "+String.valueOf(myResultset.getWrongWordCount()));
+		wrongwords.setSize(150, 30);
+		wrongwords.setLocation(200, 60);
+		
+		//aphraselength.setText("Durschn. Satzlänge"+.String.valueOf(myResultset.))
+		aphraselength.setSize(150,30);
+		aphraselength.setLocation(200,80);
+		
 		
 		ChartPanel pieChart = new ChartPanel(chart);
 		pieChart.setPreferredSize(new Dimension(300,200));
 		
 		
 		
-		piechartupper.setSize(100, 200);
+		piechartupper.setSize(300, 200);
 		piechartupper.add(pieChart);
+		piechartupper.setLocation(300, 300);
 		
-		
-		reportpanel.setLayout(new java.awt.GridBagLayout());
-		reportpanel.setSize(400, 400);
+		headline.setVerticalAlignment(SwingConstants.TOP);
+		reportpanel.setSize(600, 700);
 		
 		reportpanel.add(headline);
        reportpanel.add(name);
        reportpanel.add(surname);
        reportpanel.add(age);
        reportpanel.add(profession);
+       reportpanel.add(wordcount);
+       reportpanel.add(wrongwords);
        reportpanel.add(piechartupper);
+       
+
 		
 		return reportpanel;
 	}

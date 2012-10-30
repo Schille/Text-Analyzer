@@ -156,7 +156,7 @@ public class TestReportCreator {
 	        frame.getContentPane().add(reporter.getGraphPanel(daprofile, results));
 	        frame.pack();
 	        frame.setVisible(true);
-	        
+
 	        frame.setAlwaysOnTop(true);
 	        frame.setAlwaysOnTop(true);
 	}
