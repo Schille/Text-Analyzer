@@ -6,7 +6,7 @@ package org.textanalyzer.database;
 import org.textanalyzer.analyzer.dictionary.WordStatus;
 
 /**
- * @author mschilonka
+ * @author Michael Schilonka
  *
  */
 public class DBDictionary implements IDBDictionary {
