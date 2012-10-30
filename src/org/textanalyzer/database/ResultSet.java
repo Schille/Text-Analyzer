@@ -1,57 +1,124 @@
 package org.textanalyzer.database;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.textanalyzer.analyzer.TextMood;
 
 public class ResultSet implements IResultSet {
+	
+	private int wordCount;
+	private int wrongWordCount;
+	private HashMap<String, Integer> mostFrequentWord = new HashMap<String, Integer>();
+	private int pseudoIQ;
+	private HashMap<String, Integer> customWordCount = new HashMap<String, Integer>();
+	private int avaragePhraseLength;
+	private String mostFrequentNomen;
+	private TextMood textMood;
+	
+	
+	/**
+	 * @return the mostFrequentWord
+	 */
+	protected HashMap<String, Integer> getMostFrequentWord() {
+		return mostFrequentWord;
+	}
+
+	/**
+	 * @param mostFrequentWord the mostFrequentWord to set
+	 */
+	protected void setMostFrequentWord(HashMap<String, Integer> mostFrequentWord) {
+		this.mostFrequentWord = mostFrequentWord;
+	}
+
+	/**
+	 * @param wordCount the wordCount to set
+	 */
+	protected void setWordCount(int wordCount) {
+		this.wordCount = wordCount;
+	}
+
+	/**
+	 * @param wrongWordCount the wrongWordCount to set
+	 */
+	protected void setWrongWordCount(int wrongWordCount) {
+		this.wrongWordCount = wrongWordCount;
+	}
+
+	/**
+	 * @param pseudoIQ the pseudoIQ to set
+	 */
+	protected void setPseudoIQ(int pseudoIQ) {
+		this.pseudoIQ = pseudoIQ;
+	}
+
+	/**
+	 * @param customWordCount the customWordCount to set
+	 */
+	protected void setCustomWordCount(HashMap<String, Integer> customWordCount) {
+		this.customWordCount = customWordCount;
+	}
+
+	/**
+	 * @param avaragePhraseLength the avaragePhraseLength to set
+	 */
+	protected void setAvaragePhraseLength(int avaragePhraseLength) {
+		this.avaragePhraseLength = avaragePhraseLength;
+	}
+
+	/**
+	 * @param mostFrequentNomen the mostFrequentNomen to set
+	 */
+	protected void setMostFrequentNomen(String mostFrequentNomen) {
+		this.mostFrequentNomen = mostFrequentNomen;
+	}
+
+	/**
+	 * @param textMood the textMood to set
+	 */
+	protected void setTextMood(TextMood textMood) {
+		this.textMood = textMood;
+	}
+
 
 	@Override
 	public int getWordCount() {
-		// TODO Auto-generated method stub getWordCount
-		return 0;
+		return wordCount;
 	}
 
 	@Override
 	public int getWrongWordCount() {
-		// TODO Auto-generated method stub getWrongWordCount
-		return 0;
+		return wrongWordCount;
 	}
 
 	@Override
 	public Map<String, Integer> getMostFrequentWord(int myNumber) {
-		// TODO Auto-generated method stub getMostFrequentWord
-		return null;
+		return mostFrequentWord;
 	}
 
 	@Override
 	public int getPseudoIQ() {
-		// TODO Auto-generated method stub getPseudoIQ
-		return 0;
+		return pseudoIQ;
 	}
 
 	@Override
 	public Map<String, Integer> getCustomWordCount() {
-		// TODO Auto-generated method stub getCustomWordCount
-		return null;
+		return customWordCount;
 	}
 
 	@Override
-	public int avaragePhraseLength() {
-		// TODO Auto-generated method stub avaragePhraseLength
-		return 0;
+	public int getAvaragePhraseLength() {
+		return avaragePhraseLength;
 	}
 
 	@Override
 	public String getMostFrequentNomen() {
-		// TODO Auto-generated method stub getMostFrequentNomen
-		return null;
+		return mostFrequentNomen;
 	}
 
 	@Override
 	public TextMood getTextMood() {
-		// TODO Auto-generated method stub getTextMood
-		return null;
+		return textMood;
 	}
 
 }
