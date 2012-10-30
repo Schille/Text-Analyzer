@@ -119,6 +119,8 @@ public class Analyzer implements IAnalyzer {
 		}
 		text += sentence.sentence + sentence.punctuation;
 		
+		// TODO Analyze the overall text
+		
 		System.out.println(text);
 	}
 
