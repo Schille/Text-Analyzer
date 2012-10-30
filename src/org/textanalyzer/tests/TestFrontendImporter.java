@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.textanalyzer.frontend.FrontendImporter;
 
 /**
- * @author sandrock
+ * @author Sebastian Hirschl
  *
  */
 public class TestFrontendImporter {
