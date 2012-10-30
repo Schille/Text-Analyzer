@@ -2,6 +2,7 @@
  * 
  */
 package org.textanalyzer.reportcreator;
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.ChartUtilities;
@@ -19,9 +20,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import javax.swing.JPanel;
 
@@ -128,11 +134,18 @@ public class ReportCreator implements IReportCreator {
 		mostusedcustomwords.setLocation(10, 320);
 		
 		Map<String,Integer> temp2 = myResultset.getCustomWordCount();
+		SortedMap<Integer,String> orderCustom = new TreeMap<Integer, String>(Collections.reverseOrder());
+		
 		for (Map.Entry<String, Integer> entry : temp2.entrySet()) {
-			mostusedcustomwords.setText(mostusedcustomwords.getText()+"<br> - "+entry.getKey()+ " ("+entry.getValue()+")");
-
+			orderCustom.put(entry.getValue(), entry.getKey());
 		}
 		
+		Iterator<?> iterator = orderCustom.keySet().iterator();
+		  while (iterator.hasNext()) {
+		  Object key = iterator.next();
+			mostusedcustomwords.setText(mostusedcustomwords.getText()+"<br> - "+key+ " ("+orderCustom.get(key)+")");
+		  }
+		  
 		mostusedcustomwords.setText(mostusedcustomwords.getText()+"</html>");
 		
 		mood.setText("Grundstimmung: "+myResultset.getTextMood());
@@ -146,11 +159,23 @@ public class ReportCreator implements IReportCreator {
 		
 		mostusedwords.setText("<html>Liste der häufigsten Wörter - Wort (Anzahl): ");
 		
-		Map<String,Integer> temp = myResultset.getMostFrequentWord(10);
-		for (Map.Entry<String, Integer> entry : temp.entrySet()) {
-			mostusedwords.setText(mostusedwords.getText()+"<br> - "+entry.getKey()+ " ("+entry.getValue()+")");
-
+		
+		
+		Map<String,Integer> temp3 = myResultset.getMostFrequentWord(10);
+		SortedMap<Integer,String> orderFrequent = new TreeMap<Integer, String>(Collections.reverseOrder());
+		
+		
+		
+		for (Map.Entry<String, Integer> entry : temp3.entrySet()) {
+			orderFrequent.put(entry.getValue(), entry.getKey());
 		}
+		
+		Iterator<?> iterator2 = orderFrequent.keySet().iterator();
+		  while (iterator2.hasNext()) {
+		  Object key = iterator2.next();
+			mostusedwords.setText(mostusedwords.getText()+"<br> - "+key+ " ("+orderFrequent.get(key)+")");
+		  }
+		
 		mostusedwords.setText(mostusedwords.getText()+"</html>");
 		mostusedwords.setSize(300,200);
 		mostusedwords.setLocation(10, 120);
