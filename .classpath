@@ -12,5 +12,7 @@
 	<classpathentry kind="lib" path="lib/orientdb-server-1.2.0.jar"/>
 	<classpathentry kind="lib" path="lib/pdfbox-1.7.1.jar"/>
 	<classpathentry kind="lib" path="lib/poi-3.8-20120326.jar"/>
+	<classpathentry kind="lib" path="lib/jcommon-1.0.17.jar"/>
+	<classpathentry kind="lib" path="lib/jfreechart-1.0.14.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
