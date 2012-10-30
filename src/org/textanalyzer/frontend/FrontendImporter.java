@@ -43,7 +43,6 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 
 		
 		
-		textareaForBlank.setText("Hier ist die Eingabe eines Textes möglich....");
 		textareaFrame.setViewportView(textareaForBlank);
 
 		browseButton.setBackground(new java.awt.Color(204, 0, 0));
@@ -182,8 +181,10 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 
 		browseButton.getAccessibleContext().setAccessibleName("");
 
+	
 		pack();
 		setVisible(true);
+		
 	}
 
 
