@@ -7,10 +7,13 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.ChartFactory;
 import org.jfree.data.general.DefaultPieDataset;
+
+import java.awt.Font;
 import java.io.File;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 import java.util.List;
 
@@ -30,25 +33,40 @@ public class ReportCreator implements IReportCreator {
 	 */
 	@Override
 	public JPanel getGraphPanel(IProfileInformation myProfile, IResultSet myResultset) {
-		JFrame frame = new JFrame("FrameChart");
+		JPanel reportpanel = new JPanel();
 		JLabel name = new JLabel();
 		JLabel surname = new JLabel();
 		JLabel age = new JLabel();
 		JLabel profession = new JLabel();
-		
-		name.setText(myProfile.getLastName());
-		surname.setText(myProfile.getFirstName());
-		age.setText(String.valueOf(myProfile.getAge()));
-		profession.setText(myProfile.getProfession());
+		JLabel headline = new JLabel();
+		JLabel wordmistakes = new JLabel();
 		
 		
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        frame.pack();
-        frame.setVisible(true);
+		
+		headline.setText("Report");
+		headline.setFont(new Font("Dialog", 1 ,20));
+		headline.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		wordmistakes.setText("Verhältnis Rechtschreibfehler/Wortanzahl");
+		DefaultPieDataset pieMistakes = new DefaultPieDataset();
+		pieMistakes.setValue("Rechtschreibfehler", myResultset.getWrongWordCount());
+		pieMistakes.setValue("Gesamtanzahl der Worte", myResultset.getWordCount());
+		
+		name.setText("Nachname: "+myProfile.getLastName());
+		surname.setText("Vorname: "+myProfile.getFirstName());
+		age.setText("Alter: "+String.valueOf(myProfile.getAge()));
+		profession.setText("Profession: " +myProfile.getProfession());
 		
 		
-		return null;
+		reportpanel.setSize(400, 400);
+		
+		reportpanel.add(headline);
+       reportpanel.add(name);
+       reportpanel.add(surname);
+       reportpanel.add(age);
+       reportpanel.add(profession);
+		
+		return reportpanel;
 	}
 
 	/* (non-Javadoc)
