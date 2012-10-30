@@ -133,7 +133,7 @@ public class TestReportCreator {
 			@Override
 			public String getMostFrequentNomen() {
 				// TODO Auto-generated method stub
-				return null;
+				return "Mongo";
 			}
 			
 			@Override
@@ -146,7 +146,7 @@ public class TestReportCreator {
 			@Override
 			public int getAvaragePhraseLength() {
 				// TODO Auto-generated method stub
-				return 0;
+				return 7;
 			}
 		}; 
 		
@@ -157,7 +157,7 @@ public class TestReportCreator {
 	        frame.getContentPane().add(reporter.getGraphPanel(daprofile, results));
 	        frame.pack();
 	        frame.setVisible(true);
-	        
+
 	        frame.setAlwaysOnTop(true);
 	        frame.setAlwaysOnTop(true);
 	}

@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  * @author Katharina Sandrock
@@ -42,7 +43,6 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 
 		
 		
-		textareaForBlank.setText("Hier ist die Eingabe eines Textes möglich....");
 		textareaFrame.setViewportView(textareaForBlank);
 
 		browseButton.setBackground(new java.awt.Color(204, 0, 0));
@@ -181,8 +181,10 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 
 		browseButton.getAccessibleContext().setAccessibleName("");
 
+	
 		pack();
 		setVisible(true);
+		
 	}
 
 
@@ -212,8 +214,21 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	private void startAnalysisMouseClicked(java.awt.event.MouseEvent evt) {
 		filepath = dataPath.getText();
 		blankText = textareaForBlank.getText();		
+
+		if(filepath.equals("") && blankText.equals("")) {
+			JOptionPane.showMessageDialog(null, "Bitte wähle eine Textquelle !", "Fehler", JOptionPane.OK_CANCEL_OPTION);
+			return;
+		}
+		if(!filepath.equals("") && !blankText.equals("")){
+			JOptionPane.showMessageDialog(null, "Bitte nur eine Textquelle wählen!", "Fehler", JOptionPane.OK_OPTION);
+			return;
+		}
+		
+		setVisible(false);
 	
-	}
+		}
+	
+	
 	@Override
 	public String getFilePath() {
 		return filepath;

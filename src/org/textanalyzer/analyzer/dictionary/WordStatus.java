@@ -16,6 +16,7 @@ public enum WordStatus {
 	FILLER,
 	VERB,
 	ADJECTIV,
+	PREPOSITION,
 	OTHER,
 	
 }
