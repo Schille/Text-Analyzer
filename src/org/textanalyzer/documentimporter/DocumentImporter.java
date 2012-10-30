@@ -67,7 +67,7 @@ public class DocumentImporter implements IDocumentImporter {
 		}else{
 		//Plain Text
 			document.setDocumentFormat(DocumentFormat.PLAIN_TEXT);
-
+			document.setText(frontend.getText());
 		}
 		document.setDocumentPath(frontend.getFilePath());
 		document.setFileName(file.getName());
