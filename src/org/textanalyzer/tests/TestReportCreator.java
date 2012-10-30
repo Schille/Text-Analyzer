@@ -6,6 +6,7 @@ package org.textanalyzer.tests;
 import static org.junit.Assert.*;
 
 import java.awt.Dimension;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import org.junit.Test;
 import org.textanalyzer.analyzer.TextMood;
 import org.textanalyzer.database.IProfileInformation;
 import org.textanalyzer.database.IResultSet;
+import org.textanalyzer.documentimporter.IDocument;
 import org.textanalyzer.reportcreator.ReportCreator;
 
 /**
@@ -127,7 +129,19 @@ public class TestReportCreator {
 			@Override
 			public Map<String, Integer> getMostFrequentWord(int myNumber) {
 				// TODO Auto-generated method stub
-				return null;
+				HashMap<String,Integer> k = new HashMap<String, Integer>();
+				k.put("Mongo", 10);
+				k.put("Master", 9);
+				k.put("Kuppe", 8);
+				k.put("Map", 7);
+				k.put("Gitarre", 6);
+				k.put("Instrument", 5);
+				k.put("Flöte", 4);
+				k.put("Hund", 3);
+				k.put("Katze", 2);
+				k.put("Hund", 1);
+				
+				return k;
 			}
 			
 			@Override
@@ -147,6 +161,12 @@ public class TestReportCreator {
 			public int getAvaragePhraseLength() {
 				// TODO Auto-generated method stub
 				return 7;
+			}
+
+			@Override
+			public IDocument getDocument() {
+				// TODO Auto-generated method stub
+				return null;
 			}
 		}; 
 		

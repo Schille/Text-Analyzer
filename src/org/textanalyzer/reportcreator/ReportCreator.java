@@ -19,7 +19,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JPanel;
 
@@ -54,6 +56,7 @@ public class ReportCreator implements IReportCreator {
 		JLabel mood = new JLabel();
 		JLabel pseudoiq = new JLabel();
 		JLabel relationwords = new JLabel();
+		JLabel mostusedwords = new JLabel();
 		
 		
 		
@@ -128,6 +131,17 @@ public class ReportCreator implements IReportCreator {
 		pseudoiq.setLocation(390,60);
 		
 		
+		mostusedwords.setText("<html>Liste der häufigsten Wörter - Wort (Anzahl): ");
+		
+		Map<String,Integer> temp = myResultset.getMostFrequentWord(10);
+		for (Map.Entry<String, Integer> entry : temp.entrySet()) {
+			mostusedwords.setText(mostusedwords.getText()+"<br> - "+entry.getKey()+ " ("+entry.getValue()+")");
+
+		}
+		mostusedwords.setText(mostusedwords.getText()+"</html>");
+		
+		mostusedwords.setSize(300,200);
+		mostusedwords.setLocation(10, 120);
 		
 		
 		
@@ -157,6 +171,7 @@ public class ReportCreator implements IReportCreator {
        reportpanel.add(mood);
        reportpanel.add(pseudoiq);
        reportpanel.add(relationwords);
+       reportpanel.add(mostusedwords);
        
        reportpanel.add(piechartupper);
        
