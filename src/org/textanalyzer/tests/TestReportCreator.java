@@ -133,7 +133,7 @@ public class TestReportCreator {
 			@Override
 			public String getMostFrequentNomen() {
 				// TODO Auto-generated method stub
-				return null;
+				return "Mongo";
 			}
 			
 			@Override
@@ -146,7 +146,7 @@ public class TestReportCreator {
 			@Override
 			public int getAvaragePhraseLength() {
 				// TODO Auto-generated method stub
-				return 0;
+				return 7;
 			}
 		}; 
 		

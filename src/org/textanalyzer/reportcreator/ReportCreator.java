@@ -48,6 +48,8 @@ public class ReportCreator implements IReportCreator {
 		JLabel aphraselength = new JLabel();
 		JLabel wordcount = new JLabel();
 		JLabel wrongwords = new JLabel();
+		JLabel mostword = new JLabel();
+		JLabel mood = new JLabel();
 		
 		//reportpanel.setLayout(new java.awt.GridBagLayout());
 		reportpanel.setLayout(null);
@@ -91,9 +93,20 @@ public class ReportCreator implements IReportCreator {
 		wrongwords.setSize(150, 30);
 		wrongwords.setLocation(200, 60);
 		
-		//aphraselength.setText("Durschn. Satzlänge"+.String.valueOf(myResultset.))
+		aphraselength.setText("Durschn. Satzlänge: "+String.valueOf(myResultset.getAvaragePhraseLength()));
 		aphraselength.setSize(150,30);
 		aphraselength.setLocation(200,80);
+		
+		mostword.setText("Häufigstes Nomen: "+myResultset.getMostFrequentNomen());
+		mostword.setSize(150,30);
+		mostword.setLocation(390, 40);
+		
+		mood.setText("Grundstimmung: "+myResultset.getTextMood());
+		mood.setSize(150, 30);
+		mood.setLocation(390, 60);
+		
+		
+		
 		
 		
 		ChartPanel pieChart = new ChartPanel(chart);
@@ -115,6 +128,7 @@ public class ReportCreator implements IReportCreator {
        reportpanel.add(profession);
        reportpanel.add(wordcount);
        reportpanel.add(wrongwords);
+       reportpanel.add(aphraselength);
        reportpanel.add(piechartupper);
        
 
