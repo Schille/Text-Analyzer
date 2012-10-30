@@ -12,4 +12,5 @@ import javax.swing.JPanel;
 public interface IProfileViewer {
 
 		JPanel getProfileViewer();
+		
 }

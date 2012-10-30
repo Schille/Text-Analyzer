@@ -23,7 +23,7 @@ public interface IResultSet {
 	
 	Map<String,Integer> getCustomWordCount();
 	
-	int avaragePhraseLength();
+	int getAvaragePhraseLength();
 	
 	String getMostFrequentNomen();
 	
