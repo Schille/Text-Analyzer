@@ -103,13 +103,13 @@ public class TestReportCreator {
 			@Override
 			public int getWrongWordCount() {
 				// TODO Auto-generated method stub
-				return 0;
+				return 100;
 			}
 			
 			@Override
 			public int getWordCount() {
 				// TODO Auto-generated method stub
-				return 0;
+				return 500;
 			}
 			
 			@Override
@@ -151,7 +151,7 @@ public class TestReportCreator {
 		
 		
 		  JFrame frame = new JFrame("FrameChart");
-		  frame.setPreferredSize(new Dimension(400, 400));
+		  frame.setPreferredSize(new Dimension(600, 700));
 	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        frame.getContentPane().add(reporter.getGraphPanel(daprofile, results));
 	        frame.pack();
