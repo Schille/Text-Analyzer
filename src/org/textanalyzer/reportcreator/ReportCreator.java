@@ -57,6 +57,7 @@ public class ReportCreator implements IReportCreator {
 		JLabel pseudoiq = new JLabel();
 		JLabel relationwords = new JLabel();
 		JLabel mostusedwords = new JLabel();
+		JLabel mostusedcustomwords = new JLabel();
 		
 		
 		
@@ -65,8 +66,8 @@ public class ReportCreator implements IReportCreator {
 		
 		headline.setText("Report");
 		headline.setFont(new Font("Dialog", 1 ,30));
-		headline.setLocation(200, 3);
-		headline.setSize(200, 100);
+		headline.setLocation(240, 3);
+		headline.setSize(200, 35);
 		
 		wordmistakes.setText("");
 		DefaultPieDataset pieMistakes = new DefaultPieDataset();
@@ -114,13 +115,25 @@ public class ReportCreator implements IReportCreator {
 		relationwords.setSize(340,30);
 		relationwords.setLocation(290,275);
 		
-		aphraselength.setText("Durschn. Satzlänge: "+String.valueOf(myResultset.getAvaragePhraseLength()));
-		aphraselength.setSize(150,30);
+		aphraselength.setText("Durschn. Satzlänge: "+String.valueOf(myResultset.getAvaragePhraseLength())+" Wörter");
+		aphraselength.setSize(250,30);
 		aphraselength.setLocation(200,80);
 		
 		mostword.setText("Häufigstes Nomen: "+myResultset.getMostFrequentNomen());
 		mostword.setSize(250,30);
 		mostword.setLocation(200, 100);
+		
+		mostusedcustomwords.setText("<html>Häufigste Listenwörter - Wort (Anzahl): ");
+		mostusedcustomwords.setSize(300, 200);
+		mostusedcustomwords.setLocation(10, 320);
+		
+		Map<String,Integer> temp2 = myResultset.getCustomWordCount();
+		for (Map.Entry<String, Integer> entry : temp2.entrySet()) {
+			mostusedcustomwords.setText(mostusedcustomwords.getText()+"<br> - "+entry.getKey()+ " ("+entry.getValue()+")");
+
+		}
+		
+		mostusedcustomwords.setText(mostusedcustomwords.getText()+"</html>");
 		
 		mood.setText("Grundstimmung: "+myResultset.getTextMood());
 		mood.setSize(250, 30);
@@ -139,7 +152,6 @@ public class ReportCreator implements IReportCreator {
 
 		}
 		mostusedwords.setText(mostusedwords.getText()+"</html>");
-		
 		mostusedwords.setSize(300,200);
 		mostusedwords.setLocation(10, 120);
 		
@@ -154,7 +166,6 @@ public class ReportCreator implements IReportCreator {
 		piechartupper.add(pieChart);
 		piechartupper.setLocation(300, 300);
 		
-		headline.setVerticalAlignment(SwingConstants.TOP);
 		reportpanel.setSize(600, 700);
 		reportpanel.setBackground(new Color(255,255,255));
 		
@@ -172,6 +183,7 @@ public class ReportCreator implements IReportCreator {
        reportpanel.add(pseudoiq);
        reportpanel.add(relationwords);
        reportpanel.add(mostusedwords);
+       reportpanel.add(mostusedcustomwords);
        
        reportpanel.add(piechartupper);
        

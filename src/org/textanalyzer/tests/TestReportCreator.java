@@ -153,7 +153,19 @@ public class TestReportCreator {
 			@Override
 			public Map<String, Integer> getCustomWordCount() {
 				// TODO Auto-generated method stub
-				return null;
+				HashMap<String,Integer> k = new HashMap<String, Integer>();
+				k.put("Mongo", 100);
+				k.put("Master", 90);
+				k.put("Kuppe", 28);
+				k.put("Map", 37);
+				k.put("Gitarre", 60);
+				k.put("Instrument", 51);
+				k.put("Flöte", 42);
+				k.put("Hund", 33);
+				k.put("Katze", 22);
+				k.put("Hund", 12);
+				
+				return k;
 			}
 
 
@@ -171,7 +183,7 @@ public class TestReportCreator {
 		}; 
 		
 		
-		  JFrame frame = new JFrame("FrameChart");
+		  JFrame frame = new JFrame("Report");
 		  frame.setPreferredSize(new Dimension(600, 700));
 	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        frame.getContentPane().add(reporter.getGraphPanel(daprofile, results));
