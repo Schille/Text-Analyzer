@@ -5,7 +5,6 @@ package org.textanalyzer.database;
 
 import java.util.List;
 
-import org.textanalyzer.analyzer.IResultSet;
 
 /**
  * @author Michael Schilonka
