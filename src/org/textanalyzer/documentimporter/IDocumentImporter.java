@@ -9,6 +9,6 @@ package org.textanalyzer.documentimporter;
  */
 public interface IDocumentImporter {
 	
-	IDocument invokeNewDocumentImport(DocumentFormat format, String path);
+	IDocument invokeNewDocumentImport();
 	
 }

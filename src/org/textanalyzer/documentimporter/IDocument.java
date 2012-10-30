@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public interface IDocument {
 
-	URI getDocumentPath();
+	String getDocumentPath();
 	
 	Date getImportDate();
 	

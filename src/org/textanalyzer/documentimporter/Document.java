@@ -5,35 +5,53 @@ import java.util.Date;
 
 public class Document implements IDocument {
 
+	private String text;
+	private String documentPath;
+	private Date importDate;
+	private DocumentFormat documentFormat;
+	private String fileName;
 	@Override
-	public URI getDocumentPath() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getDocumentPath() {
+		return documentPath;
 	}
 
 	@Override
 	public Date getImportDate() {
-		// TODO Auto-generated method stub
-		return null;
+		return importDate;
 	}
 
 	@Override
 	public DocumentFormat getDocumentFormat() {
-		// TODO Auto-generated method stub
-		return null;
+		return documentFormat;
 	}
 
 	@Override
 	public String getText() {
-		return "Damit Ihr indess erkennt, woher dieser ganze Irrthum gekommen ist, und weshalb man die Lust anklagt und den Schmerz lobet, so will ich Euch Alles eröffnen und auseinander setzen, was jener Begründer der Wahrheit und gleichsam Baumeister des glücklichen Lebens selbst darüber gesagt hat. Niemand, sagt er, verschmähe, oder hasse, oder fliehe die Lust als solche, sondern weil grosse Schmerzen ihr folgen, wenn man nicht mit Vernunft ihr nachzugehen verstehe. Ebenso werde der Schmerz als solcher von Niemand geliebt, gesucht und verlangt, sondern weil mitunter solche Zeiten eintreten, dass man mittelst Arbeiten und Schmerzen eine grosse Lust sich zu verschaften suchen müsse. Um hier gleich bei dem Einfachsten stehen zu bleiben, so würde Niemand von uns anstrengende körperliche Uebungen vornehmen, wenn er nicht einen Vortheil davon erwartete. Wer dürfte aber wohl Den tadeln, der nach einer Lust verlangt, welcher keine Unannehmlichkeit folgt, oder der einem Schmerze ausweicht, aus dem keine Lust hervorgeht?";
-		// TODO Auto-generated method stub
-		//return null;
+		return text;
 	}
 
 	@Override
 	public String getFileName() {
-		// TODO Auto-generated method stub
-		return null;
+		return fileName;
 	}
 
+	public void setDocumentPath(String documentPath) {
+		this.documentPath = documentPath;
+	}
+
+	public void setImportDate(Date importDate) {
+		this.importDate = importDate;
+	}
+
+	public void setDocumentFormat(DocumentFormat documentFormat) {
+		this.documentFormat = documentFormat;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public void setText(String text){
+		this.text = text;
+	}
 }
