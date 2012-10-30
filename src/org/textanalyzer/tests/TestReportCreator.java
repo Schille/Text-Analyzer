@@ -159,7 +159,6 @@ public class TestReportCreator {
 	        frame.setVisible(true);
 
 	        frame.setAlwaysOnTop(true);
-	        frame.setAlwaysOnTop(true);
 	}
 
 }

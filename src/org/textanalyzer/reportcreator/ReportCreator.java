@@ -6,9 +6,11 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.io.File;
@@ -50,6 +52,10 @@ public class ReportCreator implements IReportCreator {
 		JLabel wrongwords = new JLabel();
 		JLabel mostword = new JLabel();
 		JLabel mood = new JLabel();
+		JLabel pseudoiq = new JLabel();
+		JLabel relationwords = new JLabel();
+		
+		
 		
 		//reportpanel.setLayout(new java.awt.GridBagLayout());
 		reportpanel.setLayout(null);
@@ -59,13 +65,21 @@ public class ReportCreator implements IReportCreator {
 		headline.setLocation(200, 3);
 		headline.setSize(200, 100);
 		
-		wordmistakes.setText("Verhältnis Rechtschreibfehler/Wortanzahl");
+		wordmistakes.setText("");
 		DefaultPieDataset pieMistakes = new DefaultPieDataset();
 		pieMistakes.setValue("Rechtschreibfehler", myResultset.getWrongWordCount());
-		pieMistakes.setValue("Wortanzahl", myResultset.getWordCount());
+		pieMistakes.setValue("Wortanzahl", myResultset.getWordCount()-myResultset.getWrongWordCount());
+		
+	
+		
 		
 		JFreeChart chart = ChartFactory.createPieChart
-				(" ",pieMistakes,true,true,false );
+				("",pieMistakes,true,true,false );
+		
+		
+		PiePlot plot = new PiePlot();
+		plot =(PiePlot)chart.getPlot();
+		plot.setLabelGenerator(null);
 		
 		
 		
@@ -93,17 +107,25 @@ public class ReportCreator implements IReportCreator {
 		wrongwords.setSize(150, 30);
 		wrongwords.setLocation(200, 60);
 		
+		relationwords.setText("<html><center><b>Verhältnis der Gesamtwortanzahl / Rechtschreibfehler</b></center></html>");
+		relationwords.setSize(340,30);
+		relationwords.setLocation(290,275);
+		
 		aphraselength.setText("Durschn. Satzlänge: "+String.valueOf(myResultset.getAvaragePhraseLength()));
 		aphraselength.setSize(150,30);
 		aphraselength.setLocation(200,80);
 		
 		mostword.setText("Häufigstes Nomen: "+myResultset.getMostFrequentNomen());
-		mostword.setSize(150,30);
-		mostword.setLocation(390, 40);
+		mostword.setSize(250,30);
+		mostword.setLocation(200, 100);
 		
 		mood.setText("Grundstimmung: "+myResultset.getTextMood());
-		mood.setSize(150, 30);
-		mood.setLocation(390, 60);
+		mood.setSize(250, 30);
+		mood.setLocation(390, 40);
+		
+		pseudoiq.setText("<html><b>Wertung: "+myResultset.getPseudoIQ()+"</b></html>");
+		pseudoiq.setSize(200,30);
+		pseudoiq.setLocation(390,60);
 		
 		
 		
@@ -120,6 +142,8 @@ public class ReportCreator implements IReportCreator {
 		
 		headline.setVerticalAlignment(SwingConstants.TOP);
 		reportpanel.setSize(600, 700);
+		reportpanel.setBackground(new Color(255,255,255));
+		
 		
 		reportpanel.add(headline);
        reportpanel.add(name);
@@ -129,6 +153,11 @@ public class ReportCreator implements IReportCreator {
        reportpanel.add(wordcount);
        reportpanel.add(wrongwords);
        reportpanel.add(aphraselength);
+       reportpanel.add(mostword);
+       reportpanel.add(mood);
+       reportpanel.add(pseudoiq);
+       reportpanel.add(relationwords);
+       
        reportpanel.add(piechartupper);
        
 
