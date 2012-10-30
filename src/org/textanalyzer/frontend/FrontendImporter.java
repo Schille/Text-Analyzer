@@ -20,7 +20,7 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	private javax.swing.JLabel text_EingabeDesTextes;
 	private javax.swing.JLabel text_TextInTextfeld;
 	private javax.swing.JLabel text_Textanalyse;
-	private javax.swing.JTextField textareaForBlank;
+	private javax.swing.JTextArea textareaForBlank;
 	private javax.swing.JScrollPane textareaFrame;
 	private String filepath = "";
 	private String blankText ="";
@@ -29,7 +29,7 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	public void showImportWindow() {
 
 		textareaFrame = new javax.swing.JScrollPane();
-		textareaForBlank = new javax.swing.JTextField();
+		textareaForBlank = new javax.swing.JTextArea();
 		javax.swing.JButton browseButton = new javax.swing.JButton();
 		dataPath = new javax.swing.JTextField();
 		text_Textanalyse = new javax.swing.JLabel();
@@ -41,10 +41,11 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		setBackground(new java.awt.Color(255, 255, 255));
 
-		
-		
+		textareaForBlank.setLineWrap(true);
+		textareaForBlank.setColumns(20);
+		textareaForBlank.setRows(5);
 		textareaFrame.setViewportView(textareaForBlank);
-
+		
 		browseButton.setBackground(new java.awt.Color(204, 0, 0));
 		browseButton.setForeground(new java.awt.Color(255, 255, 255));
 		browseButton.setText("Browse...");
