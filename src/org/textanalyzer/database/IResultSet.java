@@ -6,9 +6,10 @@ package org.textanalyzer.database;
 import java.util.Map;
 
 import org.textanalyzer.analyzer.TextMood;
+import org.textanalyzer.documentimporter.IDocument;
 
 /**
- * @author Andreas Neumann
+ * @author Michael Schilonka
  *
  */
 public interface IResultSet {
@@ -28,5 +29,7 @@ public interface IResultSet {
 	String getMostFrequentNomen();
 	
 	TextMood getTextMood();
+	
+	IDocument getDocument();
 		
 }

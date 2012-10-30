@@ -4,7 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.textanalyzer.analyzer.TextMood;
+import org.textanalyzer.documentimporter.IDocument;
 
+/**
+ * @author Michael Schilonka
+ *
+ */
 public class ResultSet implements IResultSet {
 	
 	private int wordCount;
@@ -15,41 +20,47 @@ public class ResultSet implements IResultSet {
 	private int avaragePhraseLength;
 	private String mostFrequentNomen;
 	private TextMood textMood;
+	private IDocument document;
 	
 	
-	protected HashMap<String, Integer> getMostFrequentWord() {
-		return mostFrequentWord;
+	//----------------------------Getter Setter------------------------------------------------------
+	public void setDocument(IDocument myDocument){
+		document = myDocument;
+	}
+	
+	public IDocument getDocument(){
+		return document;
 	}
 
-	protected void setMostFrequentWord(HashMap<String, Integer> mostFrequentWord) {
+	public void setMostFrequentWord(HashMap<String, Integer> mostFrequentWord) {
 		this.mostFrequentWord = mostFrequentWord;
 	}
 
-	protected void setWordCount(int wordCount) {
+	public void setWordCount(int wordCount) {
 		this.wordCount = wordCount;
 	}
 
-	protected void setWrongWordCount(int wrongWordCount) {
+	public void setWrongWordCount(int wrongWordCount) {
 		this.wrongWordCount = wrongWordCount;
 	}
 
-	protected void setPseudoIQ(int pseudoIQ) {
+	public void setPseudoIQ(int pseudoIQ) {
 		this.pseudoIQ = pseudoIQ;
 	}
 
-	protected void setCustomWordCount(HashMap<String, Integer> customWordCount) {
+	public void setCustomWordCount(HashMap<String, Integer> customWordCount) {
 		this.customWordCount = customWordCount;
 	}
 
-	protected void setAvaragePhraseLength(int avaragePhraseLength) {
+	public void setAvaragePhraseLength(int avaragePhraseLength) {
 		this.avaragePhraseLength = avaragePhraseLength;
 	}
-
-	protected void setMostFrequentNomen(String mostFrequentNomen) {
+	
+	public void setMostFrequentNomen(String mostFrequentNomen) {
 		this.mostFrequentNomen = mostFrequentNomen;
 	}
 
-	protected void setTextMood(TextMood textMood) {
+	public void setTextMood(TextMood textMood) {
 		this.textMood = textMood;
 	}
 
@@ -93,5 +104,11 @@ public class ResultSet implements IResultSet {
 	public TextMood getTextMood() {
 		return textMood;
 	}
+	
+	public HashMap<String, Integer> getMostFrequentWord() {
+		return mostFrequentWord;
+	}
+
+	//END----------------------------Getter Setter------------------------------------------------------
 
 }
