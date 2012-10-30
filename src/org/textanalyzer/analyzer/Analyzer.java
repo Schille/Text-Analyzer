@@ -13,6 +13,13 @@ import org.textanalyzer.database.ResultSet;
 public class Analyzer implements IAnalyzer {
 
 	private IResultSet analysis;
+	private int wordCount = 0;
+	private int wrongWordCount = 0;
+	private int sentenceCount = 0;
+	//private int IQ = 0;
+	//private int mood = 0;
+	//private int phraseLength = 0;
+	//private int wordLength = 0;
 
 	private class MyWord{
 		protected String word;
@@ -33,7 +40,6 @@ public class Analyzer implements IAnalyzer {
 		
 		/* Creating the Result Set */
 		this.analysis = new ResultSet();
-		
 		/* Get the text and transform to Stream */
 		if(myTask.getDocument() == null || myTask.getDocument().getText() == null)
 			throw new Error("No Document to analyze");
@@ -48,6 +54,47 @@ public class Analyzer implements IAnalyzer {
 		}
 		
 		return this.analysis;
+	}
+	
+	private void analyze(Reader input) throws IOException{
+		MySentence sentence = analyzeSentence(input);
+		String text = "";
+		while(sentence != null && !sentence.inputEnd){
+			text += sentence.sentence + sentence.punctuation + " ";
+			sentenceCount++;
+			sentence = analyzeSentence(input);
+		}
+		text += sentence.sentence + sentence.punctuation;
+		sentenceCount++;
+		
+		// TODO Calculate TextMood
+		// TODO Calculate IQ
+		//IQ = ((wordCount - wrongWordCount) * 100) / wordCount;
+		
+		
+		System.out.println(text);
+	}
+	
+	private MySentence analyzeSentence(Reader input) throws IOException{
+		// Set the punctuation
+		MyWord word = analyzeWord(input);
+		MySentence sentence = new MySentence();
+		sentence.sentence = "";
+		
+		// Read the words of a sentence
+		while(!word.inputEnd && word.punctuation == ""){
+			sentence.sentence += word.word + " ";
+			wordCount++;
+			word = analyzeWord(input);
+		}
+		sentence.sentence += word.word;
+		sentence.punctuation = word.punctuation;
+		sentence.inputEnd = word.inputEnd;
+		wordCount++;
+		
+		// TODO Calc PhraseLength
+		
+		return sentence;
 	}
 	
 	private MyWord analyzeWord(Reader input) throws IOException{
@@ -69,31 +116,15 @@ public class Analyzer implements IAnalyzer {
 		word.punctuation = getPunctuation(word.word);
 		if(word.punctuation != null){
 			word.word = word.word.substring(0, word.word.length()-word.punctuation.length());
-			// TODO Analyze the word
-			System.out.println(word.word);
-			System.out.println(word.punctuation);
 		}
+
+		// TODO Calc Wordcount
+		// TODO Calc Nomencount
+		// TODO Calc CustomWordcount
+		// TODO Calc WrongWordCount
+		// TODO Calc FrequentWords
+		
 		return word;
-	}
-	
-	private MySentence analyzeSentence(Reader input) throws IOException{
-		// Set the punctuation
-		MyWord word = analyzeWord(input);
-		MySentence sentence = new MySentence();
-		sentence.sentence = "";
-		
-		// Read the words of a sentence
-		while(!word.inputEnd && word.punctuation == ""){
-			sentence.sentence += word.word + " ";
-			word = analyzeWord(input);
-		}
-		sentence.sentence += word.word;
-		sentence.punctuation = word.punctuation;
-		sentence.inputEnd = word.inputEnd;
-		
-		// TODO Analyze the sentence
-		
-		return sentence;
 	}
 	
 	private String getPunctuation(String word){
@@ -108,20 +139,6 @@ public class Analyzer implements IAnalyzer {
 			}
 		}
 		return "";
-	}
-	
-	private void analyze(Reader input) throws IOException{
-		MySentence sentence = analyzeSentence(input);
-		String text = "";
-		while(sentence != null && !sentence.inputEnd){
-			text += sentence.sentence + sentence.punctuation + " ";
-			sentence = analyzeSentence(input);
-		}
-		text += sentence.sentence + sentence.punctuation;
-		
-		// TODO Analyze the overall text
-		
-		System.out.println(text);
 	}
 
 }

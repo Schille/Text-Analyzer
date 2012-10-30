@@ -20,7 +20,7 @@ public interface IAnalyzeTaskInformation {
 	
 	void setWordList(List<String> myWordList);
 	
-	List<String> getWordList(int count);
+	List<String> getWordList();
 	
 	IProfileInformation getProfile();
 	
