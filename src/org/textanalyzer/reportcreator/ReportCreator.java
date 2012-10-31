@@ -2,7 +2,6 @@
  * 
  */
 package org.textanalyzer.reportcreator;
-import org.apache.commons.collections.comparators.ReverseComparator;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.ChartUtilities;
@@ -10,21 +9,13 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.io.File;
-
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -64,6 +55,10 @@ public class ReportCreator implements IReportCreator {
 		JLabel relationwords = new JLabel();
 		JLabel mostusedwords = new JLabel();
 		JLabel mostusedcustomwords = new JLabel();
+		JLabel filename = new JLabel();
+		JLabel filepath = new JLabel();
+		JLabel filedate = new JLabel();
+		JLabel fileformat = new JLabel();
 		
 		
 		
@@ -119,7 +114,7 @@ public class ReportCreator implements IReportCreator {
 		
 		relationwords.setText("<html><center><b>Anzahl Rechtschreibfehler</b></center></html>");
 		relationwords.setSize(340,30);
-		relationwords.setLocation(360,135);
+		relationwords.setLocation(350,135);
 		
 		aphraselength.setText("Durschn. Satzlänge: "+String.valueOf(myResultset.getAvaragePhraseLength())+" Wörter");
 		aphraselength.setSize(250,30);
@@ -181,6 +176,22 @@ public class ReportCreator implements IReportCreator {
 		mostusedwords.setLocation(10, 120);
 		
 		
+		filename.setText("Dateiname: "+myResultset.getDocument().getFileName());
+		filename.setSize(150,30);
+		filename.setLocation(10,625);
+		
+		filepath.setText("Verzeichnis: "+myResultset.getDocument().getDocumentPath());
+		filepath.setSize(300,30);
+		filepath.setLocation(10,650);
+		
+		filedate.setText("Importiert: "+myResultset.getDocument().getImportDate().toLocaleString());
+		filedate.setSize(250,30);
+		filedate.setLocation(380, 625);
+		
+		fileformat.setText("Format: "+myResultset.getDocument().getDocumentFormat());
+		fileformat.setSize(150,30);
+		fileformat.setLocation(230, 625);
+		
 		
 		ChartPanel pieChart = new ChartPanel(chart);
 		pieChart.setPreferredSize(new Dimension(300,200));
@@ -189,7 +200,7 @@ public class ReportCreator implements IReportCreator {
 		
 		piechartupper.setSize(300, 205);
 		piechartupper.add(pieChart);
-		piechartupper.setLocation(300, 160);
+		piechartupper.setLocation(290, 160);
 		
 		reportpanel.setSize(600, 700);
 		reportpanel.setBackground(new Color(255,255,255));
@@ -209,6 +220,10 @@ public class ReportCreator implements IReportCreator {
        reportpanel.add(relationwords);
        reportpanel.add(mostusedwords);
        reportpanel.add(mostusedcustomwords);
+       reportpanel.add(filename);
+       reportpanel.add(filepath);
+       reportpanel.add(filedate);
+       reportpanel.add(fileformat);
        
        reportpanel.add(piechartupper);
        

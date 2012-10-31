@@ -6,6 +6,7 @@ package org.textanalyzer.tests;
 import static org.junit.Assert.*;
 
 import java.awt.Dimension;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import org.junit.Test;
 import org.textanalyzer.analyzer.TextMood;
 import org.textanalyzer.database.IProfileInformation;
 import org.textanalyzer.database.IResultSet;
+import org.textanalyzer.documentimporter.DocumentFormat;
 import org.textanalyzer.documentimporter.IDocument;
 import org.textanalyzer.reportcreator.ReportCreator;
 
@@ -178,7 +180,38 @@ public class TestReportCreator {
 			@Override
 			public IDocument getDocument() {
 				// TODO Auto-generated method stub
-				return null;
+				return new IDocument() {
+					
+					@Override
+					public String getText() {
+						// TODO Auto-generated method stub
+						return null;
+					}
+					
+					@Override
+					public Date getImportDate() {
+						// TODO Auto-generated method stub
+						return new Date();
+					}
+					
+					@Override
+					public String getFileName() {
+						// TODO Auto-generated method stub
+						return "filename";
+					}
+					
+					@Override
+					public String getDocumentPath() {
+						// TODO Auto-generated method stub
+						return "path to file";
+					}
+					
+					@Override
+					public DocumentFormat getDocumentFormat() {
+						// TODO Auto-generated method stub
+						return DocumentFormat.PDF;
+					}
+				};
 			}
 		}; 
 		
