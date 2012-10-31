@@ -2,11 +2,14 @@
  * 
  */
 package org.textanalyzer.reportcreator;
+import org.apache.poi.ss.usermodel.charts.ChartDataFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
 import java.awt.Color;
@@ -112,7 +115,7 @@ public class ReportCreator implements IReportCreator {
 		wrongwords.setSize(150, 30);
 		wrongwords.setLocation(200, 60);
 		
-		relationwords.setText("<html><center><b>Anzahl Rechtschreibfehler</b></center></html>");
+		relationwords.setText("<html><center><b>Anteil Rechtschreibfehler</b></center></html>");
 		relationwords.setSize(340,30);
 		relationwords.setLocation(350,135);
 		
@@ -165,10 +168,14 @@ public class ReportCreator implements IReportCreator {
 			orderFrequent.put(entry.getValue(), entry.getKey());
 		}
 		
+        DefaultCategoryDataset barchartset = new DefaultCategoryDataset();
+
+		
 		Iterator<?> iterator2 = orderFrequent.keySet().iterator();
 		  while (iterator2.hasNext()) {
 		  Object key = iterator2.next();
 			mostusedwords.setText(mostusedwords.getText()+"<br> - "+key+ " ("+orderFrequent.get(key)+")");
+			barchartset.setValue(Integer.parseInt(key.toString()),"", orderFrequent.get(key));
 		  }
 		
 		mostusedwords.setText(mostusedwords.getText()+"</html>");
@@ -196,11 +203,27 @@ public class ReportCreator implements IReportCreator {
 		ChartPanel pieChart = new ChartPanel(chart);
 		pieChart.setPreferredSize(new Dimension(300,200));
 		
+
+        
+        JFreeChart barchart = ChartFactory.createBarChart("", "Wort", "Anzahl der häufigsten Wörter", barchartset, PlotOrientation.HORIZONTAL, false,  true, false);
+        
+        ChartPanel barchartpanel = new ChartPanel(barchart);
+        barchartpanel.setPreferredSize(new Dimension(390,230));
 		
-		
+        JPanel barchartupper = new JPanel();
+        barchartupper.setBackground(new Color(255,255,255));
+        
+        barchartupper.setSize(390, 235);
+        barchartupper.add(barchartpanel);
+        barchartupper.setLocation(200, 370);
+        
+        reportpanel.add(barchartupper);
+
+        
 		piechartupper.setSize(300, 205);
 		piechartupper.add(pieChart);
 		piechartupper.setLocation(290, 160);
+		piechartupper.setBackground(new Color(255,255,255));
 		
 		reportpanel.setSize(600, 700);
 		reportpanel.setBackground(new Color(255,255,255));
