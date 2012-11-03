@@ -15,6 +15,7 @@ public class TestDocumentImporter {
 		DocumentImporter document = new DocumentImporter();
 		IDocument mydoc = new Document();
 		mydoc = document.invokeNewDocumentImport();
+		assert(mydoc.getDocumentFormat() == DocumentFormat.DOC);
 		System.out.println(mydoc.getText());
 	}
 	

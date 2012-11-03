@@ -1,15 +1,17 @@
 package org.textanalyzer.documentimporter;
 
-import java.net.URI;
 import java.util.Date;
 
 public class Document implements IDocument {
 
+	// private class variables
 	private String text;
 	private String documentPath;
 	private Date importDate;
 	private DocumentFormat documentFormat;
 	private String fileName;
+	
+	// ---------------------- Getters -----------------------
 	@Override
 	public String getDocumentPath() {
 		return documentPath;
@@ -34,7 +36,7 @@ public class Document implements IDocument {
 	public String getFileName() {
 		return fileName;
 	}
-
+	// ---------------------- Setters -----------------------
 	public void setDocumentPath(String documentPath) {
 		this.documentPath = documentPath;
 	}
