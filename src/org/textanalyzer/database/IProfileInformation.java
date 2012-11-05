@@ -39,4 +39,6 @@ public interface IProfileInformation {
 	long getId();
 
 	void setAnalyzedDocuments(ArrayList<ResultSet> analyzedDocuments);
+
+	void setAnalyzedDocuments(List<IResultSet> myResultSet);
 }
