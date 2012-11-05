@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 public class ProfileViewer implements IProfileViewer {
 
 	private long userID;
+	private JPanel ground;
+	
 	
 	//-----------Constructor------------
 	public ProfileViewer(long myUserID){
@@ -23,7 +25,7 @@ public class ProfileViewer implements IProfileViewer {
 	 */
 	@Override
 	public JPanel getProfileViewer() {
-		return new JPanel();
+		return ground;
 	}
 
 }
