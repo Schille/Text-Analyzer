@@ -18,7 +18,7 @@ import org.textanalyzer.database.IResultSet;
  */
 public class ProfileViewer implements IProfileViewer {
 
-	private long userID;
+	private int userID;
 	private JPanel ground;
 	private DatabaseConnector connector;
 	private IProfileInformation profileInformation;
