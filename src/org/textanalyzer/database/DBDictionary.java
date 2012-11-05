@@ -3,7 +3,14 @@
  */
 package org.textanalyzer.database;
 
+import java.util.List;
+
 import org.textanalyzer.analyzer.dictionary.WordStatus;
+
+import com.orientechnologies.orient.core.db.document.ODatabaseDocumentTx;
+import com.orientechnologies.orient.core.query.nativ.ONativeSynchQuery;
+import com.orientechnologies.orient.core.query.nativ.OQueryContextNativeSchema;
+import com.orientechnologies.orient.core.record.impl.ODocument;
 
 /**
  * @author Michael Schilonka
@@ -16,8 +23,9 @@ public class DBDictionary implements IDBDictionary {
 	 */
 	@Override
 	public WordStatus getWordStatus(String myWord) {
-		// TODO Auto-generated method stub
 		return null;
+
+		
 	}
 
 	/* (non-Javadoc)
@@ -25,8 +33,12 @@ public class DBDictionary implements IDBDictionary {
 	 */
 	@Override
 	public void setWordStatus(String myWord, WordStatus myStatus) {
-		// TODO Auto-generated method stub
-
+		ODocument word = new ODocument("Word");
+		word.field("Word", myWord);
+		word.field("WordStatus", myStatus);
+		word.save();
 	}
+	
+
 
 }
