@@ -161,7 +161,7 @@ public class TestReportCreator {
 				k.put("Flöte", 4);
 				k.put("Hund", 3);
 				k.put("Katze", 2);
-				k.put("Hund", 1);
+				k.put("Hund", 100);
 				
 				return k;
 			}
@@ -275,7 +275,7 @@ IResultSet results2 = new IResultSet() {
 				k.put("Flöte", 4);
 				k.put("Hund", 3);
 				k.put("Katze", 2);
-				k.put("Hund", 1);
+				k.put("Hunde", 200);
 				
 				return k;
 			}

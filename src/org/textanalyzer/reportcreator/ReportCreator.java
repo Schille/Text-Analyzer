@@ -2,10 +2,8 @@
  * 
  */
 package org.textanalyzer.reportcreator;
-import org.apache.poi.ss.usermodel.charts.ChartDataFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.PlotOrientation;
@@ -37,6 +35,7 @@ public class ReportCreator implements IReportCreator {
 	/* (non-Javadoc)
 	 * @see org.textanalyzer.reportcreator.IReportCreator#getGraphPanel(org.textanalyzer.database.IProfileInformation, org.textanalyzer.analyzer.IResultSet)
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public JPanel getGraphPanel(IProfileInformation myProfile, IResultSet myResultset) {
 		JPanel reportpanel = new JPanel();
@@ -48,7 +47,6 @@ public class ReportCreator implements IReportCreator {
 		JLabel age = new JLabel();
 		JLabel profession = new JLabel();
 		JLabel headline = new JLabel();
-		JLabel wordmistakes = new JLabel();
 		JLabel aphraselength = new JLabel();
 		JLabel wordcount = new JLabel();
 		JLabel wrongwords = new JLabel();
@@ -73,7 +71,6 @@ public class ReportCreator implements IReportCreator {
 		headline.setLocation(240, 3);
 		headline.setSize(200, 35);
 		
-		wordmistakes.setText("");
 		DefaultPieDataset pieMistakes = new DefaultPieDataset();
 		pieMistakes.setValue("Rechtschreibfehler", myResultset.getWrongWordCount());
 		pieMistakes.setValue("restliche Worte", myResultset.getWordCount()-myResultset.getWrongWordCount());
@@ -268,11 +265,9 @@ public class ReportCreator implements IReportCreator {
 		JLabel age = new JLabel();
 		JLabel profession = new JLabel();
 		JLabel headline = new JLabel();
-		JLabel wordmistakes = new JLabel();
 		JLabel aphraselength = new JLabel();
 		JLabel wordcount = new JLabel();
 		JLabel wrongwords = new JLabel();
-		JLabel mostword = new JLabel();
 		JLabel mood = new JLabel();
 		JLabel pseudoiq = new JLabel();
 		JLabel relationwords = new JLabel();
@@ -343,7 +338,7 @@ public class ReportCreator implements IReportCreator {
 		 
 		 relationwords.setText("<html><center><b>Anteil Rechtschreibfehler</b></center></html>");
 		 relationwords.setSize(340,30);
-		 relationwords.setLocation(350,135);
+		 relationwords.setLocation(350,110);
 		 
 			pieMistakes.setValue("Rechtschreibfehler", temp_wrongwords);
 			pieMistakes.setValue("restliche Worte", temp_wordcount-temp_wrongwords);
@@ -367,6 +362,27 @@ public class ReportCreator implements IReportCreator {
 				mostusedwords.setText(mostusedwords.getText()+"</html>");
 				mostusedwords.setSize(300,200);
 				mostusedwords.setLocation(10, 120);
+				
+				
+				
+				mostusedcustomwords.setText("<html>Häufigste Listenwörter - Wort (Anzahl): ");
+				mostusedcustomwords.setSize(300, 200);
+				mostusedcustomwords.setLocation(10, 320);
+				
+				Map<String,Integer> temp2 = av_cases.getListMap();
+				SortedMap<Integer,String> orderCustom = new TreeMap<Integer, String>(Collections.reverseOrder());
+				
+				for (Map.Entry<String, Integer> entry : temp2.entrySet()) {
+					orderCustom.put(entry.getValue(), entry.getKey());
+				}
+				
+				Iterator<?> iterator = orderCustom.keySet().iterator();
+				  while (iterator.hasNext()) {
+				  Object key = iterator.next();
+					mostusedcustomwords.setText(mostusedcustomwords.getText()+"<br> - "+orderCustom.get(key)+ " ("+key+")");
+				  }
+				  
+				mostusedcustomwords.setText(mostusedcustomwords.getText()+"</html>");
 			
 			
 			JFreeChart chart = ChartFactory.createPieChart
@@ -382,7 +398,7 @@ public class ReportCreator implements IReportCreator {
 			
 			piechartupper.setSize(300, 205);
 			piechartupper.add(pieChart);
-			piechartupper.setLocation(290, 160);
+			piechartupper.setLocation(290, 135);
 			piechartupper.setBackground(new Color(255,255,255));
 		 
 		 wordcount.setText("Wortanzahl: " + String.valueOf(temp_wordcount));
@@ -401,6 +417,24 @@ public class ReportCreator implements IReportCreator {
 			pseudoiq.setSize(200,30);
 			pseudoiq.setLocation(390,60);
 			
+			mood.setText("Grundstimmung: "+av_cases.averageMood());
+			mood.setSize(250, 30);
+			mood.setLocation(390, 40);
+			
+			JFreeChart barchart = ChartFactory.createBarChart("", "Wort", "Anzahl der häufigsten Wörter", barchartset, PlotOrientation.HORIZONTAL, false,  true, false);
+	        
+	        ChartPanel barchartpanel = new ChartPanel(barchart);
+	        barchartpanel.setPreferredSize(new Dimension(390,230));
+			
+	        JPanel barchartupper = new JPanel();
+	        barchartupper.setBackground(new Color(255,255,255));
+	        
+	        barchartupper.setSize(390, 235);
+	        barchartupper.add(barchartpanel);
+	        barchartupper.setLocation(200, 370);
+	        
+	        reportpanel.add(barchartupper);
+			
 		 
 			
 		   reportpanel.add(headline);
@@ -416,6 +450,8 @@ public class ReportCreator implements IReportCreator {
 		 reportpanel.add(hint);
 		 reportpanel.add(relationwords);
 		 reportpanel.add(mostusedwords);
+		 reportpanel.add(mostusedcustomwords);
+		 reportpanel.add(mood);
 		
 		
 		return reportpanel;

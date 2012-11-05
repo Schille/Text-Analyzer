@@ -70,6 +70,42 @@ public class Averager {
 		
 		return listWord;
 	}
+	
+	/**
+	 * optional
+	 * @return the most occurring mood of all texts of the given List
+	 */
+	public String averageMood() {
+		String mood = new String();
+		SortedMap<String,Integer> moods = new TreeMap<String,Integer>();
+		SortedMap<Integer,String> moods_ordered = new TreeMap<Integer,String>();
+		
+		Iterator<?> iterator = resultlist.iterator();
+		while(iterator.hasNext()) {
+			IResultSet temp_res = (IResultSet)iterator.next();
+			try {
+			if(moods.containsKey(temp_res.getTextMood().name())) {
+				moods.put(temp_res.getTextMood().name(), moods.get(temp_res.getTextMood().name())+1);
+			}
+			else {
+				moods.put(temp_res.getTextMood().name(), 0);
+			}
+			}
+			catch(NullPointerException e) {
+				System.err.println("There is no mood for the given text.");
+				return "";
+			}
+		}
+			
+		
+		
+		for (Map.Entry<String, Integer> entry : moods.entrySet()) {
+			moods_ordered.put(entry.getValue(), entry.getKey());
+		}
+		mood = moods_ordered.get(moods_ordered.firstKey());
+		
+		return mood;
+	}
 
 
 }
