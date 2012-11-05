@@ -3,12 +3,16 @@
  */
 package org.textanalyzer.profileviewer;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -17,6 +21,10 @@ import org.textanalyzer.database.DBHandle;
 import org.textanalyzer.database.DatabaseConnector;
 import org.textanalyzer.database.IProfileInformation;
 import org.textanalyzer.database.IResultSet;
+import org.textanalyzer.database.ResultSet;
+import org.textanalyzer.documentimporter.DocumentImporter;
+import org.textanalyzer.documentimporter.IDocument;
+import org.textanalyzer.reportcreator.ReportCreator;
 
 /**
  * @author Michael Schilonka & Robert Stein
@@ -30,7 +38,7 @@ public class ProfileViewer implements IProfileViewer {
 	private DatabaseConnector connector;
 	private IProfileInformation profileInformation;
 	private List<IResultSet> resultSets;
-
+	private DocumentImporter importer;
 
 
 	
@@ -42,16 +50,11 @@ public class ProfileViewer implements IProfileViewer {
 		connector = new DatabaseConnector();
 		profileInformation = connector.getProfileInformation(myUserID);
 		resultSets = connector.getAllResultSets(myUserID);
+		importer = new DocumentImporter();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-=======
-	
-	/* (non-Javadoc)
->>>>>>> 2d8a2abfe674e8368e50354d78bef46eef8c5adf
-	 * @see org.textanalyzer.profileviewer.IProfileViewer#getProfileViewer()
 	 */
 	@Override
 	public JPanel getProfileViewer() {
@@ -95,11 +98,39 @@ public class ProfileViewer implements IProfileViewer {
 		new_analyse.setSize(200, 50);
 		new_analyse.setLocation(40,170);
 		new_analyse.setFocusPainted(false);
+		new_analyse.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				IDocument mydocument;
+				mydocument = importer.invokeNewDocumentImport();
+			}
+		});
 		
 		av_analyse.setText("Durchschnittsanalyse starten");
 		av_analyse.setSize(200, 50);
 		av_analyse.setLocation(40,240);
 		av_analyse.setFocusPainted(false);
+		
+		av_analyse.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				IProfileInformation profileinfo = connector.getProfileInformation((int)userID);
+				List<IResultSet>resultlist = connector.getAllResultSets(userID);
+				ReportCreator reporter = new ReportCreator();
+				
+				  JFrame frame = new JFrame("Report");
+				  frame.setPreferredSize(new Dimension(600, 700));
+			        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			        frame.getContentPane().add(reporter.getGraphPanel(profileinfo, resultlist));
+			        frame.pack();
+			        frame.setVisible(true);
+
+			        frame.setAlwaysOnTop(true);
+				
+			}
+		});
 		
 		texte.setSize(180, 300);
 		texte.setLocation(280, 50);
@@ -109,6 +140,7 @@ public class ProfileViewer implements IProfileViewer {
 		while(result.hasNext()) {
 			IResultSet temp_res = (IResultSet)result.next();
 			dataname.add("something");
+
 			//dataname.add(temp_res.getDocument().getFileName());	
 		}
 		texte.setListData(dataname.toArray());

@@ -2,6 +2,7 @@ package org.textanalyzer.reportcreator;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
@@ -17,10 +18,10 @@ import org.textanalyzer.database.IResultSet;
 
 public class Averager {
 	
-	private ArrayList<IResultSet> resultlist;
+	private LinkedList<IResultSet> resultlist;
 	
 	public Averager(List<IResultSet> myResultset) {
-		resultlist = (ArrayList<IResultSet>) myResultset;
+		resultlist = (LinkedList<IResultSet>) myResultset;
 		
 	}
 	/**
