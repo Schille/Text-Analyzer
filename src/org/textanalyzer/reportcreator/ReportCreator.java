@@ -10,10 +10,16 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+
+import javassist.util.HotSwapper;
+
 import javax.swing.JLabel;
+import javax.swing.JSeparator;
+
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -60,7 +66,15 @@ public class ReportCreator implements IReportCreator {
 		JLabel filepath = new JLabel();
 		JLabel filedate = new JLabel();
 		JLabel fileformat = new JLabel();
+		JSeparator horline1 = new JSeparator(JSeparator.HORIZONTAL);
+		JSeparator horline2 = new JSeparator(JSeparator.HORIZONTAL);
+	      
+	      
+	    horline1.setSize(580,10);
+	    horline1.setLocation(10,125);
 		
+	    horline2.setSize(580,10);
+	    horline2.setLocation(10,610);
 		
 		
 		//Set LayoutManager null for better manual positioning
@@ -247,6 +261,8 @@ public class ReportCreator implements IReportCreator {
        reportpanel.add(mostword);
        reportpanel.add(mood);
        reportpanel.add(pseudoiq);
+       reportpanel.add(horline1);
+       reportpanel.add(horline2);
        reportpanel.add(relationwords);
        reportpanel.add(mostusedwords);
        reportpanel.add(mostusedcustomwords);
@@ -283,7 +299,16 @@ public class ReportCreator implements IReportCreator {
 		JLabel relationwords = new JLabel();
 		JLabel mostusedwords = new JLabel();
 		JLabel mostusedcustomwords = new JLabel();
-
+		JSeparator horline1 = new JSeparator(JSeparator.HORIZONTAL);
+		JSeparator horline2 = new JSeparator(JSeparator.HORIZONTAL);
+	      
+	      
+	    horline1.setSize(580,10);
+	    horline1.setLocation(10,120);
+		
+	    horline2.setSize(580,10);
+	    horline2.setLocation(10,610);
+	    
 		JLabel hint = new JLabel();
 		
 		
@@ -348,7 +373,7 @@ public class ReportCreator implements IReportCreator {
 		 
 		 relationwords.setText("<html><center><b>Anteil Rechtschreibfehler</b></center></html>");
 		 relationwords.setSize(340,30);
-		 relationwords.setLocation(350,110);
+		 relationwords.setLocation(350,125);
 		 
 			pieMistakes.setValue("Rechtschreibfehler", temp_wrongwords);
 			pieMistakes.setValue("restliche Worte", temp_wordcount-temp_wrongwords);
@@ -408,7 +433,7 @@ public class ReportCreator implements IReportCreator {
 			
 			piechartupper.setSize(300, 205);
 			piechartupper.add(pieChart);
-			piechartupper.setLocation(290, 135);
+			piechartupper.setLocation(290, 150);
 			piechartupper.setBackground(new Color(255,255,255));
 		 
 		 wordcount.setText("Wortanzahl: " + String.valueOf(temp_wordcount));
@@ -457,6 +482,8 @@ public class ReportCreator implements IReportCreator {
 	       reportpanel.add(aphraselength);
 	       reportpanel.add(pseudoiq);
 	       reportpanel.add(piechartupper);
+	       reportpanel.add(horline1);
+	       reportpanel.add(horline2);
 		 reportpanel.add(hint);
 		 reportpanel.add(relationwords);
 		 reportpanel.add(mostusedwords);
