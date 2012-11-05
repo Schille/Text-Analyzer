@@ -63,7 +63,7 @@ public class ReportCreator implements IReportCreator {
 		
 		
 		
-		//reportpanel.setLayout(new java.awt.GridBagLayout());
+		//Set LayoutManager null for better manual positioning
 		reportpanel.setLayout(null);
 		
 		headline.setText("Report");
@@ -71,22 +71,26 @@ public class ReportCreator implements IReportCreator {
 		headline.setLocation(240, 3);
 		headline.setSize(200, 35);
 		
+		
+		//Creating the dataset for the piechart
 		DefaultPieDataset pieMistakes = new DefaultPieDataset();
+		//setting the values for the 'categories' of the chart
 		pieMistakes.setValue("Rechtschreibfehler", myResultset.getWrongWordCount());
 		pieMistakes.setValue("restliche Worte", myResultset.getWordCount()-myResultset.getWrongWordCount());
 		
-	
-		
-		
+		//Creating chart from dataset.
 		JFreeChart chart = ChartFactory.createPieChart
 				("",pieMistakes,true,true,false );
 		
-		
+		//Setting plot options for the chart
 		PiePlot plot = new PiePlot();
-		plot =(PiePlot)chart.getPlot();
-		plot.setLabelGenerator(null);
+		plot = (PiePlot)chart.getPlot();
+		plot.setLabelGenerator(null);	//Don't generate Labels within the graphic
 		
-		
+		/**
+		 * Setting text, size and position of various labels
+		 * Get data from ProfileInformation and ResultSet
+		 */
 		
 		name.setText("Nachname: "+myProfile.getLastName());
 		name.setSize(150, 30);
@@ -116,6 +120,7 @@ public class ReportCreator implements IReportCreator {
 		relationwords.setSize(340,30);
 		relationwords.setLocation(350,135);
 		
+		
 		aphraselength.setText("Durschn. Satzlänge: "+String.valueOf(myResultset.getAvaragePhraseLength())+" Wörter");
 		aphraselength.setSize(250,30);
 		aphraselength.setLocation(200,80);
@@ -128,19 +133,25 @@ public class ReportCreator implements IReportCreator {
 		mostusedcustomwords.setSize(300, 200);
 		mostusedcustomwords.setLocation(10, 320);
 		
-		Map<String,Integer> temp2 = myResultset.getCustomWordCount();
-		SortedMap<Integer,String> orderCustom = new TreeMap<Integer, String>(Collections.reverseOrder());
+		//Some logic to sort the given map by value
 		
+		Map<String,Integer> temp2 = myResultset.getCustomWordCount();
+		//Reversed sorted map, start with the largest key
+		SortedMap<Integer,String> orderCustom = new TreeMap<Integer, String>(Collections.reverseOrder()); 
+		
+		//Swap key and value to sort by value (former key)
 		for (Map.Entry<String, Integer> entry : temp2.entrySet()) {
 			orderCustom.put(entry.getValue(), entry.getKey());
 		}
 		
+		//Iterate over all map entries and put the key and value into the label
 		Iterator<?> iterator = orderCustom.keySet().iterator();
 		  while (iterator.hasNext()) {
 		  Object key = iterator.next();
 			mostusedcustomwords.setText(mostusedcustomwords.getText()+"<br> - "+orderCustom.get(key)+ " ("+key+")");
 		  }
 		  
+
 		mostusedcustomwords.setText(mostusedcustomwords.getText()+"</html>");
 		
 		mood.setText("Grundstimmung: "+myResultset.getTextMood());
@@ -152,9 +163,8 @@ public class ReportCreator implements IReportCreator {
 		pseudoiq.setLocation(390,60);
 		
 		
+		//Same thing here, ordering a list of words and put result into a label
 		mostusedwords.setText("<html>Liste der häufigsten Wörter - Wort (Anzahl): ");
-		
-		
 		
 		Map<String,Integer> temp3 = myResultset.getMostFrequentWord(10);
 		SortedMap<Integer,String> orderFrequent = new TreeMap<Integer, String>(Collections.reverseOrder());
@@ -196,13 +206,11 @@ public class ReportCreator implements IReportCreator {
 		fileformat.setSize(150,30);
 		fileformat.setLocation(230, 625);
 		
-		
+        //Creating barchart dataset, most likely the piechart
 		ChartPanel pieChart = new ChartPanel(chart);
 		pieChart.setPreferredSize(new Dimension(300,200));
 		
-
-        
-        JFreeChart barchart = ChartFactory.createBarChart("", "Wort", "Anzahl der häufigsten Wörter", barchartset, PlotOrientation.HORIZONTAL, false,  true, false);
+		JFreeChart barchart = ChartFactory.createBarChart("", "Wort", "Anzahl der häufigsten Wörter", barchartset, PlotOrientation.HORIZONTAL, false,  true, false);
         
         ChartPanel barchartpanel = new ChartPanel(barchart);
         barchartpanel.setPreferredSize(new Dimension(390,230));
@@ -226,6 +234,8 @@ public class ReportCreator implements IReportCreator {
 		reportpanel.setBackground(new Color(255,255,255));
 		
 		
+		
+		//Put all components onto the panel
 		reportpanel.add(headline);
        reportpanel.add(name);
        reportpanel.add(surname);

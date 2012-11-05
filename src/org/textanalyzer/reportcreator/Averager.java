@@ -23,7 +23,10 @@ public class Averager {
 		resultlist = (ArrayList<IResultSet>) myResultset;
 		
 	}
-	
+	/**
+	 * 
+	 * @return SortedMap which contains a map of the most used words.
+	 */
 	public SortedMap<String,Integer> getWordMap() {
 		
 		SortedMap<String,Integer> mostWords = new TreeMap<String,Integer>();
@@ -48,6 +51,10 @@ public class Averager {
 		
 	}
 	
+	/**
+	 * 
+	 * @return a map which contains the most used words from custom lists.
+	 */
 	public SortedMap<String,Integer> getListMap() {
 		
 		SortedMap<String,Integer> listWord = new TreeMap<String,Integer>();
