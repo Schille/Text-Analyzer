@@ -25,13 +25,19 @@ import org.textanalyzer.database.IResultSet;
 public class ProfileViewer implements IProfileViewer {
 
 	private long userID;
+
 	private JPanel ground;
 	private DatabaseConnector connector;
 	private IProfileInformation profileInformation;
 	private List<IResultSet> resultSets;
 
-	// -----------Constructor------------
-	public ProfileViewer(int myUserID) {
+
+
+	
+	
+	//-----------Constructor------------
+	public ProfileViewer(int myUserID){
+
 		userID = myUserID;
 		connector = new DatabaseConnector();
 		profileInformation = connector.getProfileInformation(myUserID);
@@ -41,6 +47,10 @@ public class ProfileViewer implements IProfileViewer {
 	/*
 	 * (non-Javadoc)
 	 * 
+=======
+	
+	/* (non-Javadoc)
+>>>>>>> 2d8a2abfe674e8368e50354d78bef46eef8c5adf
 	 * @see org.textanalyzer.profileviewer.IProfileViewer#getProfileViewer()
 	 */
 	@Override
@@ -107,4 +117,8 @@ public class ProfileViewer implements IProfileViewer {
 		return ground;
 	}
 
-}
+
+
+	}
+
+
