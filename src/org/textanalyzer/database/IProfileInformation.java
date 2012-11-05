@@ -3,6 +3,7 @@
  */
 package org.textanalyzer.database;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,9 +21,8 @@ public interface IProfileInformation {
 	
 	String getProfession();
 	
-	List<IResultSet> getAnalyzedDocuments();
+	ArrayList<ResultSet> getAnalyzedDocuments();
 	
-	void setAnalyzedDocuments(List<IResultSet> myResultSet);
 	
 	void addToAnalyzedDocuments(IResultSet myResultSet);
 	
@@ -33,4 +33,10 @@ public interface IProfileInformation {
 	void setAge(int myAge);
 	
 	void setProfession(String myProfession);
+
+	void setId(long myID);
+
+	long getId();
+
+	void setAnalyzedDocuments(ArrayList<ResultSet> analyzedDocuments);
 }

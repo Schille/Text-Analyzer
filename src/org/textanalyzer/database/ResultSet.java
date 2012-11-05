@@ -21,6 +21,7 @@ public class ResultSet implements IResultSet {
 	private String mostFrequentNomen;
 	private TextMood textMood;
 	private IDocument document;
+	private int id;
 	
 	
 	//----------------------------Getter Setter------------------------------------------------------
@@ -108,6 +109,13 @@ public class ResultSet implements IResultSet {
 	public HashMap<String, Integer> getMostFrequentWord() {
 		return mostFrequentWord;
 	}
+
+	public void setId(int id) {
+		this.id=id;
+		
+	}
+
+
 
 	//END----------------------------Getter Setter------------------------------------------------------
 
