@@ -64,6 +64,7 @@ public class ProfileViewer implements IProfileViewer {
 		JButton new_analyse = new JButton();
 		JList texte = new JList();
 		ArrayList<String> dataname = new ArrayList<String>();
+		JLabel notext = new JLabel();
 		
 		
 		ground.setLayout(null);
@@ -86,6 +87,10 @@ public class ProfileViewer implements IProfileViewer {
 		profession.setLocation(40,90);
 		profession.setSize(250,30);
 		
+		notext.setText("Keine Texte vorhanden!");
+		notext.setSize(200,30);
+		notext.setLocation(280,50);
+		
 		new_analyse.setText("Neue Textanalyse");
 		new_analyse.setSize(200, 50);
 		new_analyse.setLocation(40,170);
@@ -100,11 +105,18 @@ public class ProfileViewer implements IProfileViewer {
 		texte.setLocation(280, 50);
 		
 		Iterator<?> result = resultSets.iterator();
+		if(result != null) {
 		while(result.hasNext()) {
 			IResultSet temp_res = (IResultSet)result.next();
-			dataname.add("something");	
+			dataname.add("something");
+			//dataname.add(temp_res.getDocument().getFileName());	
 		}
 		texte.setListData(dataname.toArray());
+		ground.add(texte);
+		}
+		else {
+			ground.add(notext);
+		}
 		
 		ground.add(headline);
 		ground.add(author);
@@ -112,7 +124,7 @@ public class ProfileViewer implements IProfileViewer {
 		ground.add(profession);
 		ground.add(av_analyse);
 		ground.add(new_analyse);
-		ground.add(texte);
+	
 
 		return ground;
 	}
