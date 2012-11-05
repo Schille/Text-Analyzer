@@ -112,8 +112,8 @@ public class DocumentImporter implements IDocumentImporter {
 			// Import function for *.txt files
 			} else if (extension.equalsIgnoreCase("txt")) {
 				
-				String outputString = null;
-				String buffer = null;
+				String outputString = "";
+				String buffer = "";
 				
 				try {
 					BufferedReader out = new BufferedReader(new FileReader(frontend.getFilePath()));
@@ -143,7 +143,7 @@ public class DocumentImporter implements IDocumentImporter {
 			} else {
 				correct = false;
 				JOptionPane.showMessageDialog(null,
-						"Fehlerhafte Eingabe, bitte wählen sie neu!", null,
+						"Fehlerhafte Eingabe, bitte wï¿½hlen sie neu!", null,
 						JOptionPane.OK_OPTION);
 			}
 			document.setDocumentPath(frontend.getFilePath());
