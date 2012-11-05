@@ -4,6 +4,17 @@
 package org.textanalyzer.tests;
 
 import static org.junit.Assert.*;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 //import junit.framework.Assert;
 
 import org.junit.Test;
@@ -16,14 +27,15 @@ import org.textanalyzer.analyzer.dictionary.WordStatus;
  */
 public class TestDictionary {
 
-	@Test
+
 	public void test() {
 		Dictionary test = new Dictionary();
 		assertEquals(WordStatus.VERB, test.getWordStatus("schreiben"));
-		/*for(int i=0;i<100;i++){
+		
+		for(int i=0;i<10000;i++){
 		
 		assertEquals(WordStatus.VERB, test.getWordStatus("leben"));
-		assertEquals(WordStatus.VERB, test.getWordStatus("überleben"));
+		assertEquals(WordStatus.VERB, test.getWordStatus("Ã¼berleben"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("denken"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("riechen"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("essen"));
@@ -36,7 +48,7 @@ public class TestDictionary {
 		assertEquals(WordStatus.VERB, test.getWordStatus("kochen"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("sehen"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("riechen"));
-		assertEquals(WordStatus.VERB, test.getWordStatus("fühlen"));
+		assertEquals(WordStatus.VERB, test.getWordStatus("fÃ¼hlen"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("schmerzen"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("sprechen"));
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Haus"));
@@ -49,13 +61,13 @@ public class TestDictionary {
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Maus"));
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Katze"));
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Hund"));
-		assertEquals(WordStatus.NOMEN, test.getWordStatus("Straße"));
+		assertEquals(WordStatus.NOMEN, test.getWordStatus("StraÃŸe"));
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Baum"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("blau"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("hohl"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("dick"));
-		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("spät"));
-		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("früh"));
+		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("spÃ¤t"));
+		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("frÃ¼h"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("grau"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("eckig"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("rund"));
@@ -65,15 +77,65 @@ public class TestDictionary {
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("lila"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("langsam"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("schnell"));
-		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("dünn"));
+		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("dÃ¼nn"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("breit"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("klein"));
-		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("groß"));
+		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("groÃŸ"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("braun"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("rot"));
-		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("grün"));
+		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("grÃ¼n"));
 		}
-		*/
+		
+	}
+	
+	@Test
+	public void test2(){
+
+		String outputString = "";
+		String buffer = "";
+
+		File data = new File("german");
+		try {
+
+			BufferedReader reader =  new BufferedReader(new FileReader(data));
+			
+			while((buffer = reader.readLine()) != null) {
+				outputString  += buffer;
+				buffer = null;
+			}
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+
+		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<String> words = new ArrayList<String>();
+		
+		Collections.addAll(list, outputString.split(" "));
+		
+		int a = list.size();
+		for(String key : list){
+			key = key.substring(0, 1).toUpperCase() + key.substring(1).toLowerCase();
+			words.add(key);
+			words.add(key.toLowerCase());
+		}
+
+		
+		Dictionary test = new Dictionary();
+		
+		long start = System.currentTimeMillis();
+		
+		for(String key : words){
+			test.getWordStatus(key);
+		}
+		System.out.println("Impoted: " + words.size() + " words!");
+		System.out.println("Import consumes: " + (System.currentTimeMillis() - start) + " ms");
 		
 	}
 
