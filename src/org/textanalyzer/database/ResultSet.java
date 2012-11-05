@@ -114,6 +114,10 @@ public class ResultSet implements IResultSet {
 		this.id=id;
 		
 	}
+	
+	public int getId(){
+		return this.id;
+	}
 
 
 

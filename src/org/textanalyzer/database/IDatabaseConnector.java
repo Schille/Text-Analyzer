@@ -17,6 +17,8 @@ public interface IDatabaseConnector {
 	
 	List<ProfileInformation> getAllProfiles();
 	
+	List<IResultSet> getAllResultSets(long myId);
+	
 	ProfileInformation getProfileInformation(int myId);
 	
 	void editProfile(int myId, ProfileInformation myProfile);
