@@ -23,7 +23,7 @@ import com.orientechnologies.orient.object.db.OObjectDatabaseTx;
  * @author Michael Schilonka & Maximilian Quellmalz
  *
  */
-public class OrientEmbeddable {
+public class OrientEmbeddable implements IDatabaseConnector{
 	
 	public static OObjectDatabaseTx createDatabase(){
 		/**
@@ -68,7 +68,8 @@ public class OrientEmbeddable {
 	/**
 	 * Creates an object in the database.
 	 */
-	public static void createObject(Object myObject) {	
+	@Override
+	public void createObject(Object myObject) {
 	createDatabase().save(myObject);	
 	}
 	
@@ -76,7 +77,8 @@ public class OrientEmbeddable {
 	/**
 	 * Removes a given object from database.
 	 */
-	public static void removeObject(Object myObject) {
+	@Override
+	public void removeObject(Object myObject) {
 		createDatabase().delete(myObject);
 		createDatabase().close();
 	}
@@ -85,7 +87,8 @@ public class OrientEmbeddable {
 	/**
 	 * Returns a List of all existing Profiles in the database.
 	 */
-	public static List<ProfileInformation> getAllProfiles() {
+	@Override
+	public List<ProfileInformation> getAllProfiles() {
 		 List<ProfileInformation> profileList = new LinkedList<ProfileInformation>();
 		 // Array oder LinkedList
 		 System.out.println("All Profiles");
@@ -97,7 +100,8 @@ public class OrientEmbeddable {
 
 	
 
-	public static ProfileInformation getProfileInformation(final int myId) {
+	@Override
+	public ProfileInformation getProfileInformation(int myId) {
 		
 		System.err.println("hass");
 		OObjectDatabaseTx db = createDatabase();
@@ -113,7 +117,8 @@ public class OrientEmbeddable {
 	}
 
 	
-	public void editProfile(final int myId, ProfileInformation myProfile) {
+	@Override
+	public void editProfile(int myId, ProfileInformation myProfile) {
 		OObjectDatabaseTx db = createDatabase();
 		for (ProfileInformation p : db.browseClass(ProfileInformation.class)){
 			if (p.getId()==myId) {
@@ -131,7 +136,7 @@ public class OrientEmbeddable {
 
 		 OObjectDatabaseTx db = createDatabase();
 		 
-		 
+		 OrientEmbeddable test1 = new OrientEmbeddable();
 		 
 		 ProfileInformation profile = new ProfileInformation();
 		 profile.setId(100);
@@ -162,9 +167,9 @@ public class OrientEmbeddable {
 		 result1.setMostFrequentWord(most);
 		 result1.setCustomWordCount(custom);
 		 
-		 createObject(profile);
-		 createObject(result);
-		 createObject(result1);
+		 test1.createObject(profile);
+		 test1.createObject(result);
+		 test1.createObject(result1);
 		 
 		 
 		// db.save(profile);
@@ -180,13 +185,13 @@ public class OrientEmbeddable {
 		 long start = System.currentTimeMillis();
 		 
 		 
-		 List<ProfileInformation> a = getAllProfiles();
+		 List<ProfileInformation> a = test1.getAllProfiles();
 		 for (int i=0; i<a.size();i++){
 		 System.out.println(a.get(i).getAge());
 			 
 		 }
 		 System.out.println("hasssssss");
-		 ProfileInformation hans = (ProfileInformation) getProfileInformation(100);
+		 ProfileInformation hans = (ProfileInformation) test1.getProfileInformation(100);
 		 	System.out.println(hans.getAge());
 			System.out.println(hans.getFirstName());
 			System.out.println(hans.getLastName());
@@ -239,6 +244,8 @@ public class OrientEmbeddable {
 		
 
 	 }
+
+
 
 
 }

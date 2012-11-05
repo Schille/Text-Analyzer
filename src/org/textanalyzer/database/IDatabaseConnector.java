@@ -11,14 +11,14 @@ import java.util.List;
  */
 public interface IDatabaseConnector {
 	
-	void createProfile(IProfileInformation myProfil);
+	void createObject(Object myObject);
 	
-	void removeProfile(IProfileInformation myProfil);
+	void removeObject(Object myObject);
 	
-	List<IProfileInformation> getAllProfiles();
+	List<ProfileInformation> getAllProfiles();
 	
-	IProfileInformation getProfileInformation(int myId);
+	ProfileInformation getProfileInformation(int myId);
 	
-	void editProfile(int myId, IProfileInformation myProfile);
+	void editProfile(int myId, ProfileInformation myProfile);
 	
 }
