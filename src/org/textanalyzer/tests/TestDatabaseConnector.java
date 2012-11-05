@@ -34,7 +34,6 @@ public class TestDatabaseConnector {
 		DatabaseConnector test1 = new DatabaseConnector();
 
 		ProfileInformation profile = new ProfileInformation();
-		profile.setId(100);
 		profile.setAge(99999);
 		profile.setFirstName("Peteasdasdr");
 		profile.setLastName("Klauasdasds");
@@ -46,7 +45,6 @@ public class TestDatabaseConnector {
 		custom.put("Schlauberger", 5);
 		custom.put("Scheiße", 2);
 		ResultSet result = new ResultSet();
-		result.setId(100);
 		result.setAvaragePhraseLength(12);
 		result.setPseudoIQ(40);
 		result.setWordCount(500);
@@ -54,7 +52,6 @@ public class TestDatabaseConnector {
 		result.setMostFrequentWord(most);
 		result.setCustomWordCount(custom);
 		ResultSet result1 = new ResultSet();
-		result1.setId(100);
 		result1.setAvaragePhraseLength(42);
 		result1.setPseudoIQ(455);
 		result1.setWordCount(5500);
@@ -62,19 +59,31 @@ public class TestDatabaseConnector {
 		result1.setMostFrequentWord(most);
 		result1.setCustomWordCount(custom);
 
-		test1.createObject(profile);
-		test1.createObject(result);
-		test1.createObject(result1);
+		assertEquals(1000,test1.saveProfileInformation(profile));
+		assertEquals(1001,test1.saveProfileInformation(profile));
+		test1.saveResultSet(1000,result);
+		test1.saveResultSet(1000, result1);
+		test1.saveResultSet(1001,result);
+		test1.saveResultSet(1001, result1);
 
 
 		long c = test1.countClass("ProfileInformation");
 		long d = test1.countClass("ResultSet");
 
-		assertEquals(1, c);
-		assertEquals(2, d);
+		assertEquals(2, c);
+		assertEquals(4, d);
 
-		ProfileInformation myProfile = test1.getProfileInformation(100);
+		ProfileInformation myProfile = test1.getProfileInformation(1000);
 		List<IResultSet> myResultSets = test1.getAllResultSets(myProfile.getId());
+		
+
+		
+		test1.removeObject(myProfile);
+		test1.removeObject(myResultSets.get(0));
+		test1.removeObject(myResultSets.get(1));
+		
+		myProfile = test1.getProfileInformation(1001);
+		myResultSets = test1.getAllResultSets(myProfile.getId());
 		
 
 		

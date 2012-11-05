@@ -1,5 +1,7 @@
 package org.textanalyzer.database;
 
+import java.util.List;
+
 import com.orientechnologies.orient.core.exception.OStorageException;
 import com.orientechnologies.orient.object.db.OObjectDatabaseTx;
 
@@ -25,6 +27,7 @@ public final class DBHandle extends OObjectDatabaseTx{
 			 System.out.println("Could open the db.");
 			 connector.getEntityManager().registerEntityClass(ProfileInformation.class);
 			 connector.getEntityManager().registerEntityClass(ResultSet.class);
+			 connector.getEntityManager().registerEntityClass(DBWord.class);
 		 }
 		 /**
 		  * A new Database is created and opened afterwards.
@@ -42,6 +45,7 @@ public final class DBHandle extends OObjectDatabaseTx{
 		 finally{
 			 connector.getEntityManager().registerEntityClass(ProfileInformation.class);
 			 connector.getEntityManager().registerEntityClass(ResultSet.class);
+			 connector.getEntityManager().registerEntityClass(DBWord.class);
 			 System.out.println("Registered classes.");
 		 }
 		 /**
@@ -50,4 +54,5 @@ public final class DBHandle extends OObjectDatabaseTx{
 		 return connector;
 		 
 	 }
+
 }

@@ -11,7 +11,9 @@ import java.util.List;
  */
 public interface IDatabaseConnector {
 	
-	void createObject(Object myObject);
+	long saveProfileInformation(IProfileInformation myObject);
+	
+	void saveResultSet(int myProfileID, IResultSet myObject);
 	
 	void removeObject(Object myObject);
 	

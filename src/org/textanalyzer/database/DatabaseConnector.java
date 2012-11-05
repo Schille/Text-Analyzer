@@ -32,16 +32,6 @@ public class DatabaseConnector implements IDatabaseConnector{
 		connector = DBHandle.createDB();
 	}
 	
-
-	/**
-	 * Creates an object in the database.
-	 */
-	@Override
-	public void createObject(Object myObject) {
-		connector.save(myObject);	
-	}
-	
-
 	/**
 	 * Removes a given object from database.
 	 */
@@ -65,11 +55,9 @@ public class DatabaseConnector implements IDatabaseConnector{
 		 return profileList;
 	}
 
-	
 
 	@Override
 	public ProfileInformation getProfileInformation(int myId) {
-
 		ProfileInformation help = null;
 		for (ProfileInformation p : connector.browseClass(ProfileInformation.class)){
 			if (p.getId()==myId) {
@@ -107,6 +95,22 @@ public class DatabaseConnector implements IDatabaseConnector{
 		 	}
 		 }
 		 return result;
+	}
+
+
+	@Override
+	public long saveProfileInformation(IProfileInformation myObject) {
+		long id = connector.countClass("ProfileInformation") + 1000;
+		myObject.setId(id);
+		connector.save(myObject);		
+		return id;
+	}
+
+
+	@Override
+	public void saveResultSet(int myProfileID, IResultSet myObject) {
+		((ResultSet)myObject).setId(myProfileID);
+		connector.save(myObject);				
 	}
 
 }
