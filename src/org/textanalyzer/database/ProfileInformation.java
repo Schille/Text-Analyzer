@@ -66,6 +66,11 @@ public class ProfileInformation implements IProfileInformation {
 	public ArrayList<ResultSet> getAnalyzedDocuments() {
 		return this.analyzedDocuments;
 	}
+	@Override
+	public void setAnalyzedDocuments(List<IResultSet> myResultSet) {
+		// TODO Auto-generated method stub
+		
+	}
 
 
 
