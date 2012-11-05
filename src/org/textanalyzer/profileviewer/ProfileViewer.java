@@ -1,6 +1,6 @@
 /**
- * 
- */
+*
+*/
 package org.textanalyzer.profileviewer;
 
 import java.util.List;
@@ -13,9 +13,9 @@ import org.textanalyzer.database.IProfileInformation;
 import org.textanalyzer.database.IResultSet;
 
 /**
- * @author Michael Schilonka
- *
- */
+* @author Michael Schilonka & Robert Stein
+*
+*/
 public class ProfileViewer implements IProfileViewer {
 
 	private int userID;
