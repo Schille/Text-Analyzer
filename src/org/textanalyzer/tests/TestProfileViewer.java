@@ -189,8 +189,8 @@ public class TestProfileViewer {
 	        frame.getContentPane().add(viewer.getProfileViewer());
 	        frame.pack();
 	        frame.setVisible(true);
-
-	        frame.setAlwaysOnTop(true);
+	        
+	        frame.isAlwaysOnTop();
 	}
 
 }

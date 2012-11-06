@@ -1,5 +1,6 @@
 package org.textanalyzer.frontend;
 
+import java.awt.Container;
 import java.io.File;
 import java.util.Date;
 
@@ -25,9 +26,8 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	private String filepath = "";
 	private String blankText ="";
 
-	@Override
-	public void showImportWindow() {
-
+	public FrontendImporter(){
+		super();
 		textareaFrame = new javax.swing.JScrollPane();
 		textareaForBlank = new javax.swing.JTextArea();
 		javax.swing.JButton browseButton = new javax.swing.JButton();
@@ -90,9 +90,10 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 		startAnalysis.setForeground(new java.awt.Color(255, 255, 255));
 		startAnalysis.setText("Analyse starten");
 
+		Container container = this.getContentPane();
+		
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(
-				getContentPane());
-		getContentPane().setLayout(layout);
+				container);
 		layout.setHorizontalGroup(layout
 				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(
@@ -182,10 +183,17 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 
 		browseButton.getAccessibleContext().setAccessibleName("");
 
-	
-		pack();
-		setVisible(true);
 		
+		
+		container.setLayout(layout);
+		setContentPane(container);
+		pack();
+	}
+	
+	
+	@Override
+	public void showImportWindow() {
+		setVisible(true);
 	}
 
 
@@ -217,11 +225,11 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 		blankText = textareaForBlank.getText();		
 
 		if(filepath.equals("") && blankText.equals("")) {
-			JOptionPane.showMessageDialog(null, "Bitte w‰hle eine Textquelle !", "Fehler", JOptionPane.OK_CANCEL_OPTION);
+			JOptionPane.showMessageDialog(null, "Bitte w√§hle eine Textquelle !", "Fehler", JOptionPane.OK_CANCEL_OPTION);
 			return;
 		}
 		if(!filepath.equals("") && !blankText.equals("")){
-			JOptionPane.showMessageDialog(null, "Bitte nur eine Textquelle w‰hlen!", "Fehler", JOptionPane.OK_OPTION);
+			JOptionPane.showMessageDialog(null, "Bitte nur eine Textquelle w√§hlen!", "Fehler", JOptionPane.OK_OPTION);
 			return;
 		}
 		
@@ -245,7 +253,4 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 		return blankText;
 	}
 
-	public static void main(String args[]) {
-
-	}
 }
