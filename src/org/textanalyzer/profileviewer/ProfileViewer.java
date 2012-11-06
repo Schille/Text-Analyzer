@@ -134,6 +134,7 @@ public class ProfileViewer implements IProfileViewer {
 				  frame.setPreferredSize(new Dimension(620, 700));
 			        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			        frame.getContentPane().add(reporter.getGraphPanel(profileinfo, resultlist));
+			        frame.setResizable(false);
 			        frame.pack();
 			        frame.setVisible(true);
 

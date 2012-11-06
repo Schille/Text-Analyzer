@@ -222,14 +222,14 @@ public class ReportCreator implements IReportCreator {
 		JFreeChart barchart = ChartFactory.createBarChart("", "Wort", "Anzahl der häufigsten Wörter", barchartset, PlotOrientation.HORIZONTAL, false,  true, false);
         
         ChartPanel barchartpanel = new ChartPanel(barchart);
-        barchartpanel.setPreferredSize(new Dimension(390,230));
+        barchartpanel.setPreferredSize(new Dimension(340,200));
 		
         JPanel barchartupper = new JPanel();
         barchartupper.setBackground(new Color(255,255,255));
         
-        barchartupper.setSize(390, 235);
+        barchartupper.setSize(340, 205);
         barchartupper.add(barchartpanel);
-        barchartupper.setLocation(200, 370);
+        barchartupper.setLocation(255, 370);
         
         reportpanel.add(barchartupper);
 
@@ -316,7 +316,7 @@ public class ReportCreator implements IReportCreator {
 		
 		hint.setText("Alle hier dargestellten Werte wurden als Durchschnitt des gesamten Profils ermittelt.");
 		hint.setFont(new Font("Dialog",1,10));
-		hint.setLocation(80, 640);
+		hint.setLocation(80, 630);
 		hint.setSize(500,30);
 		
 		
@@ -455,14 +455,14 @@ public class ReportCreator implements IReportCreator {
 			JFreeChart barchart = ChartFactory.createBarChart("", "Wort", "Anzahl der häufigsten Wörter", barchartset, PlotOrientation.HORIZONTAL, false,  true, false);
 	        
 	        ChartPanel barchartpanel = new ChartPanel(barchart);
-	        barchartpanel.setPreferredSize(new Dimension(390,230));
+	        barchartpanel.setPreferredSize(new Dimension(340,200));
 			
 	        JPanel barchartupper = new JPanel();
 	        barchartupper.setBackground(new Color(255,255,255));
 	        
-	        barchartupper.setSize(390, 235);
+	        barchartupper.setSize(340, 205);
 	        barchartupper.add(barchartpanel);
-	        barchartupper.setLocation(200, 370);
+	        barchartupper.setLocation(255, 370);
 	        
 	        reportpanel.add(barchartupper);
 			
