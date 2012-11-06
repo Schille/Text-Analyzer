@@ -66,7 +66,7 @@ public class ReportCreator implements IReportCreator {
 	      
 	      
 	    horline1.setSize(580,10);
-	    horline1.setLocation(10,125);
+	    horline1.setLocation(10,130);
 		
 	    horline2.setSize(580,10);
 	    horline2.setLocation(10,610);
@@ -299,14 +299,15 @@ public class ReportCreator implements IReportCreator {
 	      
 	      
 	    horline1.setSize(580,10);
-	    horline1.setLocation(10,120);
+	    horline1.setLocation(10,125);
 		
 	    horline2.setSize(580,10);
 	    horline2.setLocation(10,610);
 	    
 		JLabel hint = new JLabel();
 		
-		
+		reportpanel.setBackground(new Color(255,255,255));
+
 		
 		headline.setText("Report");
 		headline.setFont(new Font("Dialog", 1 ,30));

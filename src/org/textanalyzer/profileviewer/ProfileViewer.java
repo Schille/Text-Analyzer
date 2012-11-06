@@ -131,8 +131,8 @@ public class ProfileViewer implements IProfileViewer {
 				ReportCreator reporter = new ReportCreator();
 				
 				  JFrame frame = new JFrame("Report");
-				  frame.setPreferredSize(new Dimension(600, 700));
-			        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				  frame.setPreferredSize(new Dimension(620, 700));
+			        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			        frame.getContentPane().add(reporter.getGraphPanel(profileinfo, resultlist));
 			        frame.pack();
 			        frame.setVisible(true);
