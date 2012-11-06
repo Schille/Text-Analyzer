@@ -102,11 +102,11 @@ public class ReportCreator implements IReportCreator {
 		 */
 		
 		name.setText("Nachname: "+myProfile.getLastName());
-		name.setSize(150, 30);
+		name.setSize(200, 30);
 		name.setLocation(10, 40);
 		
 		surname.setText("Vorname: "+myProfile.getFirstName());
-		surname.setSize(150, 30);
+		surname.setSize(200, 30);
 		surname.setLocation(10, 60);
 		
 		age.setText("Alter: "+String.valueOf(myProfile.getAge()));
@@ -323,11 +323,11 @@ public class ReportCreator implements IReportCreator {
 		reportpanel.setLayout(null);
 		
 		name.setText("Nachname: "+myProfile.getLastName());
-		name.setSize(150, 30);
+		name.setSize(200, 30);
 		name.setLocation(10, 40);
 		
 		surname.setText("Vorname: "+myProfile.getFirstName());
-		surname.setSize(150, 30);
+		surname.setSize(200, 30);
 		surname.setLocation(10, 60);
 		
 		age.setText("Alter: "+String.valueOf(myProfile.getAge()));

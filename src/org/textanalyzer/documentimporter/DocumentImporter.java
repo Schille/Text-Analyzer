@@ -145,7 +145,7 @@ public class DocumentImporter implements IDocumentImporter {
 			} else {
 				correct = false;
 				JOptionPane.showMessageDialog(null,
-						"Fehlerhafte Eingabe, bitte w�hlen sie neu!", null,
+						"Fehlerhafte Eingabe, bitte wählen sie neu!", null,
 						JOptionPane.OK_OPTION);
 			}
 			document.setDocumentPath(frontend.getFilePath());
