@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -349,7 +350,7 @@ IResultSet results2 = new IResultSet() {
 			}
 		}; 
 		
-		ArrayList<IResultSet> testlist = new ArrayList<IResultSet>();
+		LinkedList<IResultSet> testlist = new LinkedList<IResultSet>();
 		testlist.add(results);
 		testlist.add(results2);
 		
