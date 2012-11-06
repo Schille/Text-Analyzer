@@ -149,9 +149,9 @@ public class ProfileViewer implements IProfileViewer {
 		if(result != null) {
 		while(result.hasNext()) {
 			IResultSet temp_res = (IResultSet)result.next();
-			dataname.add("something");
+			
 
-			//dataname.add(temp_res.getDocument().getFileName());	
+			dataname.add(temp_res.getDocument().getFileName());	
 		}
 		texte.setListData(dataname.toArray());
 		ground.add(texte);
