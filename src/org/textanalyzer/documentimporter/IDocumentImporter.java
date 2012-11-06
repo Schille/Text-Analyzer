@@ -3,6 +3,8 @@
  */
 package org.textanalyzer.documentimporter;
 
+import org.textanalyzer.database.IDocument;
+
 /**
  * @author Sebastian Hirschl
  *

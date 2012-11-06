@@ -16,11 +16,11 @@ import javax.swing.JFrame;
 
 import org.junit.Test;
 import org.textanalyzer.analyzer.TextMood;
+import org.textanalyzer.database.IDocument;
 import org.textanalyzer.database.IProfileInformation;
 import org.textanalyzer.database.IResultSet;
 import org.textanalyzer.database.ResultSet;
 import org.textanalyzer.documentimporter.DocumentFormat;
-import org.textanalyzer.documentimporter.IDocument;
 import org.textanalyzer.reportcreator.ReportCreator;
 
 /**

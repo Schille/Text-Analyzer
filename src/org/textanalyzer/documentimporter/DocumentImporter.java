@@ -13,6 +13,8 @@ import javax.swing.JOptionPane;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.util.PDFTextStripper;
 import org.apache.poi.hwpf.extractor.WordExtractor;
+import org.textanalyzer.database.Document;
+import org.textanalyzer.database.IDocument;
 import org.textanalyzer.frontend.FrontendImporter;
 
 public class DocumentImporter implements IDocumentImporter {

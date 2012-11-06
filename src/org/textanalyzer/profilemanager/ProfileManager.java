@@ -26,9 +26,8 @@ public class ProfileManager implements IProfileManager {
 	public ProfileManager(){
 		connector = new DatabaseConnector();
 		mapper = (LinkedList<ProfileInformation>) connector.getAllProfiles();
-		profileGUI = new FrontendProfileManager(this);
+		profileGUI = new FrontendProfileManager();
 	}
-	
 	
 	public void createProfile(ProfileInformation myProfile){
 		long id = connector.saveProfileInformation(myProfile);

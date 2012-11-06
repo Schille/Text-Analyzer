@@ -28,6 +28,7 @@ public final class DBHandle extends OObjectDatabaseTx{
 			 connector.getEntityManager().registerEntityClass(ProfileInformation.class);
 			 connector.getEntityManager().registerEntityClass(ResultSet.class);
 			 connector.getEntityManager().registerEntityClass(DBWord.class);
+			 connector.getEntityManager().registerEntityClass(Document.class);
 		 }
 		 /**
 		  * A new Database is created and opened afterwards.
@@ -46,6 +47,7 @@ public final class DBHandle extends OObjectDatabaseTx{
 			 connector.getEntityManager().registerEntityClass(ProfileInformation.class);
 			 connector.getEntityManager().registerEntityClass(ResultSet.class);
 			 connector.getEntityManager().registerEntityClass(DBWord.class);
+			 connector.getEntityManager().registerEntityClass(Document.class);
 			 System.out.println("Registered classes.");
 		 }
 		 /**

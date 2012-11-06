@@ -5,8 +5,8 @@ package org.textanalyzer.analyzer;
 
 import java.util.List;
 
+import org.textanalyzer.database.IDocument;
 import org.textanalyzer.database.IProfileInformation;
-import org.textanalyzer.documentimporter.IDocument;
 
 /**
  * @author Andreas Neumann
