@@ -16,11 +16,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.textanalyzer.database.DatabaseConnector;
+import org.textanalyzer.database.IDocument;
 import org.textanalyzer.database.IResultSet;
 import org.textanalyzer.database.ProfileInformation;
 import org.textanalyzer.database.ResultSet;
 import org.textanalyzer.documentimporter.DocumentFormat;
-import org.textanalyzer.documentimporter.IDocument;
 import org.textanalyzer.profileviewer.ProfileViewer;
 
 /**

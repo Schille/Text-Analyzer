@@ -19,11 +19,11 @@ import javax.swing.JPanel;
 
 import org.textanalyzer.database.DBHandle;
 import org.textanalyzer.database.DatabaseConnector;
+import org.textanalyzer.database.IDocument;
 import org.textanalyzer.database.IProfileInformation;
 import org.textanalyzer.database.IResultSet;
 import org.textanalyzer.database.ResultSet;
 import org.textanalyzer.documentimporter.DocumentImporter;
-import org.textanalyzer.documentimporter.IDocument;
 import org.textanalyzer.reportcreator.ReportCreator;
 
 /**
