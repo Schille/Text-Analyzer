@@ -338,15 +338,14 @@ public class FrontendProfileManager extends JFrame implements
 	private void addButtonMouseClicked(java.awt.event.MouseEvent evt) {
 
 		contentPanel.setLayout(null);
-		contentPanel.add(addButton);
-		contentPanel.add(deleteButton);
-	
 		hallo.setText("hallo");
+		hallo.setSize(100, 20);
+		hallo.setLocation(20,20);
 		contentPanel.add(hallo);
 		contentPanel.add(new javax.swing.JLabel("Hallo"));
 		
 
-		System.out.println("hier: " + authornameLabel.getLocation() + authornameLabel.getText()  +" " + authornameLabel.isVisible() + authornameLabel.getForeground());
+		//System.out.println("hier: " + authornameLabel.getLocation() + authornameLabel.getText()  +" " + authornameLabel.isVisible() + authornameLabel.getForeground());
 
 	}
 
