@@ -8,5 +8,5 @@ package org.textanalyzer.analyzer;
  *
  */
 public enum TextMood {
-	
+	NEUTRAL
 }

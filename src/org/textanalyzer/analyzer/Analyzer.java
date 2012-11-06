@@ -1,35 +1,46 @@
 package org.textanalyzer.analyzer;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import org.textanalyzer.analyzer.AnalyzeTaskInformation;
-import org.textanalyzer.analyzer.IAnalyzeTaskInformation;
-import org.textanalyzer.analyzer.IAnalyzer;
+import org.textanalyzer.analyzer.dictionary.Dictionary;
+import org.textanalyzer.analyzer.dictionary.IDictionary;
+import org.textanalyzer.analyzer.dictionary.WordStatus;
 import org.textanalyzer.database.IResultSet;
 import org.textanalyzer.database.ResultSet;
 
 public class Analyzer implements IAnalyzer {
 
-	private IResultSet analysis;
+	private ResultSet analysis;
+	
 	private int wordCount = 0;
 	private int wrongWordCount = 0;
 	private int sentenceCount = 0;
-	//private int IQ = 0;
-	//private int mood = 0;
-	//private int phraseLength = 0;
-	//private int wordLength = 0;
 
+	IDictionary dict = new Dictionary();
+	
+	private Map<String, Integer> customWords;
+	private List<WordCounter> nomen = new ArrayList<WordCounter>();
+	private String text;
+	private int textIndex;
+	
+	/* Some internal classes */
 	private class MyWord{
-		protected String word;
-		protected String punctuation;
-		protected boolean inputEnd;
+		protected String word = "";
+		protected String punctuation = "";
 	}
 	private class MySentence{
-		protected String sentence;
-		protected String punctuation;
-		protected boolean inputEnd;
+		protected String sentence = "";
+		//protected String punctuation = "";
+	}
+	private class WordCounter{
+		private String word;
+		protected int counter=0;
+		private WordStatus family;
+		protected WordCounter(String word, WordStatus family) {this.word=word;this.family=family;}
+		protected String getWord(){return this.word;};
 	}
 	
 	// run the analysis with some Test Data
@@ -37,108 +48,111 @@ public class Analyzer implements IAnalyzer {
 	
 	@Override
 	public IResultSet analyzeText(IAnalyzeTaskInformation myTask) {
-		
 		/* Creating the Result Set */
 		this.analysis = new ResultSet();
-		/* Get the text and transform to Stream */
+		
+		/* Get the text */
 		if(myTask.getDocument() == null || myTask.getDocument().getText() == null)
 			throw new Error("No Document to analyze");
-		Reader textReader = new StringReader(myTask.getDocument().getText());
+		else{
+			text = myTask.getDocument().getText();
+			analysis.setDocument(myTask.getDocument());
+		}
+		
+		/* Get the custom Words */
+		customWords = new HashMap<String, Integer>();
+		for (String customWord : myTask.getWordList()) {
+			customWords.put(customWord, 0);
+		}
+		
+		// TODO Remove
+		/* Get the text and transform to Stream */
+		//Reader textReader = new StringReader(myTask.getDocument().getText());
 		
 		/* Do the analysis */
-		try {
+		while(analyzeNextSentence() != null)
+		
+		/*try {
 			analyze(textReader);
 			textReader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
+
+		analysis.setWordCount(wordCount);
+		analysis.setWrongWordCount(wrongWordCount);
+		analysis.setAvaragePhraseLength(wordCount/sentenceCount);
+		analysis.setCustomWordCount(new HashMap<String, Integer>(customWords));
+		analysis.setPseudoIQ(50); // TODO Calculate IQ
+		//IQ = ((wordCount - wrongWordCount) * 100) / wordCount;
+		analysis.setTextMood(TextMood.NEUTRAL); // TODO Calculate TextMood
 		
 		return this.analysis;
 	}
 	
-	private void analyze(Reader input) throws IOException{
-		MySentence sentence = analyzeSentence(input);
-		String text = "";
-		while(sentence != null && !sentence.inputEnd){
-			text += sentence.sentence + sentence.punctuation + " ";
-			sentenceCount++;
-			sentence = analyzeSentence(input);
-		}
-		text += sentence.sentence + sentence.punctuation;
-		sentenceCount++;
-		
-		// TODO Calculate TextMood
-		// TODO Calculate IQ
-		//IQ = ((wordCount - wrongWordCount) * 100) / wordCount;
-		
-		
-		System.out.println(text);
-	}
-	
-	private MySentence analyzeSentence(Reader input) throws IOException{
-		// Set the punctuation
-		MyWord word = analyzeWord(input);
+	private MySentence analyzeNextSentence(){
+		MyWord word;
 		MySentence sentence = new MySentence();
-		sentence.sentence = "";
 		
-		// Read the words of a sentence
-		while(!word.inputEnd && word.punctuation == ""){
-			sentence.sentence += word.word + " ";
-			wordCount++;
-			word = analyzeWord(input);
+		while(textIndex >= text.length()){
+			sentence.sentence.concat(" ");
+			sentence.sentence.concat((word = analyzeNextWord()).word);
+			if(word.punctuation != "")
+				break;
 		}
-		sentence.sentence += word.word;
-		sentence.punctuation = word.punctuation;
-		sentence.inputEnd = word.inputEnd;
-		wordCount++;
+		if(sentence.sentence.equals(""))
+			return null;
 		
-		// TODO Calc PhraseLength
-		
+		sentenceCount++;
 		return sentence;
 	}
-	
-	private MyWord analyzeWord(Reader input) throws IOException{
-		// Buffer-Variables
-		int character = input.read();
-		MyWord word = new MyWord();
-		word.inputEnd = false;
-		word.word = "";
-		
-		// read the characters of a word
-		while(character != ' ' && character != -1){
-			// merge word
-			word.word += (char) character;
-			character = input.read();
-		}
-		if(character == -1){
-			word.inputEnd = true;
-		}
-		word.punctuation = getPunctuation(word.word);
-		if(word.punctuation != null){
-			word.word = word.word.substring(0, word.word.length()-word.punctuation.length());
-		}
 
-		// TODO Calc Wordcount
-		// TODO Calc Nomencount
-		// TODO Calc CustomWordcount
-		// TODO Calc WrongWordCount
-		// TODO Calc FrequentWords
+	private MyWord analyzeNextWord(){
+		MyWord word = new MyWord();
+		
+		List<Character> punctuations = new ArrayList<Character>();
+		punctuations.add('.');
+		punctuations.add('!');
+		punctuations.add('?');
+		
+		while(textIndex <= text.length() && punctuations.contains(text.charAt(textIndex))){
+			
+			word.word.concat(text.substring(textIndex-1, textIndex));
+		}
+		if(word.word == "")
+			return null;
+		
+		// TODO punctuation
+		
+		wordCount++;
+		
+		WordStatus status = dict.getWordStatus(word.word);
+		if(status == WordStatus.NOMEN){
+			for (WordCounter nomen : this.nomen) {
+				if(nomen.word.equals(nomen)){
+					nomen.counter++;
+					return word;
+				}
+			}
+			nomen.add(new WordCounter(word.word, WordStatus.NOMEN));
+		}else if(status == WordStatus.WRONG)
+			wrongWordCount++;
 		
 		return word;
 	}
 	
-	private String getPunctuation(String word){
+	/*private String getPunctuation(int index){
 		char[] punctuations = {'.', '!', '?'};
 		char[] punct = new char[1];
 		
-		word.getChars(word.length()-1, word.length(), punct, 0);
+		text.getChars(index-1, index, punct, 0);
 		
 		for (char c : punctuations) {
 			if(c == punct[0]){
-				return getPunctuation(word.substring(0, word.length()-1))+(new String(punct));
+				return getPunctuation(index+1);
 			}
 		}
 		return "";
-	}
+	}*/
 
 }
