@@ -39,18 +39,20 @@ public class ProfileViewer implements IProfileViewer {
 	private IProfileInformation profileInformation;
 	private List<IResultSet> resultSets;
 	private DocumentImporter importer;
-
+	private ProfileViewer this_viewer;
+	private JButton new_analyse;
 
 	
 	
 	//-----------Constructor------------
 	public ProfileViewer(int myUserID){
-
+		
 		userID = myUserID;
 		connector = new DatabaseConnector();
 		profileInformation = connector.getProfileInformation(myUserID);
 		resultSets = connector.getAllResultSets(myUserID);
 		importer = new DocumentImporter();
+		this_viewer = this;
 	}
 
 	/*
@@ -64,7 +66,7 @@ public class ProfileViewer implements IProfileViewer {
 		JLabel age = new JLabel();
 		JLabel profession = new JLabel();
 		JButton av_analyse = new JButton();
-		JButton new_analyse = new JButton();
+		new_analyse = new JButton();
 		JList texte = new JList();
 		ArrayList<String> dataname = new ArrayList<String>();
 		JLabel notext = new JLabel();
@@ -102,8 +104,16 @@ public class ProfileViewer implements IProfileViewer {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				IDocument mydocument;
-				mydocument = importer.invokeNewDocumentImport();
+				((JButton)arg0.getSource()).setEnabled(false);
+				Thread a = new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						importer.invokeNewDocumentImport(this_viewer);
+						
+					}
+				});
+				a.start();
 			}
 		});
 		
@@ -159,6 +169,13 @@ public class ProfileViewer implements IProfileViewer {
 	
 
 		return ground;
+	}
+
+	@Override
+	public void updateContent(IDocument myDocument) {
+		//Start analysis here...
+		System.out.println(myDocument.getText());
+		this.new_analyse.setEnabled(true);
 	}
 
 

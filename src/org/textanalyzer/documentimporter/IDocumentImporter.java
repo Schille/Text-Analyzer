@@ -4,6 +4,7 @@
 package org.textanalyzer.documentimporter;
 
 import org.textanalyzer.database.IDocument;
+import org.textanalyzer.profileviewer.ProfileViewer;
 
 /**
  * @author Sebastian Hirschl
@@ -11,6 +12,6 @@ import org.textanalyzer.database.IDocument;
  */
 public interface IDocumentImporter {
 	
-	IDocument invokeNewDocumentImport();
+	void  invokeNewDocumentImport(ProfileViewer myProfileViewer);
 	
 }

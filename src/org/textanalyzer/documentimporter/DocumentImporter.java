@@ -16,6 +16,7 @@ import org.apache.poi.hwpf.extractor.WordExtractor;
 import org.textanalyzer.database.Document;
 import org.textanalyzer.database.IDocument;
 import org.textanalyzer.frontend.FrontendImporter;
+import org.textanalyzer.profileviewer.ProfileViewer;
 
 public class DocumentImporter implements IDocumentImporter {
 	private boolean correct = true;
@@ -26,7 +27,7 @@ public class DocumentImporter implements IDocumentImporter {
 	 * After that the information is transfered into a Document which is returned.
 	 * @return Document
 	 */
-	public IDocument invokeNewDocumentImport() {
+	public void invokeNewDocumentImport(ProfileViewer myProfileViewer) {
 		Document document = new Document();
 		
 		//loop for checking if the user entered a correct file
@@ -153,7 +154,7 @@ public class DocumentImporter implements IDocumentImporter {
 			
 		} while (!correct);
 		
-		return document;
+		myProfileViewer.updateContent(document);
 
 	}
 }
