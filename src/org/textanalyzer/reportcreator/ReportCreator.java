@@ -122,7 +122,7 @@ public class ReportCreator implements IReportCreator {
 		wordcount.setLocation(200, 40);
 		
 		wrongwords.setText("Rechtschreibfehler: "+String.valueOf(myResultset.getWrongWordCount()));
-		wrongwords.setSize(150, 30);
+		wrongwords.setSize(200, 30);
 		wrongwords.setLocation(200, 60);
 		
 		relationwords.setText("<html><center><b>Anteil Rechtschreibfehler</b></center></html>");
@@ -437,7 +437,7 @@ public class ReportCreator implements IReportCreator {
 			wordcount.setLocation(200, 40);
 			
 			wrongwords.setText("Rechtschreibfehler: "+String.valueOf(temp_wrongwords));
-			wrongwords.setSize(150, 30);
+			wrongwords.setSize(200, 30);
 			wrongwords.setLocation(200, 60);
 		 
 		 	aphraselength.setText("Durchschn. Satzlänge: "+String.valueOf(temp_avphrase)+" Wörter");
