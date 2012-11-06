@@ -1,6 +1,13 @@
 package org.textanalyzer.frontend;
 import java.awt.Font;
+import java.util.Iterator;
+import java.util.LinkedList;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JPanel;
+
 import org.textanalyzer.profilemanager.ProfileManager;
 
 /**
@@ -22,17 +29,33 @@ public class FrontendProfileManager extends JFrame implements IFrontendProfileMa
     private javax.swing.JLabel icon;
     private javax.swing.JPanel selectionPanel;
     private ProfileManager profileLogic;
+    private DefaultListModel listModel = new DefaultListModel();
+    private javax.swing.JLabel authornameLabel;
+    private javax.swing.JLabel professionLabel;
+    private javax.swing.JLabel ageLabel;
+    private javax.swing.JButton submit;
+    private javax.swing.JTextField authorname;
+    private javax.swing.JTextField profession;
+    private javax.swing.JTextField age;
+    private javax.swing.JPanel authorRegistrationPanel;
     
     public FrontendProfileManager(ProfileManager myManager){
     	profileLogic = myManager;
     	
     }
     
-    
-    
 	@Override
     public void showFrontendProfileManager(){
-                    
+			
+		 	LinkedList authors = new LinkedList();
+		 	authors = profileLogic.getAuthorList();
+		 	
+		 	Iterator<String> iterate_author = authors.iterator();
+		 	while(iterate_author.hasNext()) {
+		 		String author_name =  iterate_author.next();
+		 		listModel.addElement(author_name);
+		 	}
+      
 	        authorListPanel = new javax.swing.JPanel();
 	        authorScrollPane = new javax.swing.JScrollPane();
 
@@ -48,8 +71,8 @@ public class FrontendProfileManager extends JFrame implements IFrontendProfileMa
 	        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
 	        
-	        authorList = new javax.swing.JList(profileLogic.getAuthorList().toArray());
-	        
+	       
+	        authorList = new javax.swing.JList(listModel);
 	
 	        
 	        authorList.setFont(new Font("Dialog",1,16));
@@ -113,7 +136,7 @@ public class FrontendProfileManager extends JFrame implements IFrontendProfileMa
 	        });
 
 	        deleteButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\sandrock\\DHBW\\3. Semester\\Software-Engineering\\Coding\\deleteButton.jpg")); // NOI18N
-	        deleteButton.setActionCommand("-");
+
 	        deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
 	            public void mouseClicked(java.awt.event.MouseEvent evt) {
 	                deleteButtonMouseClicked(evt);
@@ -193,21 +216,43 @@ public class FrontendProfileManager extends JFrame implements IFrontendProfileMa
 	    }                                         
 
 	    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
-	        // TODO add your handling code here:
+	    	
 	    }                                            
                                         
 
 	    private void addButtonMouseClicked(java.awt.event.MouseEvent evt) {                                       
-	        // add new author
-	        contentPanel.removeAll();
-	        contentPanel.add(addButton);
+	     
+	    authorRegistrationPanel = new JPanel();
+    	authorRegistrationPanel.setSize(100,100);
+    	this.add(authornameLabel);
+    	add(authorname);
+    	add(professionLabel);
+    	add(profession);
+    	add(ageLabel);
+    	add(age);
+    	add(submit);
+    	authornameLabel.setText("Name des Autors:");
+    	authorname.getText();
+    	professionLabel.setText("Beruf: ");
+    	profession.getText();
+    	ageLabel.setText("Alter: ");
+    	age.getText();
+    	contentPanel.add(authorRegistrationPanel);
+    	
+    	    	
+	    
+	    	
+	    
+	    	
 
 	    }                                      
 
-	    private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {                                          
-	        // delete new author
-	        
-	        contentPanel.add(deleteButton);
+	    private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) { 
+	    	
+	    	    	
+	    	profileLogic.removeProfile(authorList.getSelectedIndex());
+	    	listModel.remove(authorList.getSelectedIndex());
+
 	    }                                         
                
 	}
