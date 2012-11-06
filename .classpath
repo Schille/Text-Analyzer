@@ -10,7 +10,6 @@
 	<classpathentry kind="lib" path="lib/jdom-2.0.3.jar"/>
 	<classpathentry kind="lib" path="lib/jempbox-1.7.1.jar"/>
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.14.jar"/>
-	<classpathentry kind="lib" path="lib/jOpenDocument-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/orient-commons-1.2.0.jar"/>
 	<classpathentry kind="lib" path="lib/orientdb-core-1.2.0.jar"/>
 	<classpathentry kind="lib" path="lib/orientdb-enterprise-1.2.0.jar"/>

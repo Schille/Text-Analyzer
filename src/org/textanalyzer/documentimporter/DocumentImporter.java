@@ -49,12 +49,6 @@ public class DocumentImporter implements IDocumentImporter {
 			File file = new File(frontend.getFilePath());
 			InputStream fis = null;
 			
-			// try to open a new inputStream and read the file
-			try {
-				fis = new FileInputStream(file);
-			} catch (FileNotFoundException e1) {
-				e1.printStackTrace();
-			}
 			
 			// split the string in order to check which file was selected
 			String filename = file.getName();
@@ -87,6 +81,12 @@ public class DocumentImporter implements IDocumentImporter {
 				
 			// Import function for *.doc files
 			} else if (extension.equalsIgnoreCase("doc")) {		
+				// try to open a new inputStream and read the file
+				try {
+					fis = new FileInputStream(file);
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
 				
 				// try to extract the text of the word file
 				try {
