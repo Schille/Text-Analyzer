@@ -3,10 +3,9 @@
  */
 package org.textanalyzer.analyzer.dictionary;
 
-
 //import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream; 
+import java.io.InputStream;
 import java.net.URL;
 //import java.net.URLConnection;
 import java.util.Scanner;
@@ -17,16 +16,27 @@ import org.textanalyzer.database.DBDictionary;
 
 /**
  * @author Brab
- *
+ * 
  */
 public class Dictionary implements IDictionary{
 
-	/* (non-Javadoc)
-	 * @see org.textanalyzer.analyzer.dictionary.IDictionary#getWordStatus(java.lang.String)
+	
+	/*private DBDictionary dbDict;
+	
+	public Dictionary(){
+		dbDict = new DBDictionary();
+	}*/
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.textanalyzer.analyzer.dictionary.IDictionary#getWordStatus(java.lang
+	 * .String)
 	 */
 	@SuppressWarnings("resource")
 	@Override
 	public WordStatus getWordStatus(String myWord) {
+
 
 		
 		InputStream stream = null; 
@@ -81,15 +91,23 @@ public class Dictionary implements IDictionary{
 				    
 				    
 				    }
+
+		
+		
+
+		
+
 			}
-		 } 
-		catch ( Exception e ) {
-		 e.printStackTrace();
-		 }
-		 finally {
-		 if ( stream != null )
-		 try { stream.close(); } catch (IOException e ) {return WordStatus.WRONG; }
-		 }
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (stream != null)
+				try {
+					stream.close();
+				} catch (IOException e) {
+					return WordStatus.WRONG;
+				}
+		}
 		return WordStatus.WRONG;
 	}
 

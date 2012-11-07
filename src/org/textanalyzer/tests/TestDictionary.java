@@ -4,6 +4,17 @@
 package org.textanalyzer.tests;
 
 import static org.junit.Assert.*;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 //import junit.framework.Assert;
 
 import org.junit.Test;
@@ -16,16 +27,20 @@ import org.textanalyzer.analyzer.dictionary.WordStatus;
  */
 public class TestDictionary {
 
-	@Test
+
 	public void test() {
 		Dictionary test = new Dictionary();
+
 		/*for(int i=0;i<10;i++){
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Baum"));
 		}*/
+		//for(int i=0;i<1;i++){
+		
+		
 		for(int i=0;i<1;i++){
 		
 		assertEquals(WordStatus.VERB, test.getWordStatus("leben"));
-		assertEquals(WordStatus.VERB, test.getWordStatus("ueberleben"));
+		assertEquals(WordStatus.VERB, test.getWordStatus("ueerleben"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("denken"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("riechen"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("essen"));
@@ -39,6 +54,7 @@ public class TestDictionary {
 		assertEquals(WordStatus.VERB, test.getWordStatus("sehen"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("riechen"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("fuehlen"));
+		assertEquals(WordStatus.VERB, test.getWordStatus("fühlen"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("schmerzen"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("sprechen"));
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Haus"));
@@ -52,12 +68,15 @@ public class TestDictionary {
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Katze"));
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Hund"));
 		//assertEquals(WordStatus.NOMEN, test.getWordStatus("Stra�e"));
+		assertEquals(WordStatus.NOMEN, test.getWordStatus("Straße"));
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Baum"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("blau"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("hohl"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("dick"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("spaet"));
 		//assertEquals(WordStatus.ADJECTIV, test.getWordStatus("frueh"));
+		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("spät"));
+		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("früh"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("grau"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("eckig"));
 		//assertEquals(WordStatus.ADJECTIV, test.getWordStatus("rund"));
@@ -76,7 +95,58 @@ public class TestDictionary {
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("gruen"));
 		}
 		
-		
 	}
+	
+/*	@Test
+	public void test2(){
+
+		String outputString = "";
+		String buffer = "";
+
+		File data = new File("german");
+		try {
+
+			BufferedReader reader =  new BufferedReader(new FileReader(data));
+			
+			while((buffer = reader.readLine()) != null) {
+				outputString  += buffer;
+				buffer = null;
+			}
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+
+		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<String> words = new ArrayList<String>();
+		
+		Collections.addAll(list, outputString.split(" "));
+		
+		int a = list.size();
+		for(String key : list){
+			key = key.substring(0, 1).toUpperCase() + key.substring(1).toLowerCase();
+			words.add(key);
+			words.add(key.toLowerCase());
+		}
+
+		
+		Dictionary test = new Dictionary();
+		
+		long start = System.currentTimeMillis();
+		
+		for(String key : words){
+			test.getWordStatus(key);
+		}
+		System.out.println("Impoted: " + words.size() + " words!");
+		System.out.println("Import consumes: " + (System.currentTimeMillis() - start) + " ms");
+>>>>>>> be86782682697263cb40cdf0e3cd7514a348c3a9
+		
+	}*/
 
 }

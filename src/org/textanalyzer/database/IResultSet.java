@@ -6,7 +6,6 @@ package org.textanalyzer.database;
 import java.util.Map;
 
 import org.textanalyzer.analyzer.TextMood;
-import org.textanalyzer.documentimporter.IDocument;
 
 /**
  * @author Michael Schilonka

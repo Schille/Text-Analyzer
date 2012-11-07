@@ -1,6 +1,8 @@
-package org.textanalyzer.documentimporter;
+package org.textanalyzer.database;
 
 import java.util.Date;
+
+import org.textanalyzer.documentimporter.DocumentFormat;
 
 public class Document implements IDocument {
 

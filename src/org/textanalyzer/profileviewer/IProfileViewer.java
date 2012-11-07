@@ -1,16 +1,20 @@
 /**
- * 
- */
+*
+*/
 package org.textanalyzer.profileviewer;
 
 import javax.swing.JPanel;
 
+import org.textanalyzer.database.IDocument;
+
 /**
- * @author Michael Schilonka
- *
- */
+* @author Michael Schilonka
+*
+*/
 public interface IProfileViewer {
 
-		JPanel getProfileViewer();
-		
+JPanel getProfileViewer();
+
+void updateContent(IDocument myDocument);
+
 }

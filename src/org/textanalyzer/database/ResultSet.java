@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.textanalyzer.analyzer.TextMood;
-import org.textanalyzer.documentimporter.IDocument;
 
 /**
  * @author Michael Schilonka
@@ -21,6 +20,7 @@ public class ResultSet implements IResultSet {
 	private String mostFrequentNomen;
 	private TextMood textMood;
 	private IDocument document;
+	private int id;
 	
 	
 	//----------------------------Getter Setter------------------------------------------------------
@@ -108,6 +108,17 @@ public class ResultSet implements IResultSet {
 	public HashMap<String, Integer> getMostFrequentWord() {
 		return mostFrequentWord;
 	}
+
+	public void setId(int id) {
+		this.id=id;
+		
+	}
+	
+	public int getId(){
+		return this.id;
+	}
+
+
 
 	//END----------------------------Getter Setter------------------------------------------------------
 
