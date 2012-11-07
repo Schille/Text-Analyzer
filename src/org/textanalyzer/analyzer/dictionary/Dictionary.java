@@ -40,10 +40,11 @@ public class Dictionary implements IDictionary{
 
 		
 		InputStream stream = null; 
-        
+        InputStream wikiStream = null;
 		 try
 		 {
-		    String Abfrage ="";                                         //Variable für den Wiktionary Output
+		    String Abfrage ="";
+		    String wikiAbfrage ="";  //Variable für den Wiktionary Output
 		    String var = myWord;                                      	//Zu überprüfendes Wort
 		    WordStatus Art = WordStatus.WRONG;                    		//Wortart identifier
 		    int i=0;
@@ -62,7 +63,7 @@ public class Dictionary implements IDictionary{
 				     */
 				
 		    	URL url = new URL( "http://www.duden.de/rechtschreibung/"+var ); 
-				    
+		    	URL url_wiktionary = new URL( "http://de.wiktionary.org/w/api.php?action=query&prop=categories&format=xml&titles="+var );     
 				    
 				    while(i<=1){
 				    	stream = url.openStream(); //stream öffnen 
@@ -73,18 +74,37 @@ public class Dictionary implements IDictionary{
 				    	if(Abfrage.contains("<span class=\"wortart\">Adjektiv")) Art = WordStatus.ADJECTIV;
 				    	else if(Abfrage.contains("<div class=\"field-item even\">Adjektiv")) Art = WordStatus.ADJECTIV;
 					    else if(Abfrage.contains("<span class=\"wortart\">Substantiv")) Art = WordStatus.NOMEN;
-					    else if(Abfrage.contains("<div class=\"field-item even\">Substantiv")) Art = WordStatus.NOMEN;
-				    	
+					    else if(Abfrage.contains("<div class=\"field-item even\">Substantiv")) Art = WordStatus.NOMEN;				    	
 				    	else if(Abfrage.contains("<div class=\"field-item even\">schwaches Verb")) Art = WordStatus.VERB;
 					    else if(Abfrage.contains("<span class=\"wortart\">schwaches Verb")) Art = WordStatus.VERB;
 					    else if(Abfrage.contains("<div class=\"field-item even\">starkes Verb")) Art = WordStatus.VERB;
 					    else if(Abfrage.contains("<span class=\"wortart\">starkes Verb")) Art = WordStatus.VERB;
 					    else if(Abfrage.contains("<div class=\"field-item even\">unregelmÃ¤ÃŸiges Verb")) Art = WordStatus.VERB;
-					    else if(Abfrage.contains("Präposition")) Art = WordStatus.PREPOSITION;
-					    else if(Abfrage.contains("Füllwort")) Art= WordStatus.FILLER;
-					    else if(Abfrage.contains("missing\" \"")) Art= WordStatus.FILLER;			//Wort nicht vorhanden
-					    
-					    
+					    else Art = WordStatus.WRONG;
+					    	
+					    	
+					    }
+					    if(Art==WordStatus.WRONG){
+					    	
+					    		while(i<=1){
+						    	wikiStream = url_wiktionary.openStream();
+						    	
+						    	wikiAbfrage = new Scanner(stream).useDelimiter( "\\Z" ).next();
+
+								if (Abfrage.contains("Adjektiv"))
+								Art = WordStatus.ADJECTIV;
+								else if (Abfrage.contains("Substantiv"))
+								Art = WordStatus.NOMEN;
+								else if (Abfrage.contains("Verb"))
+								Art = WordStatus.VERB;
+								else if (Abfrage.contains("Präposition"))
+								Art = WordStatus.PREPOSITION;
+								else if (Abfrage.contains("Füllwort"))
+								Art = WordStatus.FILLER;
+								else if (Abfrage.contains("missing\" \""))
+								Art = WordStatus.WRONG; // Wort nicht vorhanden}
+								else Art= WordStatus.WRONG;
+								}
 					    System.out.println(Abfrage);
 					    db.setWordStatus(myWord, Art);
 					    return Art;
