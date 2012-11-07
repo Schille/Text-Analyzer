@@ -15,5 +15,6 @@
 	<classpathentry kind="lib" path="lib/jcommon-1.0.17.jar"/>
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.14.jar"/>
 	<classpathentry kind="lib" path="lib/poi-scratchpad-3.8-20120326.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Brab/Documents/GitHub/Text-Analyzer/lib/Sachgebiet-complete-client.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

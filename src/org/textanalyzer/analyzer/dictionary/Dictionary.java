@@ -8,16 +8,18 @@ package org.textanalyzer.analyzer.dictionary;
 import java.io.IOException;
 import java.io.InputStream; 
 import java.net.URL;
-import java.util.HashMap;
 //import java.net.URLConnection;
 import java.util.Scanner;
 
 import org.textanalyzer.database.DBDictionary;
+
+
+
 /**
  * @author Brab
  *
  */
-public class Dictionary implements IDictionary {
+public class Dictionary implements IDictionary{
 
 	/* (non-Javadoc)
 	 * @see org.textanalyzer.analyzer.dictionary.IDictionary#getWordStatus(java.lang.String)
@@ -25,11 +27,7 @@ public class Dictionary implements IDictionary {
 	@SuppressWarnings("resource")
 	@Override
 	public WordStatus getWordStatus(String myWord) {
-		HashMap<String,WordStatus> cache = new HashMap<String,WordStatus> ();
-		if(cache.get(myWord)!=null){
-			return cache.get(myWord);
-			
-		}
+
 		
 		InputStream stream = null; 
         
@@ -40,6 +38,7 @@ public class Dictionary implements IDictionary {
 		    WordStatus Art = WordStatus.WRONG;                    		//Wortart identifier
 		    int i=0;
 		    DBDictionary db = new DBDictionary();
+		    
 		    WordStatus dbWordStatus=db.getWordStatus(myWord);
 		    
 		    
@@ -52,7 +51,7 @@ public class Dictionary implements IDictionary {
 				     * &format= gibt das Format an welches zurückgeliefert werden soll (XML, HTML etc.)
 				     */
 				
-		    	URL url = new URL( " http://de.wiktionary.org/w/api.php?action=query&prop=categories&format=xml&titles="+var ); 
+		    	URL url = new URL( "http://www.duden.de/rechtschreibung/"+var ); 
 				    
 				    
 				    while(i<=1){
@@ -60,10 +59,17 @@ public class Dictionary implements IDictionary {
 		
 				    	Abfrage= new Scanner(stream).useDelimiter( "\\Z" ).next(); //Den Stream in die Variable schreiben, bei einer leerstelle nicht stoppen
 
-					    
-				    	if(Abfrage.contains("Adjektiv")) Art = WordStatus.ADJECTIV;
-					    else if(Abfrage.contains("Substantiv")) Art = WordStatus.NOMEN;
-					    else if(Abfrage.contains("Verb")) Art = WordStatus.VERB;
+				    	//chwaches Verb
+				    	if(Abfrage.contains("<span class=\"wortart\">Adjektiv")) Art = WordStatus.ADJECTIV;
+				    	else if(Abfrage.contains("<div class=\"field-item even\">Adjektiv")) Art = WordStatus.ADJECTIV;
+					    else if(Abfrage.contains("<span class=\"wortart\">Substantiv")) Art = WordStatus.NOMEN;
+					    else if(Abfrage.contains("<div class=\"field-item even\">Substantiv")) Art = WordStatus.NOMEN;
+				    	
+				    	else if(Abfrage.contains("<div class=\"field-item even\">schwaches Verb")) Art = WordStatus.VERB;
+					    else if(Abfrage.contains("<span class=\"wortart\">schwaches Verb")) Art = WordStatus.VERB;
+					    else if(Abfrage.contains("<div class=\"field-item even\">starkes Verb")) Art = WordStatus.VERB;
+					    else if(Abfrage.contains("<span class=\"wortart\">starkes Verb")) Art = WordStatus.VERB;
+					    else if(Abfrage.contains("<div class=\"field-item even\">unregelmÃ¤ÃŸiges Verb")) Art = WordStatus.VERB;
 					    else if(Abfrage.contains("Präposition")) Art = WordStatus.PREPOSITION;
 					    else if(Abfrage.contains("Füllwort")) Art= WordStatus.FILLER;
 					    else if(Abfrage.contains("missing\" \"")) Art= WordStatus.FILLER;			//Wort nicht vorhanden
