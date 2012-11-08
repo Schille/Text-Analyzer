@@ -43,12 +43,13 @@ public class FrontendProfileManager extends JFrame implements
 	private JButton deleteButton = new JButton(
 			new ImageIcon(
 					"C:\\Users\\sandrock\\DHBW\\3. Semester\\Software-Engineering\\Coding\\deleteButton.jpg"));
-	DefaultListModel<String> listModel = new DefaultListModel<String>();
-	private JList<String> authorList;
+	DefaultListModel listModel = new DefaultListModel();
+	private JList authorList;
 	private ProfileManager profileLogic;	
 
 	public FrontendProfileManager(ProfileManager myManager) {
 		profileLogic = myManager;
+		showFrontendProfileManager();
 
 	}
 
@@ -113,8 +114,8 @@ public class FrontendProfileManager extends JFrame implements
 		});
 
 		
-		// setResizable(false);
-		// pack();
+		setResizable(false);
+		pack();
 		setVisible(true);
 	}
 

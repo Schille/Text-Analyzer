@@ -1,12 +1,12 @@
 package org.textanalyzer.frontend;
 
-import java.awt.Container;
 import java.io.File;
 import java.util.Date;
-
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import java.awt.Font;
+import javax.swing.*;
 
 /**
  * @author Katharina Sandrock
@@ -15,242 +15,144 @@ import javax.swing.JOptionPane;
 
 public class FrontendImporter extends JFrame implements IFrontendImporter {
 
-	private javax.swing.JTextField dataPath;
-	private javax.swing.JButton startAnalysis;
-	private javax.swing.JLabel text_Dateiimport;
-	private javax.swing.JLabel text_EingabeDesTextes;
-	private javax.swing.JLabel text_TextInTextfeld;
-	private javax.swing.JLabel text_Textanalyse;
-	private javax.swing.JTextArea textareaForBlank;
-	private javax.swing.JScrollPane textareaFrame;
-	private String filepath = "";
-	private String blankText ="";
-
-	public FrontendImporter(){
-		super();
-		textareaFrame = new javax.swing.JScrollPane();
-		textareaForBlank = new javax.swing.JTextArea();
-		javax.swing.JButton browseButton = new javax.swing.JButton();
-		dataPath = new javax.swing.JTextField();
-		text_Textanalyse = new javax.swing.JLabel();
-		text_EingabeDesTextes = new javax.swing.JLabel();
-		text_Dateiimport = new javax.swing.JLabel();
-		text_TextInTextfeld = new javax.swing.JLabel();
-		startAnalysis = new javax.swing.JButton();
-
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		setBackground(new java.awt.Color(255, 255, 255));
-
-		textareaForBlank.setLineWrap(true);
-		textareaForBlank.setColumns(20);
-		textareaForBlank.setRows(5);
-		textareaFrame.setViewportView(textareaForBlank);
-		
-		browseButton.setBackground(new java.awt.Color(204, 0, 0));
-		browseButton.setForeground(new java.awt.Color(255, 255, 255));
-		browseButton.setText("Browse...");
-		browseButton.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				browseButtonMouseClicked(evt);
-			}
-		});
-		browseButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				browseButtonActionPerformed(evt);
-			}
-		});
-
 	
-		startAnalysis.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                startAnalysisActionPerformed(evt);
-            }
-        });
-		startAnalysis.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				startAnalysisMouseClicked(evt);
-			}
-		});
-		
-	
+	    private JTextField dataPath = new JTextField();
+	    private JButton startAnalysis = new JButton("Analyse starten");
+	    private JButton browseButton = new JButton("Browse...");
+	    private JLabel text_Dateiimport = new JLabel("Dateiimport...");
+	    private JLabel text_EingabeDesTextes = new JLabel("Eingabe des Textes");
+	    private JLabel text_TextInTextfeld = new JLabel("oder Text in Textfeld eingen/kopieren...");
+	    private JLabel text_Textanalyse = new JLabel("Textanalyse");
+	    private JTextArea textareaForBlank = new JTextArea();
+	    private JScrollPane textareaPane;
+	    private String filepath = "";
+	    private String blankText = "";
 
-		text_Textanalyse.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-		text_Textanalyse.setText("Textanalyse");
+	    
+	    public void showImportWindow() {
 
-		text_EingabeDesTextes.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-		text_EingabeDesTextes.setText("Eingabe des Textes");
+	        setTitle("Datei importieren...");
+	        setLayout(null);
+	        setBounds(0, 0, 520, 500);
+	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		text_Dateiimport.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-		text_Dateiimport.setText("Dateiimport...");
+	        textareaPane = new JScrollPane(textareaForBlank);
+	        textareaPane.setBounds(53, 210, 407, 162);
 
-		text_TextInTextfeld.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-		text_TextInTextfeld.setText("oder Text in Textfeld eingeben/kopieren:");
 
-		startAnalysis.setBackground(new java.awt.Color(204, 0, 0));
-		startAnalysis.setForeground(new java.awt.Color(255, 255, 255));
-		startAnalysis.setText("Analyse starten");
-
-		Container container = this.getContentPane();
-		
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(
-				container);
-		layout.setHorizontalGroup(layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(
-						javax.swing.GroupLayout.Alignment.TRAILING,
-						layout.createSequentialGroup()
-								.addGap(0, 0, Short.MAX_VALUE)
-								.addComponent(text_EingabeDesTextes)
-								.addGap(168, 168, 168))
-				.addGroup(
-						javax.swing.GroupLayout.Alignment.TRAILING,
-						layout.createSequentialGroup()
-								.addContainerGap(52, Short.MAX_VALUE)
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.LEADING)
-												.addGroup(
-														javax.swing.GroupLayout.Alignment.TRAILING,
-														layout.createSequentialGroup()
-																.addComponent(
-																		text_Textanalyse)
-																.addGap(183,
-																		183,
-																		183))
-												.addGroup(
-														javax.swing.GroupLayout.Alignment.TRAILING,
-														layout.createSequentialGroup()
-																.addGroup(
-																		layout.createParallelGroup(
-																				javax.swing.GroupLayout.Alignment.LEADING)
-																				.addComponent(
-																						text_Dateiimport)
-																				.addGroup(
-																						layout.createSequentialGroup()
-																								.addComponent(
-																										dataPath,
-																										javax.swing.GroupLayout.PREFERRED_SIZE,
-																										310,
-																										javax.swing.GroupLayout.PREFERRED_SIZE)
-																								.addGap(18,
-																										18,
-																										18)
-																								.addComponent(
-																										browseButton))
-																				.addComponent(
-																						textareaFrame,
-																						javax.swing.GroupLayout.PREFERRED_SIZE,
-																						407,
-																						javax.swing.GroupLayout.PREFERRED_SIZE)
-																				.addComponent(
-																						text_TextInTextfeld))
-																.addGap(50, 50,
-																		50))))
-				.addGroup(
-						layout.createSequentialGroup().addGap(209, 209, 209)
-								.addComponent(startAnalysis)
-								.addGap(0, 0, Short.MAX_VALUE)));
-		layout.setVerticalGroup(layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup()
-								.addGap(19, 19, 19)
-								.addComponent(text_Textanalyse)
-								.addGap(18, 18, 18)
-								.addComponent(text_EingabeDesTextes)
-								.addGap(18, 18, 18)
-								.addComponent(text_Dateiimport)
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(
-														dataPath,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(browseButton))
-								.addGap(18, 18, 18)
-								.addComponent(text_TextInTextfeld)
-								.addGap(18, 18, 18)
-								.addComponent(textareaFrame,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										163,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addGap(18, 18, 18).addComponent(startAnalysis)
-								.addContainerGap(26, Short.MAX_VALUE)));
-
-		browseButton.getAccessibleContext().setAccessibleName("");
-
-		
-		
-		container.setLayout(layout);
-		setContentPane(container);
-		pack();
-	}
-	
-	
-	@Override
-	public void showImportWindow() {
-		setVisible(true);
-	}
+	        text_Textanalyse.setBounds(204, 28, 140, 35);
+	        text_EingabeDesTextes.setBounds(195, 68, 160, 25);
+	        text_Dateiimport.setBounds(50, 108, 93, 21);
+	        dataPath.setBounds(52, 133, 312, 20);
+	        browseButton.setBounds(381, 131, 88, 25);
+	        text_TextInTextfeld.setBounds(50, 173, 254, 20);
+	        startAnalysis.setBounds(210, 390, 124, 26);
 
 
 
-	private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {
-
-		JFileChooser dc = new JFileChooser();
-		dc.setDialogTitle("Browse...");
-		dc.showOpenDialog(null);
-		File file = dc.getSelectedFile();
-		filepath = file.getAbsolutePath();
-		dataPath.setText(filepath);
-
-	}
-	
-	
-	private void startAnalysisActionPerformed(java.awt.event.ActionEvent evt) {
-	        
-	}
 
 
-	private void browseButtonMouseClicked(java.awt.event.MouseEvent evt) {
-		filepath = dataPath.getText();
-		getFilePath();
-	}
 
-	private void startAnalysisMouseClicked(java.awt.event.MouseEvent evt) {
-		filepath = dataPath.getText();
-		blankText = textareaForBlank.getText();		
+	        text_Textanalyse.setFont(new Font("Tahoma", 0, 24));
+	        text_EingabeDesTextes.setFont(new Font("Tahoma", 0, 18));
+	        text_Dateiimport.setFont(new Font("Tahoma", 0, 14));
+	        text_TextInTextfeld.setFont(new Font("Tahoma", 0, 14));
 
-		if(filepath.equals("") && blankText.equals("")) {
-			JOptionPane.showMessageDialog(null, "Bitte w√§hle eine Textquelle !", "Fehler", JOptionPane.OK_CANCEL_OPTION);
-			return;
-		}
-		if(!filepath.equals("") && !blankText.equals("")){
-			JOptionPane.showMessageDialog(null, "Bitte nur eine Textquelle w√§hlen!", "Fehler", JOptionPane.OK_OPTION);
-			return;
+
+	        browseButton.setBackground(new java.awt.Color(204, 0, 0));
+	        browseButton.setForeground(new java.awt.Color(255, 255, 255));
+
+	        startAnalysis.setBackground(new java.awt.Color(204, 0, 0));
+	        startAnalysis.setForeground(new java.awt.Color(255, 255, 255));
+
+	        textareaForBlank.setLineWrap(true);
+	        textareaForBlank.setColumns(20);
+	        textareaForBlank.setRows(5);
+
+
+	        add(startAnalysis);
+	        add(text_Dateiimport);
+	        add(dataPath);
+	        add(browseButton);
+	        add(text_EingabeDesTextes);
+	        add(text_TextInTextfeld);
+	        add(text_Textanalyse);
+	        add(textareaPane);
+
+
+	        browseButton.addActionListener(new java.awt.event.ActionListener() {
+
+	            public void actionPerformed(java.awt.event.ActionEvent evt) {
+	                browseButtonActionPerformed(evt);
+	            }
+	        });
+
+	        startAnalysis.addActionListener(new java.awt.event.ActionListener() {
+
+	            public void actionPerformed(java.awt.event.ActionEvent evt) {
+	                startAnalysisActionPerformed(evt);
+
+	            }
+	        });
+
+	        setVisible(true);
+	        setResizable(false);
+
+
+	    }
+
+	    private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {
+	        JFileChooser dc = new JFileChooser();
+	        dc.setDialogTitle("Browse...");
+	        dc.showOpenDialog(null);
+	        File file = dc.getSelectedFile();
+	        filepath = file.getAbsolutePath();
+	        dataPath.setText(filepath);
+
+	        filepath = dataPath.getText();
+	        getFilePath();
+	        System.out.println(filepath);
+
+	    }
+
+	    private void startAnalysisActionPerformed(java.awt.event.ActionEvent evt) {
+
+	        filepath = dataPath.getText();
+	        blankText = textareaForBlank.getText();
+
+	        if (filepath.equals("") && blankText.equals("")) {
+	            JOptionPane.showMessageDialog(null, "Bitte w‰hle eine Textquelle !", "Fehler", JOptionPane.OK_CANCEL_OPTION);
+	            return;
+	        }
+	        if (!filepath.equals("") && !blankText.equals("")) {
+	            JOptionPane.showMessageDialog(null, "Bitte nur eine Textquelle w‰hlen!", "Fehler", JOptionPane.OK_OPTION);
+	            return;
+	        }
+
+	        setVisible(false);
+
+	    }
+
+	    @Override
+	    public String getFilePath() {
+	        return filepath;
+	    }
+
+		@Override
+		public Date getImportDate() {
+			return new Date();
 		}
 		
-		setVisible(false);
-	
-		}
-	
-	
-	@Override
-	public String getFilePath() {
-		return filepath;
+	    @Override
+	    public String getText() {
+	        return blankText;
+	    }
+
+
 	}
 
-	@Override
-	public Date getImportDate() {
-		return new Date();
-	}
+	
+	
+	
 
-	@Override
-	public String getText() {
-		return blankText;
-	}
 
-}
