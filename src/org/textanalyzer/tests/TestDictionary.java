@@ -27,7 +27,7 @@ import org.textanalyzer.analyzer.dictionary.WordStatus;
  */
 public class TestDictionary {
 
-
+	@Test
 	public void test() {
 		Dictionary test = new Dictionary();
 
@@ -36,8 +36,9 @@ public class TestDictionary {
 		}*/
 		//for(int i=0;i<1;i++){
 		
-		
-		for(int i=0;i<1;i++){
+		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("Baum"));
+	
+		/*for(int i=0;i<1;i++){
 		
 		assertEquals(WordStatus.VERB, test.getWordStatus("leben"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("ueerleben"));
@@ -61,7 +62,7 @@ public class TestDictionary {
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Handy"));
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Flasche"));
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Logo"));
-		//assertEquals(WordStatus.NOMEN, test.getWordStatus("Zug"));
+		assertEquals(WordStatus.NOMEN, test.getWordStatus("Zug"));
 		//assertEquals(WordStatus.NOMEN, test.getWordStatus("Auto"));
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Schwein"));
 		//assertEquals(WordStatus.NOMEN, test.getWordStatus("Maus"));
@@ -93,7 +94,7 @@ public class TestDictionary {
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("braun"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("rot"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("gruen"));
-		}
+		}*/
 		
 	}
 	
