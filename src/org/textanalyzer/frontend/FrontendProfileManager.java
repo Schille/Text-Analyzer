@@ -112,6 +112,7 @@ public class FrontendProfileManager extends JFrame implements
 			}
 		});
 
+		
 		// setResizable(false);
 		// pack();
 		setVisible(true);
