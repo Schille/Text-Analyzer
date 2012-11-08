@@ -36,12 +36,12 @@ public class TestDictionary {
 		}*/
 		//for(int i=0;i<1;i++){
 		
-		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("Baum"));
+		assertEquals(WordStatus.NOMEN, test.getWordStatus("Baum"));
 	
-		/*for(int i=0;i<1;i++){
+		for(int i=0;i<1;i++){
 		
 		assertEquals(WordStatus.VERB, test.getWordStatus("leben"));
-		assertEquals(WordStatus.VERB, test.getWordStatus("ueerleben"));
+		assertEquals(WordStatus.VERB, test.getWordStatus("ueberleben"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("denken"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("riechen"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("essen"));
@@ -55,20 +55,21 @@ public class TestDictionary {
 		assertEquals(WordStatus.VERB, test.getWordStatus("sehen"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("riechen"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("fuehlen"));
-		assertEquals(WordStatus.VERB, test.getWordStatus("fühlen"));
+		assertEquals(WordStatus.VERB, test.getWordStatus("fuehlen"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("schmerzen"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("sprechen"));
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Haus"));
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Handy"));
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Flasche"));
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Logo"));
-		assertEquals(WordStatus.NOMEN, test.getWordStatus("Zug"));
+		WordStatus a = test.getWordStatus("Zug");
+		assertEquals(WordStatus.NOMEN, a);
 		//assertEquals(WordStatus.NOMEN, test.getWordStatus("Auto"));
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Schwein"));
 		//assertEquals(WordStatus.NOMEN, test.getWordStatus("Maus"));
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Katze"));
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Hund"));
-		//assertEquals(WordStatus.NOMEN, test.getWordStatus("Stra�e"));
+		//assertEquals(WordStatus.NOMEN, test.getWordStatus("Stra�e"));
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Straße"));
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Baum"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("blau"));
@@ -94,11 +95,10 @@ public class TestDictionary {
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("braun"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("rot"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("gruen"));
-		}*/
+		}
 		
 	}
 	
-/*	@Test
 	public void test2(){
 
 		String outputString = "";
@@ -146,8 +146,7 @@ public class TestDictionary {
 		}
 		System.out.println("Impoted: " + words.size() + " words!");
 		System.out.println("Import consumes: " + (System.currentTimeMillis() - start) + " ms");
->>>>>>> be86782682697263cb40cdf0e3cd7514a348c3a9
 		
-	}*/
+	}
 
 }

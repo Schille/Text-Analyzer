@@ -17,6 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 
+import org.textanalyzer.analyzer.AnalyzeTaskInformation;
+import org.textanalyzer.analyzer.Analyzer;
 import org.textanalyzer.database.DBHandle;
 import org.textanalyzer.database.DatabaseConnector;
 import org.textanalyzer.database.IDocument;
@@ -32,7 +34,7 @@ import org.textanalyzer.reportcreator.ReportCreator;
  */
 public class ProfileViewer implements IProfileViewer {
 
-	private long userID;
+	private int userID;
 
 	private JPanel ground;
 	private DatabaseConnector connector;
@@ -41,15 +43,16 @@ public class ProfileViewer implements IProfileViewer {
 	private DocumentImporter importer;
 	private ProfileViewer this_viewer;
 	private JButton new_analyse;
+	private Analyzer analyzer;
 
 	
 	
 	//-----------Constructor------------
 	public ProfileViewer(int myUserID){
-		
+		analyzer = new Analyzer();
 		userID = myUserID;
 		connector = new DatabaseConnector();
-		profileInformation = connector.getProfileInformation(myUserID);
+		profileInformation = connector.getProfileInformation(userID);
 		resultSets = connector.getAllResultSets(myUserID);
 		importer = new DocumentImporter();
 		this_viewer = this;
@@ -171,9 +174,17 @@ public class ProfileViewer implements IProfileViewer {
 	}
 
 	@Override
-	public void updateContent(IDocument myDocument) {
+	public void updateContent(IDocument myDocument, List<String> myWordList) {
 		//Start analysis here...
-		System.out.println(myDocument.getText());
+		profileInformation = connector.getProfileInformation(userID);
+		AnalyzeTaskInformation task = new AnalyzeTaskInformation();
+		task.setDocument(myDocument);
+		task.setProfile(profileInformation);
+		task.setWordList(myWordList);
+		
+		IResultSet set = analyzer.analyzeText(task);
+		
+		connector.saveResultSet(userID, set);
 		this.new_analyse.setEnabled(true);
 	}
 
