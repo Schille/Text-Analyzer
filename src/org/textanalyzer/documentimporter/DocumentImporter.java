@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -14,7 +15,6 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.util.PDFTextStripper;
 import org.apache.poi.hwpf.extractor.WordExtractor;
 import org.textanalyzer.database.Document;
-import org.textanalyzer.database.IDocument;
 import org.textanalyzer.frontend.FrontendImporter;
 import org.textanalyzer.profileviewer.ProfileViewer;
 
@@ -29,6 +29,7 @@ public class DocumentImporter implements IDocumentImporter {
 	 */
 	public void invokeNewDocumentImport(ProfileViewer myProfileViewer) {
 		Document document = new Document();
+		List<String> costumWords;
 		
 		//loop for checking if the user entered a correct file
 		do {
@@ -45,6 +46,8 @@ public class DocumentImporter implements IDocumentImporter {
 					e.printStackTrace();
 				}
 			}
+			
+			costumWords = frontend.getCostumWordList();
 			
 			//open a new file with the entered file path and create an input stream 
 			File file = new File(frontend.getFilePath());
@@ -154,7 +157,7 @@ public class DocumentImporter implements IDocumentImporter {
 			
 		} while (!correct);
 		
-		myProfileViewer.updateContent(document);
+		myProfileViewer.updateContent(document, costumWords);
 
 	}
 }

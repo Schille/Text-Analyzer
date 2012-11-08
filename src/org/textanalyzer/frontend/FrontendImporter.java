@@ -1,12 +1,18 @@
 package org.textanalyzer.frontend;
 
+import java.awt.Font;
 import java.io.File;
 import java.util.Date;
+import java.util.List;
+
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import java.awt.Font;
-import javax.swing.*;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  * @author Katharina Sandrock
@@ -121,11 +127,11 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	        blankText = textareaForBlank.getText();
 
 	        if (filepath.equals("") && blankText.equals("")) {
-	            JOptionPane.showMessageDialog(null, "Bitte wähle eine Textquelle !", "Fehler", JOptionPane.OK_CANCEL_OPTION);
+	            JOptionPane.showMessageDialog(null, "Bitte wï¿½hle eine Textquelle !", "Fehler", JOptionPane.OK_CANCEL_OPTION);
 	            return;
 	        }
 	        if (!filepath.equals("") && !blankText.equals("")) {
-	            JOptionPane.showMessageDialog(null, "Bitte nur eine Textquelle wählen!", "Fehler", JOptionPane.OK_OPTION);
+	            JOptionPane.showMessageDialog(null, "Bitte nur eine Textquelle wï¿½hlen!", "Fehler", JOptionPane.OK_OPTION);
 	            return;
 	        }
 
@@ -146,6 +152,11 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	    @Override
 	    public String getText() {
 	        return blankText;
+	    }
+	    
+	    public List<String> getCostumWordList(){
+	    	
+	    	return null; 
 	    }
 
 
