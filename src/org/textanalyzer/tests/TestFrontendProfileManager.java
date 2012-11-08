@@ -10,6 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.textanalyzer.database.DatabaseConnector;
+import org.textanalyzer.database.Document;
 import org.textanalyzer.database.IResultSet;
 import org.textanalyzer.database.ProfileInformation;
 import org.textanalyzer.database.ResultSet;
@@ -52,38 +53,10 @@ public class TestFrontendProfileManager {
 		result.setWrongWordCount(50);
 		result.setMostFrequentWord(most);
 		result.setCustomWordCount(custom);
-		result.setDocument(new IDocument() {
-			
-			@Override
-			public String getText() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public Date getImportDate() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public String getFileName() {
-				// TODO Auto-generated method stub
-				return "fancyprogram";
-			}
-			
-			@Override
-			public String getDocumentPath() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public DocumentFormat getDocumentFormat() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-		});
+		Document doc1 =		new Document(); 
+		doc1.setFileName("stuff");
+		result.setDocument(doc1);	
+		
 		 result1 = new ResultSet();
 		result1.setAvaragePhraseLength(42);
 		result1.setPseudoIQ(455);
@@ -91,38 +64,10 @@ public class TestFrontendProfileManager {
 		result1.setWrongWordCount(550);
 		result1.setMostFrequentWord(most);
 		result1.setCustomWordCount(custom);
-		result1.setDocument(new IDocument() {
-			
-			@Override
-			public String getText() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public Date getImportDate() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public String getFileName() {
-				// TODO Auto-generated method stub
-				return "cooltext";
-			}
-			
-			@Override
-			public String getDocumentPath() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public DocumentFormat getDocumentFormat() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-		});
+		Document doc2 =		new Document(); 
+		doc2.setFileName("funny");
+		result1.setDocument(doc2);	
+		
 
 		assertEquals(1000,test1.saveProfileInformation(profile));
 		//assertEquals(1001,test1.saveProfileInformation(profile));

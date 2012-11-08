@@ -65,26 +65,23 @@ public class Analyzer implements IAnalyzer {
 			customWords.put(customWord, 0);
 		}
 		
-		// TODO Remove
-		/* Get the text and transform to Stream */
-		//Reader textReader = new StringReader(myTask.getDocument().getText());
-		
 		/* Do the analysis */
 		while(analyzeNextSentence() != null)
 		
-		/*try {
-			analyze(textReader);
-			textReader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}*/
+			
+		// TODO Create map for NomenCounter
 
 		analysis.setWordCount(wordCount);
 		analysis.setWrongWordCount(wrongWordCount);
-		analysis.setAvaragePhraseLength(wordCount/sentenceCount);
+		if(sentenceCount > 0)
+			analysis.setAvaragePhraseLength(wordCount/sentenceCount);
+		else
+			analysis.setAvaragePhraseLength(0);
 		analysis.setCustomWordCount(new HashMap<String, Integer>(customWords));
-		analysis.setPseudoIQ(50); // TODO Calculate IQ
-		//IQ = ((wordCount - wrongWordCount) * 100) / wordCount;
+		if(wordCount > 0)
+			analysis.setPseudoIQ(((wordCount - wrongWordCount) * 100) / wordCount);
+		else
+			analysis.setPseudoIQ(0);
 		analysis.setTextMood(TextMood.NEUTRAL); // TODO Calculate TextMood
 		
 		return this.analysis;
@@ -94,39 +91,66 @@ public class Analyzer implements IAnalyzer {
 		MyWord word;
 		MySentence sentence = new MySentence();
 		
-		while(textIndex >= text.length()){
-			sentence.sentence.concat(" ");
-			sentence.sentence.concat((word = analyzeNextWord()).word);
-			if(word.punctuation != "")
+		// Get the words of a sentence
+		while(textIndex <= text.length()){
+			if((word = analyzeNextWord()) != null){
+				sentence.sentence = sentence.sentence.concat(word.word + " ");
+				if(word.punctuation != "")
+					break;
+			}else
 				break;
 		}
 		if(sentence.sentence.equals(""))
 			return null;
 		
+		// Refresh sentenceCounter
 		sentenceCount++;
+		
+		// Mistakes at sentence beginning
+		if(!Character.isUpperCase(sentence.sentence.charAt(0)))
+			wrongWordCount++;
 		return sentence;
 	}
 
 	private MyWord analyzeNextWord(){
 		MyWord word = new MyWord();
+		WordStatus status = null;
 		
+		// Set punctuation-chars
 		List<Character> punctuations = new ArrayList<Character>();
 		punctuations.add('.');
 		punctuations.add('!');
 		punctuations.add('?');
 		
-		while(textIndex <= text.length() && punctuations.contains(text.charAt(textIndex))){
-			
-			word.word.concat(text.substring(textIndex-1, textIndex));
+		// Concat the word until a Space or a punctuation occurs
+		for(;textIndex < text.length();textIndex++){
+			if((punctuations.contains(text.charAt(textIndex)) || text.charAt(textIndex) == ' ')){
+				if(word.word != "")
+					break;
+				else{
+					continue;
+				}
+			}
+			word.word = word.word.concat(text.substring(textIndex, textIndex+1));
 		}
+		
+		// End of Text
 		if(word.word == "")
 			return null;
 		
-		// TODO punctuation
+		// Get the punctuation
+		if(textIndex < text.length() && punctuations.contains(text.charAt(textIndex))){
+			for(;punctuations.contains(text.charAt(textIndex));textIndex++){
+				word.punctuation = word.punctuation.concat(text.substring(textIndex, textIndex+1));
+			}
+		}
 		
+		// Refresh the wordcounter
 		wordCount++;
 		
-		WordStatus status = dict.getWordStatus(word.word);
+		// Get Wrong words
+		//WordStatus status = dict.getWordStatus(word.word);
+		status = WordStatus.WRONG;
 		if(status == WordStatus.NOMEN){
 			for (WordCounter nomen : this.nomen) {
 				if(nomen.word.equals(nomen)){
@@ -137,22 +161,7 @@ public class Analyzer implements IAnalyzer {
 			nomen.add(new WordCounter(word.word, WordStatus.NOMEN));
 		}else if(status == WordStatus.WRONG)
 			wrongWordCount++;
-		
 		return word;
 	}
-	
-	/*private String getPunctuation(int index){
-		char[] punctuations = {'.', '!', '?'};
-		char[] punct = new char[1];
-		
-		text.getChars(index-1, index, punct, 0);
-		
-		for (char c : punctuations) {
-			if(c == punct[0]){
-				return getPunctuation(index+1);
-			}
-		}
-		return "";
-	}*/
 
 }
