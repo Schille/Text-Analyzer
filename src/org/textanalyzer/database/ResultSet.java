@@ -13,14 +13,19 @@ public class ResultSet implements IResultSet {
 	
 	private int wordCount;
 	private int wrongWordCount;
-	private HashMap<String, Integer> mostFrequentWord = new HashMap<String, Integer>();
+	private HashMap<String, Integer> mostFrequentWord;
 	private int pseudoIQ;
-	private HashMap<String, Integer> customWordCount = new HashMap<String, Integer>();
+	private HashMap<String, Integer> customWordCount;
 	private int avaragePhraseLength;
 	private String mostFrequentNomen;
 	private TextMood textMood;
 	private IDocument document;
 	private int id;
+	
+	public ResultSet(){
+		mostFrequentWord = new HashMap<String, Integer>();
+		customWordCount = new HashMap<String, Integer>();
+	}
 	
 	
 	//----------------------------Getter Setter------------------------------------------------------

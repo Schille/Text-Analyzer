@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.orientechnologies.orient.core.command.OCommandRequest;
 import com.orientechnologies.orient.core.db.ODatabase;
+import com.orientechnologies.orient.core.db.record.OIdentifiable;
 import com.orientechnologies.orient.core.exception.OStorageException;
 import com.orientechnologies.orient.core.query.OQuery;
 import com.orientechnologies.orient.core.query.nativ.ONativeSynchQuery;
@@ -98,7 +99,7 @@ public class DatabaseConnector implements IDatabaseConnector{
 		 List<IResultSet> result = new LinkedList<IResultSet>();
 		 for (ResultSet p : connector.browseClass(ResultSet.class)){
 			 if(p.getId() == myId){
-				 result.add(p);
+				 result.add((IResultSet) connector.getUserObjectByRecord((OIdentifiable) p, "ResultSet"));
 		 	}
 		 }
 		 return result;

@@ -7,7 +7,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,8 +20,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 
-import org.jfree.chart.renderer.category.WaterfallBarRenderer;
-import org.jfree.util.WaitingImageObserver;
 import org.textanalyzer.analyzer.AnalyzeTaskInformation;
 import org.textanalyzer.analyzer.Analyzer;
 import org.textanalyzer.database.DatabaseConnector;
@@ -46,6 +47,7 @@ public class ProfileViewer implements IProfileViewer {
 	private JButton new_analyse;
 	private Analyzer analyzer;
 	WaitingDialog waiter;
+	private HashMap<String,IResultSet> resultmapper;
 
 	
 	
@@ -59,6 +61,7 @@ public class ProfileViewer implements IProfileViewer {
 		resultSets = connector.getAllResultSets(myUserID);
 		importer = new DocumentImporter();
 		this_viewer = this;
+		resultmapper = new HashMap<String,IResultSet>();
 	}
 
 	/*
@@ -132,19 +135,9 @@ public class ProfileViewer implements IProfileViewer {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				IProfileInformation profileinfo = connector.getProfileInformation((int)userID);
-				List<IResultSet>resultlist = connector.getAllResultSets(userID);
-				ReportCreator reporter = new ReportCreator();
 				
-				  JFrame frame = new JFrame("Report");
-				  frame.setPreferredSize(new Dimension(620, 700));
-			        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			        frame.getContentPane().add(reporter.getGraphPanel(profileinfo, resultlist));
-			        frame.setResizable(false);
-			        frame.pack();
-			        frame.setVisible(true);
-
-			        frame.setAlwaysOnTop(true);
+				List<IResultSet>resultlist = connector.getAllResultSets(userID);
+				buildReport(resultlist);
 				
 			}
 		});
@@ -156,6 +149,7 @@ public class ProfileViewer implements IProfileViewer {
 		if(result != null) {
 		while(result.hasNext()) {
 			IResultSet temp_res = (IResultSet)result.next();
+			resultmapper.put(temp_res.getDocument().getFileName(), temp_res);
 			dataname.add(temp_res.getDocument().getFileName());	
 		}
 		texte.setListData(dataname.toArray());
@@ -164,6 +158,57 @@ public class ProfileViewer implements IProfileViewer {
 		else {
 			ground.add(notext);
 		}
+		
+		
+		texte.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				class runner implements Runnable{
+					private String mykey;
+					public runner(String key) {
+						mykey = key;
+					}
+					@Override
+					public void run() {
+							buildReport(resultmapper.get(mykey));
+						
+					}
+				}
+				
+				
+				String key = ((JList)(arg0.getComponent())).getSelectedValue().toString();
+				Thread thread = new Thread(new runner(key));
+				thread.start();
+				
+				
+				
+			}
+		});
 		
 		ground.add(headline);
 		ground.add(author);
@@ -175,6 +220,9 @@ public class ProfileViewer implements IProfileViewer {
 
 		return ground;
 	}
+	
+	
+
 
 	@Override
 	public void updateContent(IDocument myDocument, List<String> myWordList) {
@@ -195,6 +243,37 @@ public class ProfileViewer implements IProfileViewer {
 		
 		this.new_analyse.setEnabled(true);
 		
+	}
+
+	/**
+	 * @param profileinfo
+	 * @param resultlist
+	 */
+	public void buildReport(List<IResultSet> resultlist) {
+		ReportCreator reporter = new ReportCreator();
+		JFrame frame = reportFrame();
+	    frame.getContentPane().add(reporter.getGraphPanel(profileInformation, resultlist));
+	    frame.setVisible(true);
+	}
+	
+	public void buildReport(IResultSet result) {
+		ReportCreator reporter = new ReportCreator();
+		JFrame frame = reportFrame();
+	    frame.getContentPane().add(reporter.getGraphPanel(profileInformation, result));
+	    frame.setVisible(true);
+
+	    
+}
+
+	public JFrame reportFrame () {
+		JFrame frame = new JFrame("Report");
+		frame.setPreferredSize(new Dimension(620, 700));
+	    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	    frame.setResizable(false);
+	    frame.pack();
+	    frame.setAlwaysOnTop(true);
+	    
+	    return frame;
 	}
 
 
