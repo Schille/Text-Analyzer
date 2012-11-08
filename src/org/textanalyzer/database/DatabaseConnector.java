@@ -40,6 +40,14 @@ public class DatabaseConnector implements IDatabaseConnector{
 		connector.delete(myObject);
 	}
 	
+	public void removeProfile(long myID){
+		ProfileInformation tobedeleted = getProfileInformation((int) myID);
+		List<IResultSet> tobedeltedresults = getAllResultSets(myID);
+		for(IResultSet key : tobedeltedresults){
+			removeObject(key);
+		}
+		removeObject(tobedeleted);
+	}
 
 	/**
 	 * Returns a List of all existing Profiles in the database.
@@ -66,7 +74,6 @@ public class DatabaseConnector implements IDatabaseConnector{
 			
 		}
 		return help;
-
 	}
 
 	
