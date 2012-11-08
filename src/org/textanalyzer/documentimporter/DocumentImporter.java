@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -29,7 +30,7 @@ public class DocumentImporter implements IDocumentImporter {
 	 */
 	public void invokeNewDocumentImport(ProfileViewer myProfileViewer) {
 		Document document = new Document();
-		List<String> costumWords;
+		List<String> customWordList;
 		
 		//loop for checking if the user entered a correct file
 		do {
@@ -47,7 +48,7 @@ public class DocumentImporter implements IDocumentImporter {
 				}
 			}
 			
-			costumWords = frontend.getCostumWordList();
+			customWordList = frontend.getCustomWordList();
 			
 			//open a new file with the entered file path and create an input stream 
 			File file = new File(frontend.getFilePath());
@@ -157,7 +158,8 @@ public class DocumentImporter implements IDocumentImporter {
 			
 		} while (!correct);
 		
-		myProfileViewer.updateContent(document, costumWords);
+		document.setImportDate(new Date());
+		myProfileViewer.updateContent(document, customWordList);
 
 	}
 }

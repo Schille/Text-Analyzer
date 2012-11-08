@@ -21,9 +21,8 @@ public class Analyzer implements IAnalyzer {
 
 	IDictionary dict = new Dictionary();
 	
-	private Map<String, Integer> customWords = new HashMap<String, Integer>();
-	private Map<String, Integer> fullWordList = new HashMap<String, Integer>();
-	private Map<String, Integer> nomen = new HashMap<String, Integer>();
+	private Map<String, Integer> customWords;
+	private List<WordCounter> nomen = new ArrayList<WordCounter>();
 	private String text;
 	private int textIndex;
 	
@@ -36,6 +35,16 @@ public class Analyzer implements IAnalyzer {
 		protected String sentence = "";
 		//protected String punctuation = "";
 	}
+	private class WordCounter{
+		private String word;
+		protected int counter=0;
+		private WordStatus family;
+		protected WordCounter(String word, WordStatus family) {this.word=word;this.family=family;}
+		protected String getWord(){return this.word;};
+	}
+	
+	// run the analysis with some Test Data
+	public static void main(String[] args) {new Analyzer().analyzeText(new AnalyzeTaskInformation());}
 	
 	@Override
 	public IResultSet analyzeText(IAnalyzeTaskInformation myTask) {
@@ -47,7 +56,7 @@ public class Analyzer implements IAnalyzer {
 			throw new Error("No Document to analyze");
 		else{
 			text = myTask.getDocument().getText();
-			this.analysis.setDocument(myTask.getDocument());
+			analysis.setDocument(myTask.getDocument());
 		}
 		
 		/* Get the custom Words */
@@ -58,20 +67,22 @@ public class Analyzer implements IAnalyzer {
 		
 		/* Do the analysis */
 		while(analyzeNextSentence() != null)
+		
+			
+		// TODO Create map for NomenCounter
 
-		this.analysis.setWordCount(wordCount);
-		this.analysis.setWrongWordCount(wrongWordCount);
+		analysis.setWordCount(wordCount);
+		analysis.setWrongWordCount(wrongWordCount);
 		if(sentenceCount > 0)
-			this.analysis.setAvaragePhraseLength(wordCount/sentenceCount);
+			analysis.setAvaragePhraseLength(wordCount/sentenceCount);
 		else
-			this.analysis.setAvaragePhraseLength(0);
+			analysis.setAvaragePhraseLength(0);
+		analysis.setCustomWordCount(new HashMap<String, Integer>(customWords));
 		if(wordCount > 0)
-			this.analysis.setPseudoIQ(((wordCount - wrongWordCount) * 100) / wordCount);
+			analysis.setPseudoIQ(((wordCount - wrongWordCount) * 100) / wordCount);
 		else
-			this.analysis.setPseudoIQ(0);
-		this.analysis.setMostFrequentWord(new HashMap<String, Integer>(fullWordList));
-		this.analysis.setCustomWordCount(new HashMap<String, Integer>(customWords));
-		this.analysis.setTextMood(TextMood.NEUTRAL); // TODO Calculate TextMood
+			analysis.setPseudoIQ(0);
+		analysis.setTextMood(TextMood.NEUTRAL); // TODO Calculate TextMood
 		
 		return this.analysis;
 	}
@@ -103,7 +114,6 @@ public class Analyzer implements IAnalyzer {
 
 	private MyWord analyzeNextWord(){
 		MyWord word = new MyWord();
-		Integer counter;
 		WordStatus status = null;
 		
 		// Set punctuation-chars
@@ -123,6 +133,8 @@ public class Analyzer implements IAnalyzer {
 			}
 			word.word = word.word.concat(text.substring(textIndex, textIndex+1));
 		}
+		
+		// End of Text
 		if(word.word == "")
 			return null;
 		
@@ -132,29 +144,21 @@ public class Analyzer implements IAnalyzer {
 				word.punctuation = word.punctuation.concat(text.substring(textIndex, textIndex+1));
 			}
 		}
-
-		// Refresh the word counter
+		
+		// Refresh the wordcounter
 		wordCount++;
-		counter = fullWordList.remove(word.word);
-		if(counter == null)
-			fullWordList.put(word.word, 1);
-		else
-			fullWordList.put(word.word, ++counter);
-
-		// Refresh the custom word counter
-		counter = customWords.remove(word.word);
-		if(counter != null)
-			customWords.put(word.word, ++counter);
 		
 		// Get Wrong words
+		//WordStatus status = dict.getWordStatus(word.word);
 		status = WordStatus.WRONG;
-		status = dict.getWordStatus(word.word);
 		if(status == WordStatus.NOMEN){
-			counter = nomen.remove(word.word);
-			if(counter == null)
-				nomen.put(word.word, 1);
-			else
-				nomen.put(word.word, ++counter);
+			for (WordCounter nomen : this.nomen) {
+				if(nomen.word.equals(nomen)){
+					nomen.counter++;
+					return word;
+				}
+			}
+			nomen.add(new WordCounter(word.word, WordStatus.NOMEN));
 		}else if(status == WordStatus.WRONG)
 			wrongWordCount++;
 		return word;
