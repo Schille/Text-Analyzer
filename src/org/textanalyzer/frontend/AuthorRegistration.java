@@ -14,6 +14,8 @@ public class AuthorRegistration extends JFrame {
     private javax.swing.JTextField profession;
     private javax.swing.JTextField age;
 
+    
+    
    
     public AuthorRegistration(){
     	
