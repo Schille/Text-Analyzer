@@ -7,24 +7,25 @@ package org.textanalyzer.analyzer.dictionary;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.HashMap;
 //import java.net.URLConnection;
 import java.util.Scanner;
 
 import org.textanalyzer.database.DBDictionary;
 
+
+
 /**
  * @author Brab
  * 
  */
-public class Dictionary implements IDictionary {
+public class Dictionary implements IDictionary{
 
 	
-	private DBDictionary dbDict;
+	/*private DBDictionary dbDict;
 	
 	public Dictionary(){
 		dbDict = new DBDictionary();
-	}
+	}*/
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -35,67 +36,87 @@ public class Dictionary implements IDictionary {
 	@SuppressWarnings("resource")
 	@Override
 	public WordStatus getWordStatus(String myWord) {
-		HashMap<String, WordStatus> cache = new HashMap<String, WordStatus>();
-		if (cache.get(myWord) != null) {
-			return cache.get(myWord);
 
-		}
 
-		InputStream stream = null;
+		
+		InputStream stream = null; 
+        InputStream wikiStream = null;
+		 try
+		 {
+		    String Abfrage ="";
+		    String wikiAbfrage ="";  //Variable für den Wiktionary Output
+		    String var = myWord;                                      	//Zu überprüfendes Wort
+		    WordStatus Art = WordStatus.WRONG;                    		//Wortart identifier
+		    int i=0;
+		    DBDictionary db = new DBDictionary();
+		    
+		    WordStatus dbWordStatus=db.getWordStatus(myWord);
+		    
+		    
+		    if(dbWordStatus!=null){										//Lokale DB abfragen
+		    	return dbWordStatus;									//Rückgabe aus lokaler DB
+		    } else {
+		    			    	
+				    /* URL wird festgelegt
+				     * &prop= welche Eigenschaft wird abgefragt (Kategorien zu denen das Wort zugeteilt wurde)
+				     * &format= gibt das Format an welches zurückgeliefert werden soll (XML, HTML etc.)
+				     */
+				
+		    	URL url = new URL( "http://www.duden.de/rechtschreibung/"+var ); 
+		    	URL url_wiktionary = new URL( "http://de.wiktionary.org/w/api.php?action=query&prop=categories&format=xml&titles="+var );     
+				    
+				    while(i<=1){
+				    	stream = url.openStream(); //stream öffnen 
+		
+				    	Abfrage= new Scanner(stream).useDelimiter( "\\Z" ).next(); //Den Stream in die Variable schreiben, bei einer leerstelle nicht stoppen
 
-		try {
-			String Abfrage = ""; // Variable fï¿½r den Wiktionary Output
-			String var = myWord; // Zu Ã¼berprï¿½fendes Wort
-			WordStatus Art = WordStatus.WRONG; // Wortart identifier
-			int i = 0;
-			WordStatus dbWordStatus = dbDict.getWordStatus(myWord);
+				    	//chwaches Verb
+				    	if(Abfrage.contains("<span class=\"wortart\">Adjektiv")) Art = WordStatus.ADJECTIV;
+				    	else if(Abfrage.contains("<div class=\"field-item even\">Adjektiv")) Art = WordStatus.ADJECTIV;
+					    else if(Abfrage.contains("<span class=\"wortart\">Substantiv")) Art = WordStatus.NOMEN;
+					    else if(Abfrage.contains("<div class=\"field-item even\">Substantiv")) Art = WordStatus.NOMEN;				    	
+				    	else if(Abfrage.contains("<div class=\"field-item even\">schwaches Verb")) Art = WordStatus.VERB;
+					    else if(Abfrage.contains("<span class=\"wortart\">schwaches Verb")) Art = WordStatus.VERB;
+					    else if(Abfrage.contains("<div class=\"field-item even\">starkes Verb")) Art = WordStatus.VERB;
+					    else if(Abfrage.contains("<span class=\"wortart\">starkes Verb")) Art = WordStatus.VERB;
+					    else if(Abfrage.contains("<div class=\"field-item even\">unregelmÃ¤ÃŸiges Verb")) Art = WordStatus.VERB;
+					    else Art = WordStatus.WRONG;
+					    	
+					    	
+					    }
+					    if(Art==WordStatus.WRONG){
+					    	
+					    		while(i<=1){
+						    	wikiStream = url_wiktionary.openStream();
+						    	
+						    	wikiAbfrage = new Scanner(stream).useDelimiter( "\\Z" ).next();
 
-			if (dbWordStatus != null) { // Lokale DB abfragen
-				return dbWordStatus; // RÃ¼ckgabe aus lokaler DB
-			} else {
+								if (Abfrage.contains("Adjektiv"))
+								Art = WordStatus.ADJECTIV;
+								else if (Abfrage.contains("Substantiv"))
+								Art = WordStatus.NOMEN;
+								else if (Abfrage.contains("Verb"))
+								Art = WordStatus.VERB;
+								else if (Abfrage.contains("Präposition"))
+								Art = WordStatus.PREPOSITION;
+								else if (Abfrage.contains("Füllwort"))
+								Art = WordStatus.FILLER;
+								else if (Abfrage.contains("missing\" \""))
+								Art = WordStatus.WRONG; // Wort nicht vorhanden}
+								else Art= WordStatus.WRONG;
+								}
+					    System.out.println(Abfrage);
+					    db.setWordStatus(myWord, Art);
+					    return Art;
+				    
+				    
+				    }
 
-				/*
-				 * URL wird festgelegt &prop= welche Eigenschaft wird abgefragt
-				 * (Kategorien zu denen das Wort zugeteilt wurde) &format= gibt
-				 * das Format an welches zurï¿½ckgeliefert werden soll (XML, HTML
-				 * etc.)
-				 */
+		
+		
 
-				URL url = new URL(" http://de.wiktionary.org/w/api.php?action=query&prop=categories&format=xml&titles=" + var);
+		
 
-				while (i <= 1) {
-					stream = url.openStream(); // stream ï¿½ffnen
-
-					Abfrage = new Scanner(stream).useDelimiter("\\Z").next(); // Den
-																				// Stream
-																				// in
-																				// die
-																				// Variable
-																				// schreiben,
-																				// bei
-																				// einer
-																				// leerstelle
-																				// nicht
-																				// stoppen
-
-					if (Abfrage.contains("Adjektiv"))
-						Art = WordStatus.ADJECTIV;
-					else if (Abfrage.contains("Substantiv"))
-						Art = WordStatus.NOMEN;
-					else if (Abfrage.contains("Verb"))
-						Art = WordStatus.VERB;
-					else if (Abfrage.contains("PrÃ¤position"))
-						Art = WordStatus.PREPOSITION;
-					else if (Abfrage.contains("FÃ¼llwort"))
-						Art = WordStatus.FILLER;
-					else if (Abfrage.contains("missing\" \""))
-						Art = WordStatus.FILLER; // Wort nicht vorhanden
-
-					System.out.println(Abfrage);
-					dbDict.setWordStatus(myWord, Art);
-					return Art;
-
-				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
