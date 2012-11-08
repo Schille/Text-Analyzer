@@ -18,6 +18,5 @@
 	<classpathentry kind="lib" path="lib/pdfbox-1.7.1.jar"/>
 	<classpathentry kind="lib" path="lib/poi-3.8-20120326.jar"/>
 	<classpathentry kind="lib" path="lib/poi-scratchpad-3.8-20120326.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Brab/Documents/GitHub/Text-Analyzer/lib/Sachgebiet-complete-client.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
