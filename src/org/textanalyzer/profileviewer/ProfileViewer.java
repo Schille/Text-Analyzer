@@ -17,15 +17,16 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 
+import org.jfree.chart.renderer.category.WaterfallBarRenderer;
+import org.jfree.util.WaitingImageObserver;
 import org.textanalyzer.analyzer.AnalyzeTaskInformation;
 import org.textanalyzer.analyzer.Analyzer;
-import org.textanalyzer.database.DBHandle;
 import org.textanalyzer.database.DatabaseConnector;
 import org.textanalyzer.database.IDocument;
 import org.textanalyzer.database.IProfileInformation;
 import org.textanalyzer.database.IResultSet;
-import org.textanalyzer.database.ResultSet;
 import org.textanalyzer.documentimporter.DocumentImporter;
+import org.textanalyzer.frontend.WaitingDialog;
 import org.textanalyzer.reportcreator.ReportCreator;
 
 /**
@@ -44,11 +45,13 @@ public class ProfileViewer implements IProfileViewer {
 	private ProfileViewer this_viewer;
 	private JButton new_analyse;
 	private Analyzer analyzer;
+	WaitingDialog waiter;
 
 	
 	
 	//-----------Constructor------------
 	public ProfileViewer(int myUserID){
+		waiter = new WaitingDialog();
 		analyzer = new Analyzer();
 		userID = myUserID;
 		connector = new DatabaseConnector();
@@ -182,7 +185,10 @@ public class ProfileViewer implements IProfileViewer {
 		task.setProfile(profileInformation);
 		task.setWordList(myWordList);
 		
+
+		waiter.showWaiting(ground);
 		IResultSet set = analyzer.analyzeText(task);
+		waiter.dispose();
 		
 		connector.saveResultSet(userID, set);
 		
