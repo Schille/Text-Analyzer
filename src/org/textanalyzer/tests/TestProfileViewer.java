@@ -68,6 +68,7 @@ public class TestProfileViewer {
 				
 		Document doc1 =		new Document(); 
 		doc1.setFileName("stuff");
+		doc1.setImportDate(new Date());
 		result.setDocument(doc1);	
 			
 		 result1 = new ResultSet();
@@ -79,6 +80,7 @@ public class TestProfileViewer {
 		result1.setCustomWordCount(custom);
 		Document doc2 =		new Document(); 
 		doc2.setFileName("funny");
+		doc2.setImportDate(new Date());
 		result1.setDocument(doc2);	
 
 		test1.saveProfileInformation(profile);

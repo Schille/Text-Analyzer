@@ -26,6 +26,7 @@ import org.textanalyzer.database.DatabaseConnector;
 import org.textanalyzer.database.IDocument;
 import org.textanalyzer.database.IProfileInformation;
 import org.textanalyzer.database.IResultSet;
+import org.textanalyzer.database.ResultSet;
 import org.textanalyzer.documentimporter.DocumentImporter;
 import org.textanalyzer.frontend.WaitingDialog;
 import org.textanalyzer.reportcreator.ReportCreator;
@@ -47,7 +48,7 @@ public class ProfileViewer implements IProfileViewer {
 	private JButton new_analyse;
 	private Analyzer analyzer;
 	WaitingDialog waiter;
-	private HashMap<String,IResultSet> resultmapper;
+	private HashMap<String,ResultSet> resultmapper;
 
 	
 	
@@ -61,7 +62,7 @@ public class ProfileViewer implements IProfileViewer {
 		resultSets = connector.getAllResultSets(myUserID);
 		importer = new DocumentImporter();
 		this_viewer = this;
-		resultmapper = new HashMap<String,IResultSet>();
+		resultmapper = new HashMap<String,ResultSet>();
 	}
 
 	/*
@@ -148,8 +149,8 @@ public class ProfileViewer implements IProfileViewer {
 		Iterator<?> result = resultSets.iterator();
 		if(result != null) {
 		while(result.hasNext()) {
-			IResultSet temp_res = (IResultSet)result.next();
-			resultmapper.put(temp_res.getDocument().getFileName(), temp_res);
+			ResultSet temp_res = (ResultSet)result.next();
+			resultmapper.put(temp_res.getDocument().getFileName(), (ResultSet) temp_res);
 			dataname.add(temp_res.getDocument().getFileName());	
 		}
 		texte.setListData(dataname.toArray());
@@ -188,22 +189,10 @@ public class ProfileViewer implements IProfileViewer {
 			
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				class runner implements Runnable{
-					private String mykey;
-					public runner(String key) {
-						mykey = key;
-					}
-					@Override
-					public void run() {
-							buildReport(resultmapper.get(mykey));
-						
-					}
-				}
-				
 				
 				String key = ((JList)(arg0.getComponent())).getSelectedValue().toString();
-				Thread thread = new Thread(new runner(key));
-				thread.start();
+				
+				buildReport(resultmapper.get(key));
 				
 				
 				
@@ -240,6 +229,7 @@ public class ProfileViewer implements IProfileViewer {
 		
 		connector.saveResultSet(userID, set);
 		
+		buildReport(set);
 		
 		this.new_analyse.setEnabled(true);
 		

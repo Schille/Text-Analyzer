@@ -10,7 +10,6 @@ import java.util.List;
 
 import com.orientechnologies.orient.core.command.OCommandRequest;
 import com.orientechnologies.orient.core.db.ODatabase;
-import com.orientechnologies.orient.core.db.record.OIdentifiable;
 import com.orientechnologies.orient.core.exception.OStorageException;
 import com.orientechnologies.orient.core.query.OQuery;
 import com.orientechnologies.orient.core.query.nativ.ONativeSynchQuery;
@@ -99,7 +98,18 @@ public class DatabaseConnector implements IDatabaseConnector{
 		 List<IResultSet> result = new LinkedList<IResultSet>();
 		 for (ResultSet p : connector.browseClass(ResultSet.class)){
 			 if(p.getId() == myId){
-				 result.add((IResultSet) connector.getUserObjectByRecord((OIdentifiable) p, "ResultSet"));
+				 ResultSet tmp = new ResultSet();
+				 tmp.setAvaragePhraseLength(p.getAvaragePhraseLength());
+				 tmp.setCustomWordCount((HashMap<String, Integer>) p.getCustomWordCount());
+				 tmp.setDocument(p.getDocument());
+				 tmp.setId(p.getId());
+				 tmp.setMostFrequentNomen(p.getMostFrequentNomen());
+				 tmp.setMostFrequentWord(p.getMostFrequentWord());
+				 tmp.setPseudoIQ(p.getPseudoIQ());
+				 tmp.setTextMood(p.getTextMood());
+				 tmp.setWordCount(p.getWordCount());
+				 tmp.setWrongWordCount(p.getWrongWordCount());
+				 result.add(tmp);
 		 	}
 		 }
 		 return result;

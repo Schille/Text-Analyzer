@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -157,6 +158,7 @@ public class DocumentImporter implements IDocumentImporter {
 			
 		} while (!correct);
 		
+		document.setImportDate(new Date());
 		myProfileViewer.updateContent(document, customWordList);
 
 	}
