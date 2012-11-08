@@ -49,6 +49,7 @@ public class FrontendProfileManager extends JFrame implements
 
 	public FrontendProfileManager(ProfileManager myManager) {
 		profileLogic = myManager;
+		showFrontendProfileManager();
 
 	}
 
@@ -113,8 +114,8 @@ public class FrontendProfileManager extends JFrame implements
 		});
 
 		
-		// setResizable(false);
-		// pack();
+		setResizable(false);
+		pack();
 		setVisible(true);
 	}
 
