@@ -185,7 +185,10 @@ public class ProfileViewer implements IProfileViewer {
 		IResultSet set = analyzer.analyzeText(task);
 		
 		connector.saveResultSet(userID, set);
+		
+		
 		this.new_analyse.setEnabled(true);
+		
 	}
 
 

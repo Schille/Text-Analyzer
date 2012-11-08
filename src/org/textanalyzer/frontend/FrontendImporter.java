@@ -2,6 +2,8 @@ package org.textanalyzer.frontend;
 
 import java.awt.Font;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -26,10 +28,12 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	    private JButton startAnalysis = new JButton("Analyse starten");
 	    private JButton browseButton = new JButton("Browse...");
 	    private JLabel text_Dateiimport = new JLabel("Dateiimport...");
+	    private JLabel text_customWords = new JLabel("Benutzer Wörter...");
 	    private JLabel text_EingabeDesTextes = new JLabel("Eingabe des Textes");
 	    private JLabel text_TextInTextfeld = new JLabel("oder Text in Textfeld eingen/kopieren...");
 	    private JLabel text_Textanalyse = new JLabel("Textanalyse");
 	    private JTextArea textareaForBlank = new JTextArea();
+	    private JTextArea customWords = new JTextArea();
 	    private JScrollPane textareaPane;
 	    private String filepath = "";
 	    private String blankText = "";
@@ -39,7 +43,7 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 
 	        setTitle("Datei importieren...");
 	        setLayout(null);
-	        setBounds(0, 0, 520, 500);
+	        setBounds(0, 0, 700, 480);
 	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	        textareaPane = new JScrollPane(textareaForBlank);
@@ -74,8 +78,24 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	        textareaForBlank.setLineWrap(true);
 	        textareaForBlank.setColumns(20);
 	        textareaForBlank.setRows(5);
+	        
+	        
+	        
+	        text_customWords.setFont(new Font("Tahoma", 0, 14));
+	        text_customWords.setBounds(500, 80, 400, 80);
+	       
+	        
+	        JScrollPane scrolltextareaPane = new JScrollPane(customWords);
+	        scrolltextareaPane.setBounds(500, 133, 150, 240);
+	        
+	        customWords.setLineWrap(false);
+	        customWords.setColumns(5);
+	        customWords.setRows(5);
+//	        customWords.setSize(120, 238);
+//	        customWords.setLocation(500, 135);
 
-
+	        add(scrolltextareaPane);
+	        add(text_customWords);
 	        add(startAnalysis);
 	        add(text_Dateiimport);
 	        add(dataPath);
@@ -154,11 +174,11 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	        return blankText;
 	    }
 	    
-	    public List<String> getCostumWordList(){
-	    	
-	    	return null; 
+	    public List<String> getCustomWordList(){
+	    	if(customWords.getText() != null)
+	    		return  Arrays.asList(customWords.getText().split("\n"));
+	    	return new ArrayList<String>(); 
 	    }
-
 
 	}
 

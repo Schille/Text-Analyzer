@@ -81,7 +81,7 @@ public class TestProfileViewer {
 		doc2.setFileName("funny");
 		result1.setDocument(doc2);	
 
-		
+		test1.saveProfileInformation(profile);
 		test1.saveResultSet(1000,result);
 		test1.saveResultSet(1000, result1);
 		test1.saveResultSet(1001,result);
