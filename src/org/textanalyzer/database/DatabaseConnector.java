@@ -40,6 +40,14 @@ public class DatabaseConnector implements IDatabaseConnector{
 		connector.delete(myObject);
 	}
 	
+	public void removeProfile(long myID){
+		ProfileInformation tobedeleted = getProfileInformation((int) myID);
+		List<IResultSet> tobedeltedresults = getAllResultSets(myID);
+		for(IResultSet key : tobedeltedresults){
+			removeObject(key);
+		}
+		removeObject(tobedeleted);
+	}
 
 	/**
 	 * Returns a List of all existing Profiles in the database.
@@ -66,7 +74,6 @@ public class DatabaseConnector implements IDatabaseConnector{
 			
 		}
 		return help;
-
 	}
 
 	
@@ -91,7 +98,18 @@ public class DatabaseConnector implements IDatabaseConnector{
 		 List<IResultSet> result = new LinkedList<IResultSet>();
 		 for (ResultSet p : connector.browseClass(ResultSet.class)){
 			 if(p.getId() == myId){
-				 result.add(p);
+				 ResultSet tmp = new ResultSet();
+				 tmp.setAvaragePhraseLength(p.getAvaragePhraseLength());
+				 tmp.setCustomWordCount((HashMap<String, Integer>) p.getCustomWordCount());
+				 tmp.setDocument(p.getDocument());
+				 tmp.setId(p.getId());
+				 tmp.setMostFrequentNomen(p.getMostFrequentNomen());
+				 tmp.setMostFrequentWord(p.getMostFrequentWord());
+				 tmp.setPseudoIQ(p.getPseudoIQ());
+				 tmp.setTextMood(p.getTextMood());
+				 tmp.setWordCount(p.getWordCount());
+				 tmp.setWrongWordCount(p.getWrongWordCount());
+				 result.add(tmp);
 		 	}
 		 }
 		 return result;

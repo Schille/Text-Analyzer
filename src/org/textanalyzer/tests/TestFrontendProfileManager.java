@@ -15,7 +15,6 @@ import org.textanalyzer.database.IResultSet;
 import org.textanalyzer.database.ProfileInformation;
 import org.textanalyzer.database.ResultSet;
 import org.textanalyzer.documentimporter.DocumentFormat;
-import org.textanalyzer.documentimporter.IDocument;
 import org.textanalyzer.profilemanager.ProfileManager;
 
 public class TestFrontendProfileManager {

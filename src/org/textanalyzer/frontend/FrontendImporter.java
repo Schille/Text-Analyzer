@@ -1,12 +1,20 @@
 package org.textanalyzer.frontend;
 
+import java.awt.Font;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import java.awt.Font;
-import javax.swing.*;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  * @author Katharina Sandrock
@@ -20,10 +28,12 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	    private JButton startAnalysis = new JButton("Analyse starten");
 	    private JButton browseButton = new JButton("Browse...");
 	    private JLabel text_Dateiimport = new JLabel("Dateiimport...");
+	    private JLabel text_customWords = new JLabel("Benutzer WÃ¶rter...");
 	    private JLabel text_EingabeDesTextes = new JLabel("Eingabe des Textes");
 	    private JLabel text_TextInTextfeld = new JLabel("oder Text in Textfeld eingen/kopieren...");
 	    private JLabel text_Textanalyse = new JLabel("Textanalyse");
 	    private JTextArea textareaForBlank = new JTextArea();
+	    private JTextArea customWords = new JTextArea();
 	    private JScrollPane textareaPane;
 	    private String filepath = "";
 	    private String blankText = "";
@@ -33,7 +43,7 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 
 	        setTitle("Datei importieren...");
 	        setLayout(null);
-	        setBounds(0, 0, 520, 500);
+	        setBounds(0, 0, 700, 480);
 	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	        textareaPane = new JScrollPane(textareaForBlank);
@@ -68,8 +78,24 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	        textareaForBlank.setLineWrap(true);
 	        textareaForBlank.setColumns(20);
 	        textareaForBlank.setRows(5);
+	        
+	        
+	        
+	        text_customWords.setFont(new Font("Tahoma", 0, 14));
+	        text_customWords.setBounds(500, 80, 400, 80);
+	       
+	        
+	        JScrollPane scrolltextareaPane = new JScrollPane(customWords);
+	        scrolltextareaPane.setBounds(500, 133, 150, 240);
+	        
+	        customWords.setLineWrap(false);
+	        customWords.setColumns(5);
+	        customWords.setRows(5);
+//	        customWords.setSize(120, 238);
+//	        customWords.setLocation(500, 135);
 
-
+	        add(scrolltextareaPane);
+	        add(text_customWords);
 	        add(startAnalysis);
 	        add(text_Dateiimport);
 	        add(dataPath);
@@ -121,11 +147,11 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	        blankText = textareaForBlank.getText();
 
 	        if (filepath.equals("") && blankText.equals("")) {
-	            JOptionPane.showMessageDialog(null, "Bitte wähle eine Textquelle !", "Fehler", JOptionPane.OK_CANCEL_OPTION);
+	            JOptionPane.showMessageDialog(null, "Bitte wï¿½hle eine Textquelle !", "Fehler", JOptionPane.OK_CANCEL_OPTION);
 	            return;
 	        }
 	        if (!filepath.equals("") && !blankText.equals("")) {
-	            JOptionPane.showMessageDialog(null, "Bitte nur eine Textquelle wählen!", "Fehler", JOptionPane.OK_OPTION);
+	            JOptionPane.showMessageDialog(null, "Bitte nur eine Textquelle wï¿½hlen!", "Fehler", JOptionPane.OK_OPTION);
 	            return;
 	        }
 
@@ -147,7 +173,12 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	    public String getText() {
 	        return blankText;
 	    }
-
+	    
+	    public List<String> getCustomWordList(){
+	    	if(customWords.getText() != null)
+	    		return  Arrays.asList(customWords.getText().split("\n"));
+	    	return new ArrayList<String>(); 
+	    }
 
 	}
 

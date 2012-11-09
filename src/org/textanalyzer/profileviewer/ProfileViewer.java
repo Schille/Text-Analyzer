@@ -7,7 +7,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,13 +20,15 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 
-import org.textanalyzer.database.DBHandle;
+import org.textanalyzer.analyzer.AnalyzeTaskInformation;
+import org.textanalyzer.analyzer.Analyzer;
 import org.textanalyzer.database.DatabaseConnector;
 import org.textanalyzer.database.IDocument;
 import org.textanalyzer.database.IProfileInformation;
 import org.textanalyzer.database.IResultSet;
 import org.textanalyzer.database.ResultSet;
 import org.textanalyzer.documentimporter.DocumentImporter;
+import org.textanalyzer.frontend.WaitingDialog;
 import org.textanalyzer.reportcreator.ReportCreator;
 
 /**
@@ -32,7 +37,7 @@ import org.textanalyzer.reportcreator.ReportCreator;
  */
 public class ProfileViewer implements IProfileViewer {
 
-	private long userID;
+	private int userID;
 
 	private JPanel ground;
 	private DatabaseConnector connector;
@@ -41,18 +46,23 @@ public class ProfileViewer implements IProfileViewer {
 	private DocumentImporter importer;
 	private ProfileViewer this_viewer;
 	private JButton new_analyse;
+	private Analyzer analyzer;
+	WaitingDialog waiter;
+	private HashMap<String,ResultSet> resultmapper;
 
 	
 	
 	//-----------Constructor------------
 	public ProfileViewer(int myUserID){
-		
+		waiter = new WaitingDialog();
+		analyzer = new Analyzer();
 		userID = myUserID;
 		connector = new DatabaseConnector();
-		profileInformation = connector.getProfileInformation(myUserID);
+		profileInformation = connector.getProfileInformation(userID);
 		resultSets = connector.getAllResultSets(myUserID);
 		importer = new DocumentImporter();
 		this_viewer = this;
+		resultmapper = new HashMap<String,ResultSet>();
 	}
 
 	/*
@@ -126,19 +136,9 @@ public class ProfileViewer implements IProfileViewer {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				IProfileInformation profileinfo = connector.getProfileInformation((int)userID);
-				List<IResultSet>resultlist = connector.getAllResultSets(userID);
-				ReportCreator reporter = new ReportCreator();
 				
-				  JFrame frame = new JFrame("Report");
-				  frame.setPreferredSize(new Dimension(620, 700));
-			        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			        frame.getContentPane().add(reporter.getGraphPanel(profileinfo, resultlist));
-			        frame.setResizable(false);
-			        frame.pack();
-			        frame.setVisible(true);
-
-			        frame.setAlwaysOnTop(true);
+				List<IResultSet>resultlist = connector.getAllResultSets(userID);
+				buildReport(resultlist);
 				
 			}
 		});
@@ -149,7 +149,8 @@ public class ProfileViewer implements IProfileViewer {
 		Iterator<?> result = resultSets.iterator();
 		if(result != null) {
 		while(result.hasNext()) {
-			IResultSet temp_res = (IResultSet)result.next();
+			ResultSet temp_res = (ResultSet)result.next();
+			resultmapper.put(temp_res.getDocument().getFileName(), (ResultSet) temp_res);
 			dataname.add(temp_res.getDocument().getFileName());	
 		}
 		texte.setListData(dataname.toArray());
@@ -158,6 +159,45 @@ public class ProfileViewer implements IProfileViewer {
 		else {
 			ground.add(notext);
 		}
+		
+		
+		texte.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+				String key = ((JList)(arg0.getComponent())).getSelectedValue().toString();
+				
+				buildReport(resultmapper.get(key));
+				
+				
+				
+			}
+		});
 		
 		ground.add(headline);
 		ground.add(author);
@@ -169,12 +209,61 @@ public class ProfileViewer implements IProfileViewer {
 
 		return ground;
 	}
+	
+	
+
 
 	@Override
-	public void updateContent(IDocument myDocument) {
+	public void updateContent(IDocument myDocument, List<String> myWordList) {
 		//Start analysis here...
-		System.out.println(myDocument.getText());
+		profileInformation = connector.getProfileInformation(userID);
+		AnalyzeTaskInformation task = new AnalyzeTaskInformation();
+		task.setDocument(myDocument);
+		task.setProfile(profileInformation);
+		task.setWordList(myWordList);
+		
+
+		waiter.showWaiting(ground);
+		IResultSet set = analyzer.analyzeText(task);
+		waiter.dispose();
+		
+		connector.saveResultSet(userID, set);
+		
+		buildReport(set);
+		
 		this.new_analyse.setEnabled(true);
+		
+	}
+
+	/**
+	 * @param profileinfo
+	 * @param resultlist
+	 */
+	public void buildReport(List<IResultSet> resultlist) {
+		ReportCreator reporter = new ReportCreator();
+		JFrame frame = reportFrame();
+	    frame.getContentPane().add(reporter.getGraphPanel(profileInformation, resultlist));
+	    frame.setVisible(true);
+	}
+	
+	public void buildReport(IResultSet result) {
+		ReportCreator reporter = new ReportCreator();
+		JFrame frame = reportFrame();
+	    frame.getContentPane().add(reporter.getGraphPanel(profileInformation, result));
+	    frame.setVisible(true);
+
+	    
+}
+
+	public JFrame reportFrame () {
+		JFrame frame = new JFrame("Report");
+		frame.setPreferredSize(new Dimension(620, 700));
+	    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	    frame.setResizable(false);
+	    frame.pack();
+	    frame.setAlwaysOnTop(true);
+	    
+	    return frame;
 	}
 
 

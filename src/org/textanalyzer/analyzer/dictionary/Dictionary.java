@@ -3,30 +3,73 @@
  */
 package org.textanalyzer.analyzer.dictionary;
 
-//import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
-//import java.net.URLConnection;
 import java.util.Scanner;
-
 import org.textanalyzer.database.DBDictionary;
-
-
 
 /**
  * @author Brab
  * 
  */
-public class Dictionary implements IDictionary{
 
+public class Dictionary implements IDictionary {
+
+	DBDictionary db;
+	int i=0;
+	public Dictionary() {
+		db = new DBDictionary();
+	}
+
+	@SuppressWarnings("resource")
+	public WordStatus DudenRequest(String var) {
+
+		WordStatus Art = WordStatus.OTHER;
+
+		try {
+
+			String Abfrage = "";
+			InputStream stream = null;
+			URL url = new URL("http://www.duden.de/rechtschreibung/" + var);
+			stream = url.openStream();
+
+			Abfrage = new Scanner(stream).useDelimiter("\\Z").next();
+
+			if (Abfrage.contains("<span class=\"wortart\">Adjektiv"))
+				Art = WordStatus.ADJECTIV;
+			else if (Abfrage.contains("<div class=\"field-item even\">Adjektiv"))
+				Art = WordStatus.ADJECTIV;
+			else if (Abfrage.contains("<span class=\"wortart\">Substantiv"))
+				Art = WordStatus.NOMEN;
+			else if (Abfrage.contains("<div class=\"field-item even\">Substantiv"))
+				Art = WordStatus.NOMEN;
+			else if (Abfrage.contains("<div class=\"field-item even\">schwaches Verb"))
+				Art = WordStatus.VERB;
+			else if (Abfrage.contains("<span class=\"wortart\">schwaches Verb"))
+				Art = WordStatus.VERB;
+			else if (Abfrage.contains("<div class=\"field-item even\">starkes Verb"))
+				Art = WordStatus.VERB;
+			else if (Abfrage.contains("<span class=\"wortart\">starkes Verb"))
+				Art = WordStatus.VERB;
+			else
+				Art = WordStatus.OTHER;
+
+			db.setWordStatus(var, Art); // Set WordStatus in local Database
+			i++;
+			System.out.println(i);
+			return Art;
+
+		} catch (java.io.FileNotFoundException fnf) {
 	
-	/*private DBDictionary dbDict;
-	
-	public Dictionary(){
-		dbDict = new DBDictionary();
-	}*/
+			return WordStatus.WRONG;
+		} catch (IOException ex1) {
+			return WordStatus.WRONG;
+		} 
+
+		
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -34,103 +77,65 @@ public class Dictionary implements IDictionary{
 	 * org.textanalyzer.analyzer.dictionary.IDictionary#getWordStatus(java.lang
 	 * .String)
 	 */
+
 	@SuppressWarnings("resource")
 	@Override
 	public WordStatus getWordStatus(String myWord) {
-		
-		//Declaration
-		String Abfrage ="";
-	    String wikiAbfrage ="";  //Variable für den Wiktionary Output
-	    String var = myWord;                                      	//Zu überprüfendes Wort
-	    WordStatus Art = WordStatus.WRONG;                    		//Wortart identifier
-	    int i=0;
-	    DBDictionary db = new DBDictionary();
-		InputStream stream = null; 
-        InputStream wikiStream = null;
-		 
-        try
-		 {	WordStatus dbWordStatus=db.getWordStatus(myWord);
-		    		    
-		    if(dbWordStatus!=null){										//Lokale DB abfragen
-		    	return dbWordStatus;									//Rückgabe aus lokaler DB
-		    } else {		    			    	
-		    	
-		    		URL url = new URL( "http://www.duden.de/rechtschreibung/"+var ); 
-		         
-				    
-		    		while(0!=-1){
-				    	stream = url.openStream(); //stream öffnen 
-				    	Abfrage= new Scanner(stream).useDelimiter( "\\Z" ).next(); //Den Stream in die Variable schreiben, bei einer leerstelle nicht stoppen
 
-				    	//chwaches Verb
-				    	if(Abfrage.contains("<span class=\"wortart\">Adjektiv")) Art = WordStatus.ADJECTIV;
-				    	else if(Abfrage.contains("<div class=\"field-item even\">Adjektiv")) Art = WordStatus.ADJECTIV;
-					    else if(Abfrage.contains("<span class=\"wortart\">Substantiv")) Art = WordStatus.NOMEN;
-					    else if(Abfrage.contains("<div class=\"field-item even\">Substantiv")) Art = WordStatus.NOMEN;				    	
-				    	else if(Abfrage.contains("<div class=\"field-item even\">schwaches Verb")) Art = WordStatus.VERB;
-					    else if(Abfrage.contains("<span class=\"wortart\">schwaches Verb")) Art = WordStatus.VERB;
-					    else if(Abfrage.contains("<div class=\"field-item even\">starkes Verb")) Art = WordStatus.VERB;
-					    else if(Abfrage.contains("<span class=\"wortart\">starkes Verb")) Art = WordStatus.VERB;
-					    else if(Abfrage.contains("<div class=\"field-item even\">unregelmÃ¤ÃŸiges Verb"))Art = WordStatus.VERB;
-					    else Art=WordStatus.WRONG;	
-					    return Art;	
-								}
-					    
-					   
-				    
-				    
-				    }
+		// Declaration
 
-		   
-		
+		String wikiAbfrage = ""; // Variable für den Wiktionary Output
+		String var = myWord; // Zu überprüfendes Wort
+		WordStatus Art = WordStatus.OTHER; // Wortart identifier
 
-		
+		InputStream wikiStream = null;
 
+		try {
+			WordStatus dbWordStatus = db.getWordStatus(myWord);
 			
-		} catch (java.io.FileNotFoundException e){
-			try{
-			URL url_wiktionary = new URL( "http://de.wiktionary.org/w/api.php?action=query&prop=categories&format=xml&titles="+var );
-			System.out.println("Wiki Schleife");
-			while(i<=1){
-		    	wikiStream = url_wiktionary.openStream();
-		    	Abfrage= new Scanner(stream).useDelimiter( "\\Z" ).next();
-		    	wikiAbfrage = new Scanner(stream).useDelimiter( "\\Z" ).next();
+			if (dbWordStatus != null) { // Lokale DB abfragen
+				
+				System.out.println(dbWordStatus);
+				System.out.println(var);
+				return dbWordStatus; // Rückgabe aus lokaler DB
+			} else {
+				URL url_wiktionary = new URL(
+						"http://de.wiktionary.org/w/api.php?action=query&prop=categories&format=xml&titles="
+								+ var);
 
-				if (Abfrage.contains("Adjektiv"))
-				Art = WordStatus.ADJECTIV;
-				else if (Abfrage.contains("Substantiv"))
-				Art = WordStatus.NOMEN;
-				else if (Abfrage.contains("Verb"))
-				Art = WordStatus.VERB;
-				else if (Abfrage.contains("Präposition"))
-				Art = WordStatus.PREPOSITION;
-				else if (Abfrage.contains("Füllwort"))
-				Art = WordStatus.FILLER;
-				else if (Abfrage.contains("missing\" \""))
-				Art = WordStatus.WRONG; // Wort nicht vorhanden}
-				else Art= WordStatus.WRONG;
-				System.out.println("Wiki:"+Art);
+				wikiStream = url_wiktionary.openStream();
+
+				wikiAbfrage = new Scanner(wikiStream).useDelimiter("\\Z")
+						.next();
+
+				if (wikiAbfrage.contains("Adjektiv"))
+					Art = WordStatus.ADJECTIV;
+				else if (wikiAbfrage.contains("Substantiv"))
+					Art = WordStatus.NOMEN;
+				else if (wikiAbfrage.contains("Verb"))
+					Art = WordStatus.VERB;
+				else if (wikiAbfrage.contains("missing\" \""))
+					Art = DudenRequest(var); // Wort nicht vorhanden}
+				else if (wikiAbfrage.contains("Kategorie:Deutsch"))
+					Art = WordStatus.OTHER;
+				else
+					Art = DudenRequest(var);
+
+				db.setWordStatus(var, Art);
+				i++;
+				System.out.println(i);
 				return Art;
-	    }
-		}
-		 catch (Exception e1) {
-			e.printStackTrace();
-		} finally {
-			if (stream != null)
-				try {
-					stream.close();
-				} catch (IOException e2) {
-					return WordStatus.WRONG;
-				}
-		}
-		
-	} catch (MalformedURLException e) {
+			}
+
+		} catch (java.io.FileNotFoundException e) {
+
+			return WordStatus.WRONG;
+
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-		return Art;
+			return WordStatus.WRONG;
 
-	}}
+		}
+	}
+}
