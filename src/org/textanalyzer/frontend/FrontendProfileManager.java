@@ -1,6 +1,7 @@
 package org.textanalyzer.frontend;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.util.Iterator;
 import javax.swing.*;
@@ -22,8 +23,7 @@ import org.textanalyzer.profilemanager.ProfileManager;
 public class FrontendProfileManager extends JFrame implements
 		IFrontendProfileManager {
 
-	private JFrame authorRegistrationWindow = new JFrame("Profile Manager");
-
+	
 	// set variables for the banner content
 
 	private JPanel bannerPanel = new JPanel();
@@ -65,9 +65,9 @@ public class FrontendProfileManager extends JFrame implements
 			listModel.addElement(author_name);
 		}
 
-		authorRegistrationWindow.setLayout(null);
-		authorRegistrationWindow.setBounds(0, 0, 750, 550);
-		authorRegistrationWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(null);
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// create an fill the Panel which contains the Banner
 
@@ -79,7 +79,7 @@ public class FrontendProfileManager extends JFrame implements
 		bannerText.setFont(new Font("Tahoma", 0, 50));
 		bannerText.setBounds(400, 50, 300, 50);
 		bannerPanel.add(bannerText);
-		authorRegistrationWindow.add(bannerPanel);
+		add(bannerPanel);
 
 		// create and fill the navigation Panel
 
@@ -96,10 +96,10 @@ public class FrontendProfileManager extends JFrame implements
 		authorList.setFont(new Font("Dialog", 1, 16));
 		naviPanel.add(naviScrollPane);
 
-		authorRegistrationWindow.add(naviPanel);
+		add(naviPanel);
 		contentPanel.setBounds(250, 150, 500, 400);
 		contentPanel.setBackground(Color.white);
-		authorRegistrationWindow.add(contentPanel);
+		add(contentPanel);
 
 		addButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,6 +115,8 @@ public class FrontendProfileManager extends JFrame implements
 
 		
 		setResizable(false);
+		setPreferredSize(new Dimension(750,550));
+		setLocation(50,50);
 		pack();
 		setVisible(true);
 	}
