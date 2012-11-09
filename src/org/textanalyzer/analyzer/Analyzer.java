@@ -13,13 +13,19 @@ import org.textanalyzer.database.ResultSet;
 
 public class Analyzer implements IAnalyzer {
 
+	private static int POSITIVEBORDER = 5;
+	private static int NEGATIVEBORDER = 5;
+	
 	private ResultSet analysis;
 	
 	private int wordCount = 0;
 	private int wrongWordCount = 0;
 	private int sentenceCount = 0;
+	private int textAttitude = 0;
 
 	IDictionary dict = new Dictionary();
+	private String[] positiveWords = {"freudig"};
+	private String[] negativeWords = {"traurig"};
 	
 	private Map<String, Integer> customWords = new HashMap<String, Integer>();
 	private Map<String, Integer> fullWordList = new HashMap<String, Integer>();
@@ -71,7 +77,7 @@ public class Analyzer implements IAnalyzer {
 			this.analysis.setPseudoIQ(0);
 		this.analysis.setMostFrequentWord(new HashMap<String, Integer>(fullWordList));
 		this.analysis.setCustomWordCount(new HashMap<String, Integer>(customWords));
-		this.analysis.setTextMood(TextMood.NEUTRAL); // TODO Calculate TextMood
+		this.analysis.setTextMood(textAttitude>=POSITIVEBORDER?TextMood.POSITIVE:textAttitude<=NEGATIVEBORDER?TextMood.NEGATIVE:TextMood.NEUTRAL);
 		
 		return this.analysis;
 	}
@@ -125,6 +131,20 @@ public class Analyzer implements IAnalyzer {
 		}
 		if(word.word == "")
 			return null;
+		
+		// Text Attitude
+		for (String attWord : positiveWords) {
+			if(attWord.equals(word.word)){
+				textAttitude++;
+				break;
+			}
+		}
+		for (String attWord : negativeWords) {
+			if(attWord.equals(word.word)){
+				textAttitude--;
+				break;
+			}
+		}
 		
 		// Get the punctuation
 		if(textIndex < text.length() && punctuations.contains(text.charAt(textIndex))){
