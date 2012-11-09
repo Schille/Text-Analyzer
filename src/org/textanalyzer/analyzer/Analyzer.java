@@ -147,8 +147,8 @@ public class Analyzer implements IAnalyzer {
 		}
 		
 		// Get the punctuation
-		if(textIndex < text.length() && punctuations.contains(text.charAt(textIndex))){
-			for(;punctuations.contains(text.charAt(textIndex));textIndex++){
+		if(punctuations.contains(text.charAt(textIndex))){
+			for(;textIndex < text.length()&&punctuations.contains(text.charAt(textIndex));textIndex++){
 				word.punctuation = word.punctuation.concat(text.substring(textIndex, textIndex+1));
 			}
 		}
