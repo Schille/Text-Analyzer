@@ -34,7 +34,7 @@ public class FrontendProfileManager extends JFrame implements
 	private JPanel contentPanel = new JPanel();
 	private JLabel icon = new JLabel(
 			new ImageIcon(
-					"C:\\Users\\sandrock\\DHBW\\3. Semester\\Software-Engineering\\Coding\\icon.png"));
+					"../icon.png"));
 	private JLabel bannerText = new JLabel(" analytiX ");
 
 	// set variables for the navigation container
@@ -43,10 +43,10 @@ public class FrontendProfileManager extends JFrame implements
 	private JScrollPane naviScrollPane;
 	private JButton addButton = new JButton(
 			new ImageIcon(
-					"C:\\Users\\sandrock\\DHBW\\3. Semester\\Software-Engineering\\Coding\\addButton.jpg"));
+					"../addButton.jpg"));
 	private JButton deleteButton = new JButton(
 			new ImageIcon(
-					"C:\\Users\\sandrock\\DHBW\\3. Semester\\Software-Engineering\\Coding\\deleteButton.jpg"));
+					"../deleteButton.jpg"));
 	DefaultListModel listModel = new DefaultListModel();
 	private JList authorList;
 	private ProfileManager profileLogic;	
