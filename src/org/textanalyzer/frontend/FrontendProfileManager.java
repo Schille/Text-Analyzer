@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.textanalyzer.profilemanager.ProfileManager;
@@ -178,7 +179,7 @@ public class FrontendProfileManager extends JFrame implements
 
 	private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		
-		//contentPanel.setVisible(false);
+
 		authorRegistration.setVisible(true);
 		getContentPane().add(authorRegistration);
 		contentPanel.setVisible(false);
@@ -188,8 +189,12 @@ public class FrontendProfileManager extends JFrame implements
 	private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		authorRegistration.setVisible(false);
 		contentPanel.setVisible(true);	
+		if (authorList.getSelectedIndex() == -1 ){
+		JOptionPane.showMessageDialog(null, "Zum L\u00f6schen bitte zun\u00e4chst einen Autor aus der Liste w\u00e4hlen.", "Fehler", JOptionPane.ERROR_MESSAGE);
+		} else {
 		profileLogic.removeProfile(authorList.getSelectedIndex());
 		listModel.remove(authorList.getSelectedIndex());
+		}
 	}
 
 }
