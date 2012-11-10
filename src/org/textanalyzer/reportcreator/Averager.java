@@ -2,6 +2,7 @@ package org.textanalyzer.reportcreator;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -28,25 +29,32 @@ public class Averager {
 	 * 
 	 * @return SortedMap which contains a map of the most used words.
 	 */
-	public SortedMap<String,Integer> getWordMap() {
+	public LinkedHashMap<String,Integer> getWordMap() {
 		
-		SortedMap<String,Integer> mostWords = new TreeMap<String,Integer>();
 		
-		Iterator<?> iterator = resultlist.iterator();
-		while(iterator.hasNext()) {
-			IResultSet temp_res = (IResultSet)iterator.next();
-			Map<String,Integer> temp_most = temp_res.getMostFrequentWord(10);
+		
+		LinkedHashMap<String, Integer> mostWords = new LinkedHashMap<String, Integer>();
+		Iterator<?> k = resultlist.iterator();
+		
+		
+		while(k.hasNext()) {
+			Map<String,Integer> temp3 = ((IResultSet) k.next()).getMostFrequentWord(10);
+		for(int i = 0; i < 10 && temp3.entrySet().iterator()
+				.hasNext(); i++) {
+			Map.Entry<String, Integer> temp_entry = null;
 			
-			for (Map.Entry<String, Integer> entry : temp_most.entrySet()) {
-				if(mostWords.containsKey(entry.getKey())){
-				mostWords.put(entry.getKey(), mostWords.get(entry.getKey()) + entry.getValue());
-				}
-				else {
-					mostWords.put(entry.getKey() , entry.getValue() );
-				}
+			temp_entry = temp3.entrySet().iterator().next();
+		
+			for (Map.Entry<String, Integer> entry : temp3.entrySet()) {
+				if(temp_entry != null && temp_entry.getValue() <= entry.getValue())
+					temp_entry = entry;
 			}
 			
+			temp3.remove(temp_entry.getKey());
+			mostWords.put(temp_entry.getKey(), temp_entry.getValue());
+			}
 		}
+		
 		
 		return mostWords;
 		

@@ -321,7 +321,7 @@ public class ReportCreator implements IReportCreator {
 		JLabel mostusedcustomwords = new JLabel();
 		JSeparator horline1 = new JSeparator(JSeparator.HORIZONTAL);
 		JSeparator horline2 = new JSeparator(JSeparator.HORIZONTAL);
-	      
+		LinkedHashMap<String, Integer> orderFrequent = new LinkedHashMap<String, Integer>();
 	      
 	    horline1.setSize(580,10);
 	    horline1.setLocation(10,125);
@@ -401,12 +401,7 @@ public class ReportCreator implements IReportCreator {
 			
 			Averager av_cases = new Averager(myResultset);
 			
-			SortedMap<Integer, String> orderFrequent = new TreeMap<Integer,String>(Collections.reverseOrder());
-			
-
-			for (Map.Entry<String, Integer> entry : av_cases.getWordMap().entrySet()) {
-				orderFrequent.put(entry.getValue(), entry.getKey());
-			}
+			orderFrequent = av_cases.getWordMap();
 			
 			Iterator<?> iterator2 = orderFrequent.keySet().iterator();
 			  while (iterator2.hasNext()) {
@@ -414,6 +409,7 @@ public class ReportCreator implements IReportCreator {
 				mostusedwords.setText(mostusedwords.getText()+"<br> - "+orderFrequent.get(key)+ " ("+key+")");
 				barchartset.setValue(Integer.parseInt(key.toString()),"", orderFrequent.get(key));
 			  }
+			    
 			  
 				mostusedwords.setText(mostusedwords.getText()+"</html>");
 				mostusedwords.setSize(300,200);
