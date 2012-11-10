@@ -1,9 +1,17 @@
+/**
+ * @author Andreas Neumann, Robert Stein
+ */
+
 package org.textanalyzer.analyzer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import org.textanalyzer.analyzer.dictionary.Dictionary;
 import org.textanalyzer.analyzer.dictionary.IDictionary;
@@ -22,6 +30,7 @@ public class Analyzer implements IAnalyzer {
 	private int wrongWordCount = 0;
 	private int sentenceCount = 0;
 	private int textAttitude = 0;
+	private boolean firstWord;
 
 	IDictionary dict = new Dictionary();
 	private String[] positiveWords = {"freudig"};
@@ -31,7 +40,7 @@ public class Analyzer implements IAnalyzer {
 	private Map<String, Integer> fullWordList = new HashMap<String, Integer>();
 	private Map<String, Integer> nomen = new HashMap<String, Integer>();
 	private String text;
-	private int textIndex;
+	private int textIndex = 0;
 	
 	/* Some internal classes */
 	private class MyWord{
@@ -41,6 +50,37 @@ public class Analyzer implements IAnalyzer {
 	private class MySentence{
 		protected String sentence = "";
 		//protected String punctuation = "";
+	}
+	
+	public void textPreprocess() {
+		text = text.replace("<","");
+		text = text.replace(">","");
+		text = text.replace("\"","");
+		text = text.replace("+","");
+		text = text.replace("´","");
+		text = text.replace("`","");
+		text = text.replace("(","");
+		text = text.replace(")","");
+		text = text.replace("&","");
+		text = text.replace("$","");
+		text = text.replace("§","");
+		text = text.replace("%","");
+		text = text.replace("=","");
+		text = text.replace("'","");
+		text = text.replace("*","");
+		text = text.replace("#","");
+		text = text.replace("_","");
+		text = text.replace(";","");
+		text = text.replace(":","");
+		text = text.replace("°","");
+		text = text.replace(",","");
+		text = text.replace("^","");
+		text = text.replace("[","");
+		text = text.replace("]","");
+		text = text.replace("|","");
+		text = text.replace("{","");
+		text = text.replace("}","");
+		
 	}
 	
 	@Override
@@ -55,7 +95,8 @@ public class Analyzer implements IAnalyzer {
 			text = myTask.getDocument().getText();
 			this.analysis.setDocument(myTask.getDocument());
 		}
-		
+		textPreprocess();
+		System.out.println(text);
 		/* Get the custom Words */
 		customWords = new HashMap<String, Integer>();
 		for (String customWord : myTask.getWordList()) {
@@ -67,17 +108,32 @@ public class Analyzer implements IAnalyzer {
 
 		this.analysis.setWordCount(wordCount);
 		this.analysis.setWrongWordCount(wrongWordCount);
+		this.analysis.setPseudoIQ(0);
 		if(sentenceCount > 0)
 			this.analysis.setAvaragePhraseLength(wordCount/sentenceCount);
 		else
 			this.analysis.setAvaragePhraseLength(0);
+		
+		double wordc = wordCount;
+		double sentc = sentenceCount;
+		double wrongWordc = wrongWordCount;
+		
 		if(wordCount > 0)
-			this.analysis.setPseudoIQ(((wordCount - wrongWordCount) * 100) / wordCount);
-		else
-			this.analysis.setPseudoIQ(0);
+			this.analysis.setPseudoIQ(
+					(int) (100*((sentc*(wordc/sentc)-wrongWordc)/1000F)/((sentc*(wordc/sentc)-wrongWordc)/1000F+0.1F)));
 		this.analysis.setMostFrequentWord(new HashMap<String, Integer>(fullWordList));
 		this.analysis.setCustomWordCount(new HashMap<String, Integer>(customWords));
 		this.analysis.setTextMood(textAttitude>=POSITIVEBORDER?TextMood.POSITIVE:textAttitude<=NEGATIVEBORDER?TextMood.NEGATIVE:TextMood.NEUTRAL);
+		
+				
+		SortedMap<Integer,String> orderFreNom = new TreeMap<Integer, String>(Collections.reverseOrder()); 		
+		for (Entry<String, Integer> entry : fullWordList.entrySet()) {
+			if(dict.getWordStatus(entry.getKey()) == WordStatus.NOMEN)
+			orderFreNom.put(entry.getValue(), entry.getKey());
+		}
+		
+				
+		this.analysis.setMostFrequentNomen(orderFreNom.get(orderFreNom.firstKey()));
 		
 		return this.analysis;
 	}
@@ -85,10 +141,11 @@ public class Analyzer implements IAnalyzer {
 	private MySentence analyzeNextSentence(){
 		MyWord word;
 		MySentence sentence = new MySentence();
-		
+		firstWord = true;
 		// Get the words of a sentence
 		while(textIndex <= text.length()){
 			if((word = analyzeNextWord()) != null){
+				
 				sentence.sentence = sentence.sentence.concat(word.word + " ");
 				if(word.punctuation != "")
 					break;
@@ -147,14 +204,15 @@ public class Analyzer implements IAnalyzer {
 		}
 		
 		// Get the punctuation
-		if(textIndex < text.length() && punctuations.contains(text.charAt(textIndex))){
-			for(;punctuations.contains(text.charAt(textIndex));textIndex++){
+	
+			for(;textIndex < text.length()-1 && punctuations.contains(text.charAt(textIndex));textIndex++){
 				word.punctuation = word.punctuation.concat(text.substring(textIndex, textIndex+1));
 			}
-		}
+	
 
 		// Refresh the word counter
 		wordCount++;
+		System.out.println(wordCount);
 		counter = fullWordList.remove(word.word);
 		if(counter == null)
 			fullWordList.put(word.word, 1);
@@ -176,7 +234,19 @@ public class Analyzer implements IAnalyzer {
 			else
 				nomen.put(word.word, ++counter);
 		}else if(status == WordStatus.WRONG)
+			if(firstWord == true) {
+				status = dict.getWordStatus(word.word.toLowerCase());
+				if(status == WordStatus.WRONG) {
+					wrongWordCount++;
+				}
+				else {
+					if(fullWordList.containsKey(word.word.toLowerCase()))
+						fullWordList.put(word.word.toLowerCase(), fullWordList.get(word.word.toLowerCase())+1);
+				}
+			}
+			else {
 			wrongWordCount++;
+			}
 		return word;
 	}
 

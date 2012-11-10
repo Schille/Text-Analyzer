@@ -1,4 +1,3 @@
-
 package org.textanalyzer.frontend;
 
 import java.awt.Color;
@@ -27,30 +26,28 @@ import org.textanalyzer.profileviewer.ProfileViewer;
 public class FrontendProfileManager extends JFrame implements
 		IFrontendProfileManager {
 
-	
 	// set variables for the banner content
 
 	private JPanel bannerPanel = new JPanel();
 	private JPanel contentPanel = new JPanel();
-	private JLabel icon = new JLabel(
-			new ImageIcon(
-					"../icon.png"));
+	private JLabel icon = new JLabel(new ImageIcon("../icon.png"));
 	private JLabel bannerText = new JLabel(" analytiX ");
 
 	// set variables for the navigation container
 
 	private JPanel naviPanel = new JPanel();
 	private JScrollPane naviScrollPane;
-	private JButton addButton = new JButton(
-			new ImageIcon(
-					"../addButton.jpg"));
-	private JButton deleteButton = new JButton(
-			new ImageIcon(
-					"../deleteButton.jpg"));
+	private JButton addButton = new JButton(new ImageIcon("../addButton.jpg"));
+	private JButton deleteButton = new JButton(new ImageIcon(
+			"../deleteButton.jpg"));
 	DefaultListModel listModel = new DefaultListModel();
 	private JList authorList;
-	private ProfileManager profileLogic;	
+	
+	
+	private ProfileManager profileLogic;
 	private ProfileViewer profileView;
+	
+	AuthorRegistration authorRegistration = new AuthorRegistration();
 
 	public FrontendProfileManager(ProfileManager myManager) {
 		profileLogic = myManager;
@@ -71,19 +68,16 @@ public class FrontendProfileManager extends JFrame implements
 		}
 
 		setLayout(null);
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		createBanner();
-        createNavigation();
-        createContentPanel();
+		createNavigation();
+		createContentPanel();
 
-
-        add(naviPanel);
-        add(contentPanel);
-        add(bannerPanel);
-
-
+		add(naviPanel);
+		add(contentPanel);
+		add(bannerPanel);
 
 		addButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,107 +90,104 @@ public class FrontendProfileManager extends JFrame implements
 				deleteButtonActionPerformed(evt);
 			}
 		});
-		
-		authorList.addMouseListener(new MouseListener(){
+
+		authorList.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
+	
 				int key = authorList.getSelectedIndex();
 				profileView = new ProfileViewer(key);
-				
+
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 		});
-		
+		authorRegistration.setVisible(false);
 		setResizable(false);
-		setPreferredSize(new Dimension(750,550));
-		setLocation(50,50);
+		setPreferredSize(new Dimension(750, 550));
+		setLocation(50, 50);
 		pack();
 		setVisible(true);
 	}
-	
 
-    //create an fill the Panel which contains the Banner
-    private void createBanner(){
-        icon.setBounds(75, 25, 100, 100);
+	// create an fill the Panel which contains the Banner
+	private void createBanner() {
+		icon.setBounds(75, 25, 100, 100);
 
-        bannerPanel.setBounds(0, 0, 750, 150);
-        bannerPanel.setLayout(null);
-        bannerPanel.setBackground(Color.white);
-        bannerPanel.add(icon);
+		bannerPanel.setBounds(0, 0, 750, 150);
+		bannerPanel.setLayout(null);
+		bannerPanel.setBackground(Color.white);
+		bannerPanel.add(icon);
 
-        bannerText.setFont(new Font("Tahoma", 0, 50));
-        bannerText.setBounds(400, 50, 300, 50);
+		bannerText.setFont(new Font("Tahoma", 0, 50));
+		bannerText.setBounds(400, 50, 300, 50);
 
-        bannerPanel.add(bannerText);
-        
-    }
+		bannerPanel.add(bannerText);
 
-    //create and fill the navigation Panel
-    private void createNavigation(){
-        naviPanel.setBounds(0, 150, 250, 400);
-        naviPanel.setLayout(null);
-        naviPanel.setBackground(Color.white);
+	}
 
-        authorList = new JList(listModel);
-        naviScrollPane = new JScrollPane(authorList);
-        naviScrollPane.setBounds(25, 65, 200, 280);
+	// create and fill the navigation Panel
+	private void createNavigation() {
+		naviPanel.setBounds(0, 150, 250, 400);
+		naviPanel.setLayout(null);
+		naviPanel.setBackground(Color.white);
 
-        addButton.setBounds(50, 0, 50, 50);
-        naviPanel.add(addButton);
+		authorList = new JList(listModel);
+		naviScrollPane = new JScrollPane(authorList);
+		naviScrollPane.setBounds(25, 65, 200, 280);
 
-        deleteButton.setBounds(150, 0, 50, 50);
-        naviPanel.add(deleteButton);
+		addButton.setBounds(50, 0, 50, 50);
+		naviPanel.add(addButton);
+		deleteButton.setBounds(150, 0, 50, 50);
+		naviPanel.add(deleteButton);
 
-        authorList.setFont(new Font("Arial", 1, 16));
-        naviPanel.add(naviScrollPane);
-    }
+		authorList.setFont(new Font("Arial", 1, 16));
+		naviPanel.add(naviScrollPane);
+	}
 
-    //create content panel
-    private void createContentPanel(){
-        contentPanel.setBounds(250, 150, 500, 400);
-        contentPanel.setBackground(Color.white);
-        contentPanel.setLayout(null);
-    }
+	// create content panel
+	private void createContentPanel() {
+		contentPanel.setBounds(250, 150, 500, 400);
+		contentPanel.setBackground(Color.white);
+		contentPanel.setLayout(null);
+	}
 
 	private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		JPanel authorRegistrateWindow = new JPanel();
-		authorRegistrateWindow.setLayout(null);
-		authorRegistrateWindow.setBounds(250, 150, 500, 400);
-		authorRegistrateWindow.setBackground(Color.red);
-		authorRegistrateWindow.setLayout(null);
-		add(authorRegistrateWindow);
-		add(addButton);
 		
-		
-		
+		//contentPanel.setVisible(false);
+		authorRegistration.setVisible(true);
+		getContentPane().add(authorRegistration);
+		contentPanel.setVisible(false);
+
 	}
 
 	private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		authorRegistration.setVisible(false);
+		contentPanel.setVisible(true);	
 		profileLogic.removeProfile(authorList.getSelectedIndex());
 		listModel.remove(authorList.getSelectedIndex());
 	}

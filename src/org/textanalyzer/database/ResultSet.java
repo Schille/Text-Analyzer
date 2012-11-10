@@ -1,9 +1,17 @@
 package org.textanalyzer.database;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
+import org.apache.pdfbox.pdfviewer.MapEntry;
 import org.textanalyzer.analyzer.TextMood;
+import org.textanalyzer.analyzer.dictionary.WordStatus;
 
 /**
  * @author Michael Schilonka
@@ -82,7 +90,27 @@ public class ResultSet implements IResultSet {
 
 	@Override
 	public Map<String, Integer> getMostFrequentWord(int myNumber) {
-		return mostFrequentWord;
+		
+		
+		LinkedHashMap<String, Integer> orderWords = new LinkedHashMap<String, Integer>();
+		
+		for(int i = 0; i < myNumber; i++) {
+			Map.Entry<String, Integer> temp_entry = null;
+			
+			temp_entry = mostFrequentWord.entrySet().iterator().next();
+		
+			for (Map.Entry<String, Integer> entry : mostFrequentWord.entrySet()) {
+				if(temp_entry != null && temp_entry.getValue() <= entry.getValue())
+					temp_entry = entry;
+			}
+			
+			mostFrequentWord.remove(temp_entry.getKey());
+			orderWords.put(temp_entry.getKey(), temp_entry.getValue());
+		}
+		
+		
+		
+		  return orderWords;
 	}
 
 	@Override
