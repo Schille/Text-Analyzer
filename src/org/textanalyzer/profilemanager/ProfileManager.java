@@ -49,5 +49,9 @@ public class ProfileManager implements IProfileManager {
 		return result;
 	}
 	
+	public long getUserID(int myIndex){
+		return mapper.get(myIndex).getId();
+	}
+	
 	
 }
