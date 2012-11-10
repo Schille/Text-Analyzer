@@ -1,3 +1,7 @@
+/**
+ * @author Andreas Neumann, Robert Stein
+ */
+
 package org.textanalyzer.analyzer;
 
 import java.util.ArrayList;

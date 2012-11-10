@@ -132,6 +132,7 @@ public class TestAnalyzer {
 		assertEquals(8, testit.getAvaragePhraseLength());
 		assertEquals(testmostfre, testit.getMostFrequentWord(4));
 		assertEquals(29, testit.getPseudoIQ());
+		
 	
 	}
 
