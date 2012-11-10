@@ -88,13 +88,13 @@ public class AuthorRegistration extends JPanel {
 		if (validateString(author)){
 			//author can be returned
 		} else {
-			JOptionPane.showMessageDialog(null, "Bitte geben Sie einen Autorennamen an. Achten Sie bitte dabei darauf, dass er nur Buchstaben enthält und keine Zahlen oder Sonderzeichen.", "Fehler", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Bitte geben Sie einen Autorennamen an. Achten Sie bitte dabei darauf, dass er nur Buchstaben enth\u00e4lt und keine Zahlen oder Sonderzeichen.", "Fehler", JOptionPane.ERROR_MESSAGE);
 		}
 		
 		if (validateString(profession)){
 			// profession can be returned
 		} else {
-			JOptionPane.showMessageDialog(null, "Bitte geben Sie einen Beruf an. Achten Sie bitte dabei darauf, dass er nur Buchstaben enthält und keine Zahlen oder Sonderzeichen.", "Fehler", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Bitte geben Sie einen Beruf an. Achten Sie bitte dabei darauf, dass er nur Buchstaben enth\u00e4lt und keine Zahlen oder Sonderzeichen.", "Fehler", JOptionPane.ERROR_MESSAGE);
 		}
 		
 		validateAge(ageField.getText());
