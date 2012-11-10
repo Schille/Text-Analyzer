@@ -137,6 +137,11 @@ public class AuthorRegistration extends JPanel {
 		}
 		manager.createProfile(myProfileInfo);
 		frontendManager.fillList();
+		firstNameField.setText("");
+		lastNameField.setText("");
+		professionField.setText("");
+		ageField.setText("");
+		
 		}
 
 
