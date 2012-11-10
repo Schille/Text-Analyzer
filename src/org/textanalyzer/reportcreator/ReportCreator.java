@@ -17,6 +17,7 @@ import javax.swing.JSeparator;
 
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
@@ -146,12 +147,26 @@ public class ReportCreator implements IReportCreator {
 		
 		Map<String,Integer> temp2 = myResultset.getCustomWordCount();
 		//Reversed sorted map, start with the largest key
-		SortedMap<Integer,String> orderCustom = new TreeMap<Integer, String>(Collections.reverseOrder()); 
 		
-		//Swap key and value to sort by value (former key)
-		for (Map.Entry<String, Integer> entry : temp2.entrySet()) {
-			orderCustom.put(entry.getValue(), entry.getKey());
+		
+		LinkedHashMap<String, Integer> orderCustom = new LinkedHashMap<String, Integer>();
+		
+		for(int i = 0; i < 10 && temp2.entrySet().iterator()
+				.hasNext(); i++) {
+			Map.Entry<String, Integer> temp_entry = null;
+			
+			temp_entry = temp2.entrySet().iterator().next();
+		
+			for (Map.Entry<String, Integer> entry : temp2.entrySet()) {
+				if(temp_entry != null && temp_entry.getValue() <= entry.getValue())
+					temp_entry = entry;
+			}
+			
+			temp2.remove(temp_entry.getKey());
+			orderCustom.put(temp_entry.getKey(), temp_entry.getValue());
 		}
+		
+		
 		
 		//Iterate over all map entries and put the key and value into the label
 		Iterator<?> iterator = orderCustom.keySet().iterator();
@@ -176,12 +191,22 @@ public class ReportCreator implements IReportCreator {
 		mostusedwords.setText("<html>Liste der häufigsten Wörter - Wort (Anzahl): ");
 		
 		Map<String,Integer> temp3 = myResultset.getMostFrequentWord(10);
-		SortedMap<Integer,String> orderFrequent = new TreeMap<Integer, String>(Collections.reverseOrder());
+			
+		LinkedHashMap<String, Integer> orderFrequent = new LinkedHashMap<String, Integer>();
 		
+		for(int i = 0; i < 10 && temp3.entrySet().iterator()
+				.hasNext(); i++) {
+			Map.Entry<String, Integer> temp_entry = null;
+			
+			temp_entry = temp3.entrySet().iterator().next();
 		
-		
-		for (Map.Entry<String, Integer> entry : temp3.entrySet()) {
-			orderFrequent.put(entry.getValue(), entry.getKey());
+			for (Map.Entry<String, Integer> entry : temp3.entrySet()) {
+				if(temp_entry != null && temp_entry.getValue() <= entry.getValue())
+					temp_entry = entry;
+			}
+			
+			temp3.remove(temp_entry.getKey());
+			orderFrequent.put(temp_entry.getKey(), temp_entry.getValue());
 		}
 		
         DefaultCategoryDataset barchartset = new DefaultCategoryDataset();
@@ -191,12 +216,12 @@ public class ReportCreator implements IReportCreator {
 		  while (iterator2.hasNext()) {
 		  Object key = iterator2.next();
 			mostusedwords.setText(mostusedwords.getText()+"<br> - "+orderFrequent.get(key)+ " ("+key+")");
-			barchartset.setValue(Integer.parseInt(key.toString()),"", orderFrequent.get(key));
+			barchartset.setValue(orderFrequent.get(key),"",(key.toString()));
 		  }
 		
 		mostusedwords.setText(mostusedwords.getText()+"</html>");
 		mostusedwords.setSize(300,200);
-		mostusedwords.setLocation(10, 120);
+		mostusedwords.setLocation(10, 130);
 		
 		
 		filename.setText("Dateiname: "+myResultset.getDocument().getFileName());
