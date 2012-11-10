@@ -26,6 +26,7 @@ public class Analyzer implements IAnalyzer {
 	private int wrongWordCount = 0;
 	private int sentenceCount = 0;
 	private int textAttitude = 0;
+	private boolean firstWord;
 
 	IDictionary dict = new Dictionary();
 	private String[] positiveWords = {"freudig"};
@@ -68,6 +69,7 @@ public class Analyzer implements IAnalyzer {
 		text = text.replace(";","");
 		text = text.replace(":","");
 		text = text.replace("°","");
+		text = text.replace(",","");
 		text = text.replace("^","");
 		text = text.replace("[","");
 		text = text.replace("]","");
@@ -130,10 +132,11 @@ public class Analyzer implements IAnalyzer {
 	private MySentence analyzeNextSentence(){
 		MyWord word;
 		MySentence sentence = new MySentence();
-		
+		firstWord = true;
 		// Get the words of a sentence
 		while(textIndex <= text.length()){
 			if((word = analyzeNextWord()) != null){
+				
 				sentence.sentence = sentence.sentence.concat(word.word + " ");
 				if(word.punctuation != "")
 					break;
@@ -222,7 +225,19 @@ public class Analyzer implements IAnalyzer {
 			else
 				nomen.put(word.word, ++counter);
 		}else if(status == WordStatus.WRONG)
+			if(firstWord == true) {
+				status = dict.getWordStatus(word.word.toLowerCase());
+				if(status == WordStatus.WRONG) {
+					wrongWordCount++;
+				}
+				else {
+					if(fullWordList.containsKey(word.word.toLowerCase()))
+						fullWordList.put(word.word.toLowerCase(), fullWordList.get(word.word.toLowerCase())+1);
+				}
+			}
+			else {
 			wrongWordCount++;
+			}
 		return word;
 	}
 

@@ -7,7 +7,9 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.textanalyzer.analyzer.Analyzer;
@@ -91,7 +93,7 @@ public class TestAnalyzer {
 					@Override
 					public String getText() {
 						
-						return "Der & lilalaune Bär tanz fröhlich durch Karlsruhe. Dabei denkt er sich: \"Wo ist eigentlich Hans?\" " +
+						return "Der & lilalaune Bär tanzt fröhlich durch Karlsruhe. Dabei denkt er sich: \"Wo ist eigentlich Hans?\" " +
 								"Er vermisst ihn wirklich sehr. Manchmal geht er auf seinen Balkon und schaut traurig in die Ferne..." +
 								"Der Bär ist trotzdem sehr zuversichtlich, dass er seinen Freund bald wiedersieht.";
 					}
@@ -106,11 +108,30 @@ public class TestAnalyzer {
 				return doc;
 			}
 		});
-	
+		
+		Map<String, Integer> testcustom = new HashMap<String, Integer>();
+		
+		testcustom.put("Bär", 2);
+		testcustom.put("lila", 0);
+		testcustom.put("Hans", 1);
+		testcustom.put("Karlsruhe", 1);
+		
+		Map<String,Integer> testmostfre = new HashMap<String, Integer>();
+		
+		testmostfre.put("er", 3);
+		testmostfre.put("Bär", 2);
+		testmostfre.put("ist", 2);
+		testmostfre.put("seinen", 2);
+		
 		
 		assertEquals(44, testit.getWordCount());
 		assertEquals(TextMood.NEGATIVE, testit.getTextMood());
 		assertEquals("Bär", testit.getMostFrequentNomen());
+		assertEquals(2, testit.getWrongWordCount());
+		assertEquals(testcustom, testit.getCustomWordCount());
+		assertEquals(8, testit.getAvaragePhraseLength());
+		assertEquals(testmostfre, testit.getMostFrequentWord(4));
+		
 	
 	}
 
