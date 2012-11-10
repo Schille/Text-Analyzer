@@ -116,6 +116,7 @@ public class AuthorRegistration extends JPanel {
 			
 		} else {
 			JOptionPane.showMessageDialog(null, "Bitte geben Sie den Nachnamen des Autors an. Achten Sie bitte dabei darauf, dass er nur Buchstaben enth\u00e4lt und keine Zahlen oder Sonderzeichen.", "Fehler", JOptionPane.ERROR_MESSAGE);
+			return;
 		}
 		
 		
@@ -124,6 +125,7 @@ public class AuthorRegistration extends JPanel {
 			myProfileInfo.setProfession(profession);
 		} else {
 			JOptionPane.showMessageDialog(null, "Bitte geben Sie einen Beruf an. Achten Sie bitte dabei darauf, dass er nur Buchstaben enth\u00e4lt und keine Zahlen oder Sonderzeichen.", "Fehler", JOptionPane.ERROR_MESSAGE);
+			return;
 		}
 		
 		validateAge(ageField.getText());
@@ -133,10 +135,15 @@ public class AuthorRegistration extends JPanel {
 			
 		} else {
 			JOptionPane.showMessageDialog(null, "Bitte geben Sie ein Alter an. Achten Sie bitte darauf, dass Sie nur Zahlen verwenden.", "Fehler", JOptionPane.ERROR_MESSAGE);
-
+			return;
 		}
 		manager.createProfile(myProfileInfo);
 		frontendManager.fillList();
+		firstNameField.setText("");
+		lastNameField.setText("");
+		professionField.setText("");
+		ageField.setText("");
+		
 		}
 
 
@@ -149,7 +156,7 @@ public class AuthorRegistration extends JPanel {
 
 
 	private boolean validateString(String input) {
-			return input.matches("^[a-zA-Z]+$");
+			return input.matches("^[a-zA-Zäöü]+$");
 			}
 
 }
