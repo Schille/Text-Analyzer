@@ -104,14 +104,19 @@ public class Analyzer implements IAnalyzer {
 
 		this.analysis.setWordCount(wordCount);
 		this.analysis.setWrongWordCount(wrongWordCount);
+		this.analysis.setPseudoIQ(0);
 		if(sentenceCount > 0)
 			this.analysis.setAvaragePhraseLength(wordCount/sentenceCount);
 		else
 			this.analysis.setAvaragePhraseLength(0);
+		
+		double wordc = wordCount;
+		double sentc = sentenceCount;
+		double wrongWordc = wrongWordCount;
+		
 		if(wordCount > 0)
-			this.analysis.setPseudoIQ(((wordCount - wrongWordCount) * 100) / wordCount);
-		else
-			this.analysis.setPseudoIQ(0);
+			this.analysis.setPseudoIQ(
+					(int) (100*((sentc*(wordc/sentc)-wrongWordc)/1000F)/((sentc*(wordc/sentc)-wrongWordc)/1000F+0.1F)));
 		this.analysis.setMostFrequentWord(new HashMap<String, Integer>(fullWordList));
 		this.analysis.setCustomWordCount(new HashMap<String, Integer>(customWords));
 		this.analysis.setTextMood(textAttitude>=POSITIVEBORDER?TextMood.POSITIVE:textAttitude<=NEGATIVEBORDER?TextMood.NEGATIVE:TextMood.NEUTRAL);
