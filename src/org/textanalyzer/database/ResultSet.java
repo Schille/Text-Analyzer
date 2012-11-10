@@ -94,7 +94,8 @@ public class ResultSet implements IResultSet {
 		
 		LinkedHashMap<String, Integer> orderWords = new LinkedHashMap<String, Integer>();
 		
-		for(int i = 0; i < myNumber; i++) {
+		for(int i = 0; i < myNumber && mostFrequentWord.entrySet().iterator()
+				.hasNext(); i++) {
 			Map.Entry<String, Integer> temp_entry = null;
 			
 			temp_entry = mostFrequentWord.entrySet().iterator().next();

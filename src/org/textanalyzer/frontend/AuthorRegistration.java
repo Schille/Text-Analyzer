@@ -13,6 +13,9 @@ import javax.swing.JTextField;
 
 import javax.swing.text.MaskFormatter;
 
+import org.textanalyzer.database.ProfileInformation;
+import org.textanalyzer.profilemanager.ProfileManager;
+
 
 public class AuthorRegistration extends JPanel {
 
@@ -24,12 +27,15 @@ public class AuthorRegistration extends JPanel {
     private javax.swing.JTextField authornameField = new JTextField();
     private javax.swing.JTextField professionField = new JTextField();
     private javax.swing.JTextField ageField = new JTextField();
+    private ProfileManager manager;
+    private FrontendProfileManager frontendManager;
 
    
-    public AuthorRegistration(){
-    	
+    public AuthorRegistration(ProfileManager myManager, FrontendProfileManager myProfManager){
+    	manager = myManager;
+    	frontendManager = myProfManager;
     	setLayout(null);
-		setBounds(250, 150, 500, 400);
+		setSize(500, 400);
 		setBackground(Color.white);
 		
 		//set the headline
@@ -74,25 +80,31 @@ public class AuthorRegistration extends JPanel {
     	add(professionLabel);
     	add(ageLabel);
     	add(submit);
+    	setVisible(true);
     	
     	
     }
+    
+    
 
 
 	protected void submitButtonActionPerformed(ActionEvent evt) {
 		
+		ProfileInformation myProfileInfo = new ProfileInformation();
 		String author = authornameField.getText();
 		String profession = professionField.getText();
 		
 		validateString(author);
 		if (validateString(author)){
-			//author can be returned
+			myProfileInfo.setFirstName("Klausi");
+			myProfileInfo.setLastName("Peterson");
+			
 		} else {
 			JOptionPane.showMessageDialog(null, "Bitte geben Sie einen Autorennamen an. Achten Sie bitte dabei darauf, dass er nur Buchstaben enth\u00e4lt und keine Zahlen oder Sonderzeichen.", "Fehler", JOptionPane.ERROR_MESSAGE);
 		}
 		
 		if (validateString(profession)){
-			// profession can be returned
+			myProfileInfo.setProfession(profession);
 		} else {
 			JOptionPane.showMessageDialog(null, "Bitte geben Sie einen Beruf an. Achten Sie bitte dabei darauf, dass er nur Buchstaben enth\u00e4lt und keine Zahlen oder Sonderzeichen.", "Fehler", JOptionPane.ERROR_MESSAGE);
 		}
@@ -100,13 +112,15 @@ public class AuthorRegistration extends JPanel {
 		validateAge(ageField.getText());
 		if (validateAge(ageField.getText())){
 			int age = new Integer(ageField.getText());
-			//age is ready to be returned
+			myProfileInfo.setAge(age);
 			
 		} else {
 			JOptionPane.showMessageDialog(null, "Bitte geben Sie ein Alter an. Achten Sie bitte darauf, dass Sie nur Zahlen verwenden.", "Fehler", JOptionPane.ERROR_MESSAGE);
 
 		}
-	}
+		manager.createProfile(myProfileInfo);
+		frontendManager.fillList();
+		}
 
 
 	private boolean validateAge(String input) {

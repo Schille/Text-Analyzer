@@ -54,6 +54,7 @@ public class TestFrontendProfileManager {
 		result.setCustomWordCount(custom);
 		Document doc1 =		new Document(); 
 		doc1.setFileName("stuff");
+		doc1.setImportDate(new Date());
 		result.setDocument(doc1);	
 		
 		 result1 = new ResultSet();
@@ -65,6 +66,7 @@ public class TestFrontendProfileManager {
 		result1.setCustomWordCount(custom);
 		Document doc2 =		new Document(); 
 		doc2.setFileName("funny");
+		doc2.setImportDate(new Date());
 		result1.setDocument(doc2);	
 		
 

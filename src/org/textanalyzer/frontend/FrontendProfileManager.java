@@ -31,42 +31,38 @@ public class FrontendProfileManager extends JFrame implements
 
 	private JPanel bannerPanel = new JPanel();
 	private JPanel contentPanel = new JPanel();
-	private JLabel icon = new JLabel(new ImageIcon("../icon.png"));
+	private JLabel icon = new JLabel(new ImageIcon("lib/icon.png"));
 	private JLabel bannerText = new JLabel(" analytiX ");
 
 	// set variables for the navigation container
 
 	private JPanel naviPanel = new JPanel();
 	private JScrollPane naviScrollPane;
-	private JButton addButton = new JButton(new ImageIcon("../addButton.jpg"));
+	private JButton addButton = new JButton(new ImageIcon("lib/addButton.jpg"));
 	private JButton deleteButton = new JButton(new ImageIcon(
-			"../deleteButton.jpg"));
+			"lib/deleteButton.jpg"));
 	DefaultListModel listModel = new DefaultListModel();
 	private JList authorList;
 	
 	
 	private ProfileManager profileLogic;
-	private ProfileViewer profileView;
+
 	
-	AuthorRegistration authorRegistration = new AuthorRegistration();
+	private AuthorRegistration authorRegistration;
 
 	public FrontendProfileManager(ProfileManager myManager) {
 		profileLogic = myManager;
+		authorRegistration = new AuthorRegistration(profileLogic, this);
 		showFrontendProfileManager();
 
 	}
+	
+	
 
 	@Override
 	public void showFrontendProfileManager() {
 
-		LinkedList authors = new LinkedList();
-		authors = profileLogic.getAuthorList();
-
-		Iterator<String> iterate_author = authors.iterator();
-		while (iterate_author.hasNext()) {
-			String author_name = iterate_author.next();
-			listModel.addElement(author_name);
-		}
+		fillList();
 
 		setLayout(null);
 
@@ -76,9 +72,8 @@ public class FrontendProfileManager extends JFrame implements
 		createNavigation();
 		createContentPanel();
 
-		add(naviPanel);
-		add(contentPanel);
-		add(bannerPanel);
+		getContentPane().add(naviPanel);
+		getContentPane().add(bannerPanel);
 
 		addButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,8 +92,18 @@ public class FrontendProfileManager extends JFrame implements
 			@Override
 			public void mouseClicked(MouseEvent e) {
 	
+				contentPanel.removeAll();
+				
 				int key = authorList.getSelectedIndex();
-				profileView = new ProfileViewer(key);
+				ProfileViewer profileView = new ProfileViewer((int)profileLogic.getUserID(key));
+				JPanel profilePanel =  profileView.getProfileViewer();
+				profilePanel.setLocation(0,0);
+				profilePanel.setBackground(Color.white);
+				
+		profilePanel.setVisible(true);
+		contentPanel.add(profilePanel);
+		contentPanel.repaint();
+				
 
 			}
 
@@ -127,12 +132,25 @@ public class FrontendProfileManager extends JFrame implements
 			}
 
 		});
-		authorRegistration.setVisible(false);
+	
 		setResizable(false);
 		setPreferredSize(new Dimension(750, 550));
 		setLocation(50, 50);
 		pack();
 		setVisible(true);
+	}
+
+
+
+	public void fillList() {
+		listModel.removeAllElements();
+		LinkedList<String> authors = profileLogic.getAuthorList();
+
+		Iterator<String> iterate_author = authors.iterator();
+		while (iterate_author.hasNext()) {
+			String author_name = iterate_author.next();
+			listModel.addElement(author_name);
+		}
 	}
 
 	// create an fill the Panel which contains the Banner
@@ -148,7 +166,7 @@ public class FrontendProfileManager extends JFrame implements
 		bannerText.setBounds(400, 50, 300, 50);
 
 		bannerPanel.add(bannerText);
-
+		bannerPanel.setVisible(true);
 	}
 
 	// create and fill the navigation Panel
@@ -168,6 +186,8 @@ public class FrontendProfileManager extends JFrame implements
 
 		authorList.setFont(new Font("Arial", 1, 16));
 		naviPanel.add(naviScrollPane);
+		
+		naviPanel.setVisible(true);
 	}
 
 	// create content panel
@@ -175,26 +195,35 @@ public class FrontendProfileManager extends JFrame implements
 		contentPanel.setBounds(250, 150, 500, 400);
 		contentPanel.setBackground(Color.white);
 		contentPanel.setLayout(null);
+		contentPanel.setVisible(true);
+		getContentPane().add(contentPanel);
 	}
 
 	private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		
+		contentPanel.removeAll();
 
+		contentPanel.add(authorRegistration);
+		authorRegistration.setLocation(0,0);
 		authorRegistration.setVisible(true);
-		getContentPane().add(authorRegistration);
-		contentPanel.setVisible(false);
+		contentPanel.repaint();
+		
+		
 
 	}
 
 	private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		authorRegistration.setVisible(false);
-		contentPanel.setVisible(true);	
+		contentPanel.removeAll();
+		createContentPanel();
+		getContentPane().add(contentPanel);
+		contentPanel.repaint();
 		if (authorList.getSelectedIndex() == -1 ){
 		JOptionPane.showMessageDialog(null, "Zum L\u00f6schen bitte zun\u00e4chst einen Autor aus der Liste w\u00e4hlen.", "Fehler", JOptionPane.ERROR_MESSAGE);
 		} else {
 		profileLogic.removeProfile(authorList.getSelectedIndex());
 		listModel.remove(authorList.getSelectedIndex());
 		}
+		
 	}
 
 }
