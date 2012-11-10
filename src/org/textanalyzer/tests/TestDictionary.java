@@ -27,21 +27,20 @@ import org.textanalyzer.analyzer.dictionary.WordStatus;
  */
 public class TestDictionary {
 
-	
-	/*public void test() {
+
+	public void test() {
 		Dictionary test = new Dictionary();
 
-		/*for(int i=0;i<10;i++){
-		assertEquals(WordStatus.NOMEN, test.getWordStatus("Baum"));
-		}
-		//for(int i=0;i<1;i++){
 		
-		assertEquals(WordStatus.NOMEN, test.getWordStatus("Baum"));
+		
 	
 		for(int i=0;i<1;i++){
-		
+		assertEquals(WordStatus.OTHER, test.getWordStatus("gekannt"));
+		assertEquals(WordStatus.OTHER, test.getWordStatus("wiedersieht"));
+		assertEquals(WordStatus.OTHER, test.getWordStatus("singend"));
+		assertEquals(WordStatus.NOMEN, test.getWordStatus("Baum"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("leben"));
-		assertEquals(WordStatus.VERB, test.getWordStatus("ueberleben"));
+		assertEquals(WordStatus.VERB, test.getWordStatus("Ã¼berleben"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("denken"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("riechen"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("essen"));
@@ -52,7 +51,7 @@ public class TestDictionary {
 		assertEquals(WordStatus.VERB, test.getWordStatus("schlafen"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("kochen"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("sehen"));
-		assertEquals(WordStatus.VERB, test.getWordStatus("fuehlen"));
+		assertEquals(WordStatus.VERB, test.getWordStatus("fÃ¼hlen"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("schmerzen"));
 		assertEquals(WordStatus.VERB, test.getWordStatus("sprechen"));
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Haus"));
@@ -66,14 +65,14 @@ public class TestDictionary {
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Maus"));
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Katze"));
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Hund"));
-		assertEquals(WordStatus.NOMEN, test.getWordStatus("Straße"));
+		assertEquals(WordStatus.NOMEN, test.getWordStatus("StraÃŸe"));
 		assertEquals(WordStatus.NOMEN, test.getWordStatus("Baum"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("blau"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("hohl"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("dick"));
-		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("spaet"));
-		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("früh"));
-		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("spät"));
+		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("spÃ¤t"));
+		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("frÃ¼h"));
+		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("spÃ¤t"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("grau"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("eckig"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("rund"));
@@ -83,16 +82,21 @@ public class TestDictionary {
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("lila"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("langsam"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("schnell"));
-		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("dünn"));
+		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("dÃ¼nn"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("breit"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("klein"));
-		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("groß"));
+		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("groÃŸ"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("braun"));
 		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("rot"));
-		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("grün"));
+		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("grÃ¼n"));
+		assertEquals(WordStatus.NOMEN, test.getWordStatus("Pornokino"));
+		assertEquals(WordStatus.ADJECTIV, test.getWordStatus("kackbraun"));
+		assertEquals(WordStatus.WRONG, test.getWordStatus("blauddddd"));
+		assertEquals(WordStatus.WRONG, test.getWordStatus("nÃ¤hmlich"));
 		}
 		
-	}*/
+	}
+	
 	@Test
 	public void test2(){
 
