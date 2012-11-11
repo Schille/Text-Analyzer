@@ -25,108 +25,113 @@ import org.textanalyzer.profilemanager.ProfileManager;
 
 public class AuthorRegistration extends JPanel {
 
-	/* 
+	/*
 	 * setting all the variables which should appear on the JLabel
-	 * @param headLine JLabel which gives the user the overview of the functionality of the side
-	 * @param firstNameLabel, lastNameLabel, professionLabel, ageLabel : JLabels which inform the user which input they should type in the text field aside
-	 * @param firstNameField, lastNameField, professionNameField, ageField : JFields which will get the input of the user that will describe the author
+	 * 
+	 * @param headLine JLabel which gives the user the overview of the
+	 * functionality of the side
+	 * 
+	 * @param firstNameLabel, lastNameLabel, professionLabel, ageLabel : JLabels
+	 * which inform the user which input they should type in the text field
+	 * aside
+	 * 
+	 * @param firstNameField, lastNameField, professionNameField, ageField :
+	 * JFields which will get the input of the user that will describe the
+	 * author
 	 */
-    private javax.swing.JLabel headLine = new JLabel("Anlegen eines neuen Autors");
-    private javax.swing.JLabel firstNameLabel = new JLabel("Vorname: ");
-    private javax.swing.JLabel lastNameLabel = new JLabel("Nachname: ");
-    private javax.swing.JLabel professionLabel = new JLabel("Beruf: ");
-    private javax.swing.JLabel ageLabel = new JLabel("Alter: ");
-    private javax.swing.JButton submit = new JButton("Autor anlegen");
-    private javax.swing.JTextField firstNameField = new JTextField();
-    private javax.swing.JTextField lastNameField = new JTextField();
-    private javax.swing.JTextField professionField = new JTextField();
-    private javax.swing.JTextField ageField = new JTextField();
-    
-    private ProfileManager manager;
-    
-    private FrontendProfileManager frontendManager;
-    
-    /*
-     * constructor which is responsible to create the JPanel which allows to input the needed data
-     */
-    
-   
-    public AuthorRegistration(ProfileManager myManager, FrontendProfileManager myProfManager){
-    	manager = myManager;
-    	frontendManager = myProfManager;
-    	setLayout(null);
+	private javax.swing.JLabel headLine = new JLabel(
+			"Anlegen eines neuen Autors");
+	private javax.swing.JLabel firstNameLabel = new JLabel("Vorname: ");
+	private javax.swing.JLabel lastNameLabel = new JLabel("Nachname: ");
+	private javax.swing.JLabel professionLabel = new JLabel("Beruf: ");
+	private javax.swing.JLabel ageLabel = new JLabel("Alter: ");
+	private javax.swing.JButton submit = new JButton("Autor anlegen");
+	private javax.swing.JTextField firstNameField = new JTextField();
+	private javax.swing.JTextField lastNameField = new JTextField();
+	private javax.swing.JTextField professionField = new JTextField();
+	private javax.swing.JTextField ageField = new JTextField();
+
+	private ProfileManager manager;
+
+	private FrontendProfileManager frontendManager;
+
+	/*
+	 * constructor which is responsible to create the JPanel which allows to
+	 * input the needed data
+	 */
+
+	public AuthorRegistration(ProfileManager myManager,
+			FrontendProfileManager myProfManager) {
+		manager = myManager;
+		frontendManager = myProfManager;
+		setLayout(null);
 		setSize(500, 400);
 		setBackground(Color.white);
-		
+
 		/*
 		 * set the headline
 		 */
-    	headLine.setBounds(86,27,317,33);
-    	headLine.setFont(new Font("Arial",0,24));
-    	
-    	/*
-    	 * set the Labels that inform the users about the needed input
-    	 */
-    	firstNameLabel.setBounds(100,100,93,22);
-    	firstNameLabel.setFont(new Font("Arial",0,16));
-    	lastNameLabel.setBounds(100,150,93,22);
-    	lastNameLabel.setFont(new Font("Arial",0,16));
-    	professionLabel.setBounds(100,200,93,22);
-    	professionLabel.setFont(new Font("Arial",0,16));
-    	ageLabel.setBounds(100,250,93,22);
-    	ageLabel.setFont(new Font("Arial",0,16));
-    	
-    	
-    	/*
-    	 * set the three text fields
-    	 */
-    	firstNameField.setBounds(200,100,190,25);
-    	lastNameField.setBounds(200,150,190,25);
-    	professionField.setBounds(200,200,190,25);
-    	ageField.setBounds(200,250,190,25);
-    	
-    	/*
-    	 * set the Button to submit the input
-    	 */
-    	submit.setBounds(200,300,130,30);
-    	submit.setForeground(Color.white);
-    	submit.setBackground(new Color(209,0,0));
-    	submit.setFont(new Font("Arial",0,15));
-    	
-		
+		headLine.setBounds(86, 27, 317, 33);
+		headLine.setFont(new Font("Arial", 0, 24));
+
 		/*
-		 *  add an ActionListener to the Button
+		 * set the Labels that inform the users about the needed input
 		 */
-    	submit.addActionListener(new java.awt.event.ActionListener() {
-    		public void actionPerformed(java.awt.event.ActionEvent evt) {
-    			submitButtonActionPerformed(evt);
-    		}
-    	});
-    	
-		
-    	/*
-    	 * add all created elements to the JPanel and set it visible
-    	 */
+		firstNameLabel.setBounds(100, 100, 93, 22);
+		firstNameLabel.setFont(new Font("Arial", 0, 16));
+		lastNameLabel.setBounds(100, 150, 93, 22);
+		lastNameLabel.setFont(new Font("Arial", 0, 16));
+		professionLabel.setBounds(100, 200, 93, 22);
+		professionLabel.setFont(new Font("Arial", 0, 16));
+		ageLabel.setBounds(100, 250, 93, 22);
+		ageLabel.setFont(new Font("Arial", 0, 16));
+
+		/*
+		 * set the three text fields
+		 */
+		firstNameField.setBounds(200, 100, 190, 25);
+		lastNameField.setBounds(200, 150, 190, 25);
+		professionField.setBounds(200, 200, 190, 25);
+		ageField.setBounds(200, 250, 190, 25);
+
+		/*
+		 * set the Button to submit the input
+		 */
+		submit.setBounds(200, 300, 130, 30);
+		submit.setForeground(Color.white);
+		submit.setBackground(new Color(209, 0, 0));
+		submit.setFont(new Font("Arial", 0, 15));
+
+		/*
+		 * add an ActionListener to the Button
+		 */
+		submit.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				submitButtonActionPerformed(evt);
+			}
+		});
+
+		/*
+		 * add all created elements to the JPanel and set it visible
+		 */
 		add(headLine);
 		add(firstNameField);
 		add(lastNameField);
 		add(professionField);
 		add(ageField);
-    	add(firstNameLabel);
-    	add(lastNameLabel);
-    	add(professionLabel);
-    	add(ageLabel);
-    	add(submit);
-    	setVisible(true);
-    	
-    	
-    }
-    
-    
-    /*
-     * submitButtonActionPerformed is the method performed when the submit button is clicked
-     * 
-     */
+		add(firstNameLabel);
+		add(lastNameLabel);
+		add(professionLabel);
+		add(ageLabel);
+		add(submit);
+		setVisible(true);
+
+	}
+
+	/*
+	 * submitButtonActionPerformed is the method performed when the submit
+	 * button is clicked
+	 */
 
 	protected void submitButtonActionPerformed(ActionEvent evt) {
 		
@@ -175,11 +180,17 @@ public class AuthorRegistration extends JPanel {
 		 */
 		if (validateAge(ageField.getText())){
 			int age = new Integer(ageField.getText());
+			if (age < 120) {
 			myProfileInfo.setAge(age);
-			
-		} else {
-			JOptionPane.showMessageDialog(null, "Bitte geben Sie ein Alter an. Achten Sie bitte darauf, dass Sie nur Zahlen verwenden.", "Fehler", JOptionPane.ERROR_MESSAGE);
+			} else {
+			JOptionPane.showMessageDialog(null, "Sind sie sicher, dass das das richtige Alter ist?", "Fehler", JOptionPane.ERROR_MESSAGE);
 			return;
+			}
+		
+		}else {
+			JOptionPane.showMessageDialog(null, "Bitte geben Sie ein Alter an. Achten Sie bitte darauf, dass Sie nur Zahlen verwenden.", "Fehler", JOptionPane.ERROR_MESSAGE);
+			return;	
+		
 		}
 		manager.createProfile(myProfileInfo);
 		frontendManager.fillList();
@@ -194,25 +205,23 @@ public class AuthorRegistration extends JPanel {
 		
 		}
 
-
-		/*
-		 * the method validateAge checks with a regular expression if the given String just contains numbers
-		 */
+	/*
+	 * the method validateAge checks with a regular expression if the given
+	 * String just contains numbers
+	 */
 	private boolean validateAge(String input) {
-	
-			return input.matches("^[0-9]+$");
-			
-		
+
+		return input.matches("^[0-9]+$");
+
 	}
 
-
-		/*
-		 * the method validateString checks with a regular expression if the given String just contains letter
-		 * since the software is made for Germans also the "umlaute" and the ß is allowed for the inut 
-		 */
+	/*
+	 * the method validateString checks with a regular expression if the given
+	 * String just contains letter since the software is made for Germans also
+	 * the "umlaute" and the ß is allowed for the inut
+	 */
 	private boolean validateString(String input) {
-			return input.matches("^[a-zA-Zäöüß]+$");
-			}
+		return input.matches("^[a-zA-Zäöüß]+$");
+	}
 
 }
-
