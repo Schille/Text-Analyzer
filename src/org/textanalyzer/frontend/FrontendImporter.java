@@ -21,9 +21,16 @@ import javax.swing.JTextField;
  * 
  */
 
+/*
+ * the class FrontendImporter is responsible for the graphic appearance that is displayed if the user wants to import a text to a author
+ */
+
 public class FrontendImporter extends JFrame implements IFrontendImporter {
 
 	
+		/*
+		 * variables which defining the elements that are needed to create the FrontendImporter
+		 */
 	    private JTextField dataPath = new JTextField();
 	    private JButton startAnalysis = new JButton("Analyse starten");
 	    private JButton browseButton = new JButton("Browse...");
@@ -38,7 +45,9 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	    private String filepath = "";
 	    private String blankText = "";
 
-	    
+	    /*
+	     * method showImportWindow displays the JFrame with all the elements that are needed to display the FrontendImporter 
+	     */
 	    public void showImportWindow() {
 
 	        setTitle("Datei importieren...");
@@ -46,10 +55,15 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	        setBounds(0, 0, 700, 480);
 	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+	        /*
+	         * textareaPane is the JScrollPane which is needed to allow scrolling in the textareaForBlank
+	         */
 	        textareaPane = new JScrollPane(textareaForBlank);
 	        textareaPane.setBounds(53, 210, 407, 162);
 
-
+	        /*
+	         * setting all the elements on the frame
+	         */
 	        text_Textanalyse.setBounds(204, 28, 140, 35);
 	        text_EingabeDesTextes.setBounds(195, 68, 160, 25);
 	        text_Dateiimport.setBounds(50, 108, 93, 21);
@@ -58,23 +72,26 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	        text_TextInTextfeld.setBounds(50, 173, 254, 20);
 	        startAnalysis.setBounds(210, 390, 124, 26);
 
-
-
-
-
-
+	        /*
+	         * set the font to the text elements
+	         */
 	        text_Textanalyse.setFont(new Font("Tahoma", 0, 24));
 	        text_EingabeDesTextes.setFont(new Font("Tahoma", 0, 18));
 	        text_Dateiimport.setFont(new Font("Tahoma", 0, 14));
 	        text_TextInTextfeld.setFont(new Font("Tahoma", 0, 14));
 
-
+	        /*
+	         * give the buttons an standardized look
+	         */
 	        browseButton.setBackground(new java.awt.Color(204, 0, 0));
 	        browseButton.setForeground(new java.awt.Color(255, 255, 255));
 
 	        startAnalysis.setBackground(new java.awt.Color(204, 0, 0));
 	        startAnalysis.setForeground(new java.awt.Color(255, 255, 255));
 
+	        /*
+	         * set the textarea
+	         */
 	        textareaForBlank.setLineWrap(true);
 	        textareaForBlank.setColumns(20);
 	        textareaForBlank.setRows(5);
@@ -84,16 +101,20 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	        text_customWords.setFont(new Font("Tahoma", 0, 14));
 	        text_customWords.setBounds(500, 80, 400, 80);
 	       
-	        
+	        /*
+	         * scrolltextareaPane ScrollPane which is needed to let the customWords field scroll
+	         */
 	        JScrollPane scrolltextareaPane = new JScrollPane(customWords);
 	        scrolltextareaPane.setBounds(500, 133, 150, 240);
 	        
 	        customWords.setLineWrap(false);
 	        customWords.setColumns(5);
 	        customWords.setRows(5);
-//	        customWords.setSize(120, 238);
-//	        customWords.setLocation(500, 135);
 
+
+	        /*
+	         * adding all elements to the Frame
+	         */
 	        add(scrolltextareaPane);
 	        add(text_customWords);
 	        add(startAnalysis);
@@ -105,7 +126,9 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	        add(text_Textanalyse);
 	        add(textareaPane);
 
-
+	        /*
+	         * that the listeners to the buttons
+	         */
 	        browseButton.addActionListener(new java.awt.event.ActionListener() {
 
 	            public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -127,6 +150,12 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 
 	    }
 
+	    /* 
+	     * if the browse button is clicked the file chooser dialogue appears
+	     * the selected file of the dialogue is entered to the dataPath text field
+	     * in the end the variable "filepath" gets the content of the dataPath text field
+	     * and the method getfilepath is called to pass the filepath
+	     */
 	    private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {
 	        JFileChooser dc = new JFileChooser();
 	        dc.setDialogTitle("Browse...");
@@ -141,6 +170,11 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 
 	    }
 
+	    /*
+	     * startAnalysisActionPerformed is the action that will be performed if the startAnalysis button is clicked
+	     * then it will be proved if one of the fields (either the dataPath field or the textareaForBlank field) is not empty
+	     * if they both are empty or both are filled the user is informed about the wrong input given
+	     */
 	    private void startAnalysisActionPerformed(java.awt.event.ActionEvent evt) {
 
 	        filepath = dataPath.getText();
@@ -159,21 +193,32 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 
 	    }
 
+	    /*
+	     * returned the filepath to let it use from the documentimporter e.g.
+	     */
 	    @Override
 	    public String getFilePath() {
 	        return filepath;
 	    }
 
+	    /*
+	     * sets the date on which the report has been made
+	     */
 		@Override
 		public Date getImportDate() {
 			return new Date();
 		}
-		
+		/*
+		 * method getText delivers the content of the blankText field
+		 */
 	    @Override
 	    public String getText() {
 	        return blankText;
 	    }
 	    
+	    /*
+	     * if there is some input in the custom word list the text will be split on the enters and passed
+	     */
 	    public List<String> getCustomWordList(){
 	    	if(customWords.getText() != null)
 	    		return  Arrays.asList(customWords.getText().split("\n"));
