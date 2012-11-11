@@ -16,6 +16,11 @@ import javax.swing.text.MaskFormatter;
 import org.textanalyzer.database.ProfileInformation;
 import org.textanalyzer.profilemanager.ProfileManager;
 
+/**
+ * @author Katharina Sandrock
+ * 
+ */
+
 /*
  * the class AuthorRegistration acts as a JPanel which should allow the user to add an author to the software
  * therefore the user has to enter four facts of the author: the first name, the last name, the profession an the age
@@ -93,6 +98,7 @@ public class AuthorRegistration extends JPanel {
 		lastNameField.setBounds(200, 150, 190, 25);
 		professionField.setBounds(200, 200, 190, 25);
 		ageField.setBounds(200, 250, 190, 25);
+
 
 		/*
 		 * set the Button to submit the input

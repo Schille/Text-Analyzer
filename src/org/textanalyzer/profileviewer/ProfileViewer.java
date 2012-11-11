@@ -20,7 +20,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.text.html.*;
 
 import org.textanalyzer.analyzer.AnalyzeTaskInformation;
 import org.textanalyzer.analyzer.Analyzer;
@@ -136,7 +135,7 @@ public class ProfileViewer implements IProfileViewer {
 			}
 		});
 		
-		String multiLine = "<html>" + "<div align=\"center\">" +  "Durchschnittsanalyse" + "<br>"   + "starten" + "</html>";
+		String multiLine = "<html><body><div align=\"center\"> Durchschnittsanalyse <br> starten</div> </body></html>";
 		av_analyse.setText(multiLine);
 		av_analyse.setSize(180, 50);
 		av_analyse.setLocation(40,240);

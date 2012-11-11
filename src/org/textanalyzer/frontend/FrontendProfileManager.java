@@ -76,6 +76,8 @@ public class FrontendProfileManager extends JFrame implements
 	 */
 	private AuthorRegistration authorRegistration;
 	
+	private HelpPanel helpPage;
+	
 	
 	/*
 	 * constructor of the class FrontendProfileManager gets a ProfileManager
@@ -220,8 +222,7 @@ public class FrontendProfileManager extends JFrame implements
 		borderleft.setBounds(0,0,31,150);
 		bannerPanel.add(icon);
 		bannerPanel.add(borderleft);
-		
-		//bannerText.setFont(new Font("Arial", 0, 50));
+	
 		bannerText.setBounds(270, 40, 436, 65);
 
 		bannerPanel.add(bannerText);
@@ -259,10 +260,14 @@ public class FrontendProfileManager extends JFrame implements
 		contentPanel.setBounds(250, 150, 500, 400);
 		contentPanel.setBackground(Color.white);
 		contentPanel.setLayout(null);
-		JLabel help = new JLabel();
-		help.setBounds(25,25,100,100);
-		help.setFont(new Font("Arial",1,25));
-		contentPanel.add(help);
+
+		helpPage = new HelpPanel();
+		contentPanel.add(helpPage);
+		helpPage.setSize(500,400);
+		helpPage.setLocation(0, 0);
+		helpPage.setVisible(true);
+		contentPanel.repaint();
+		
 		contentPanel.setVisible(true);
 		getContentPane().add(contentPanel);
 		
