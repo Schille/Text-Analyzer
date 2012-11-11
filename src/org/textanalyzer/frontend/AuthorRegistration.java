@@ -90,7 +90,7 @@ public class AuthorRegistration extends JPanel {
     	 */
     	submit.setBounds(200,300,130,30);
     	submit.setForeground(Color.white);
-    	submit.setBackground(Color.red);
+    	submit.setBackground(new Color(209,0,0));
     	submit.setFont(new Font("Arial",0,15));
     	
 		

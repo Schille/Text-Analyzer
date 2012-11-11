@@ -85,10 +85,10 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	        /*
 	         * give the buttons an standardized look
 	         */
-	        browseButton.setBackground(new java.awt.Color(204, 0, 0));
+	        browseButton.setBackground(new Color(209,0,0));
 	        browseButton.setForeground(new java.awt.Color(255, 255, 255));
 	        browseButton.setFont(new Font("Arial", 0, 14));
-	        startAnalysis.setBackground(new java.awt.Color(204, 0, 0));
+	        startAnalysis.setBackground(new Color(209,0,0));
 	        startAnalysis.setForeground(new java.awt.Color(255, 255, 255));
 	        startAnalysis.setFont(new Font("Arial", 0, 14));
 	        /*

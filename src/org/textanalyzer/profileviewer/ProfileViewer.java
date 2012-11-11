@@ -117,7 +117,7 @@ public class ProfileViewer implements IProfileViewer {
 		new_analyse.setLocation(40,170);
 		new_analyse.setFont(new Font("Arial",0,16));
 		new_analyse.setForeground(Color.white);
-		new_analyse.setBackground(Color.red);
+		new_analyse.setBackground(new Color(209,0,0));
 		new_analyse.setFocusPainted(false);
 		new_analyse.addActionListener(new ActionListener() {
 			
@@ -141,7 +141,7 @@ public class ProfileViewer implements IProfileViewer {
 		av_analyse.setSize(180, 50);
 		av_analyse.setLocation(40,240);
 		av_analyse.setForeground(Color.white);
-		av_analyse.setBackground(Color.red);
+		av_analyse.setBackground(new Color(209,0,0));
 		av_analyse.setFont(new Font("Arial",0,16));
 		av_analyse.setFocusPainted(false);
 		

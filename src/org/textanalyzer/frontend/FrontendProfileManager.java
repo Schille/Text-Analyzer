@@ -40,9 +40,10 @@ public class FrontendProfileManager extends JFrame implements
 	 */
 	
 	private JPanel bannerPanel = new JPanel();
-	private JLabel icon = new JLabel(new ImageIcon("lib/icon.png"));
-	private JLabel bannerText = new JLabel(" analytiX ");
-
+	private JLabel icon = new JLabel(new ImageIcon("lib/analyzer.jpg"));
+	private JLabel bannerText = new JLabel(new ImageIcon("lib/banner.jpg"));
+	private JLabel borderleft = new JLabel(new ImageIcon("lib/borderleft.jpg"));
+	
 	/* set variables for the navigation container
 	*  @param naviPanel JPanel on which the navigation will be added 
 	*  @param authorList JList of all the authors that are in the data base
@@ -58,7 +59,8 @@ public class FrontendProfileManager extends JFrame implements
 	private JButton addButton = new JButton(new ImageIcon("lib/addButton.jpg"));
 	private JButton deleteButton = new JButton(new ImageIcon(
 			"lib/deleteButton.jpg"));
-	
+	private JLabel borderleft2 = new JLabel(new ImageIcon("lib/borderleft2.jpg"));
+
 	/* 
 	 * @param contentPanel JPanel as placeholder for the content
 	 */
@@ -210,15 +212,17 @@ public class FrontendProfileManager extends JFrame implements
 	 * create an fill the Panel which contains the banner
 	 */
 	private void createBanner() {
-		icon.setBounds(75, 25, 100, 100);
-
+		
 		bannerPanel.setBounds(0, 0, 750, 150);
 		bannerPanel.setLayout(null);
 		bannerPanel.setBackground(Color.white);
+		icon.setBounds(75, 0, 144, 140);
+		borderleft.setBounds(0,0,31,150);
 		bannerPanel.add(icon);
-
-		bannerText.setFont(new Font("Arial", 0, 50));
-		bannerText.setBounds(400, 50, 300, 75);
+		bannerPanel.add(borderleft);
+		
+		//bannerText.setFont(new Font("Arial", 0, 50));
+		bannerText.setBounds(270, 40, 436, 65);
 
 		bannerPanel.add(bannerText);
 		bannerPanel.setVisible(true);
@@ -232,13 +236,16 @@ public class FrontendProfileManager extends JFrame implements
 		naviPanel.setLayout(null);
 		naviPanel.setBackground(Color.white);
 
+		borderleft2.setBounds(0,0,26,400);
+		naviPanel.add(borderleft2);
+		
 		authorList = new JList(listModel);
 		naviScrollPane = new JScrollPane(authorList);
-		naviScrollPane.setBounds(25, 65, 200, 280);
-
-		addButton.setBounds(50, 0, 50, 50);
+		naviScrollPane.setBounds(30, 65, 200, 280);
+		
+		addButton.setBounds(55, 0, 50, 50);
 		naviPanel.add(addButton);
-		deleteButton.setBounds(150, 0, 50, 50);
+		deleteButton.setBounds(155, 0, 50, 50);
 		naviPanel.add(deleteButton);
 
 		authorList.setFont(new Font("Arial", 1, 16));
@@ -252,8 +259,13 @@ public class FrontendProfileManager extends JFrame implements
 		contentPanel.setBounds(250, 150, 500, 400);
 		contentPanel.setBackground(Color.white);
 		contentPanel.setLayout(null);
+		JLabel help = new JLabel();
+		help.setBounds(25,25,100,100);
+		help.setFont(new Font("Arial",1,25));
+		contentPanel.add(help);
 		contentPanel.setVisible(true);
 		getContentPane().add(contentPanel);
+		
 	}
 
 	/*
