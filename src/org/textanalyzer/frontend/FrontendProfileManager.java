@@ -217,8 +217,8 @@ public class FrontendProfileManager extends JFrame implements
 		bannerPanel.setBackground(Color.white);
 		bannerPanel.add(icon);
 
-		bannerText.setFont(new Font("Tahoma", 0, 50));
-		bannerText.setBounds(400, 50, 300, 50);
+		bannerText.setFont(new Font("Arial", 0, 50));
+		bannerText.setBounds(400, 50, 300, 75);
 
 		bannerPanel.add(bannerText);
 		bannerPanel.setVisible(true);

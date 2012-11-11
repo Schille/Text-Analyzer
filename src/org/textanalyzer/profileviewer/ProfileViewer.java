@@ -3,6 +3,7 @@
  */
 package org.textanalyzer.profileviewer;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.text.html.*;
 
 import org.textanalyzer.analyzer.AnalyzeTaskInformation;
 import org.textanalyzer.analyzer.Analyzer;
@@ -86,29 +88,36 @@ public class ProfileViewer implements IProfileViewer {
 		ground.setSize(500,400);
 		
 		headline.setText("Profilübersicht");
-		headline.setFont(new Font("Dialog", 1 ,20));
+		headline.setFont(new Font("Arial", 1 ,24));
 		headline.setLocation(180, 3);
 		headline.setSize(400, 35);
 		
 		author.setText("Name: "+profileInformation.getLastName()+", "+profileInformation.getFirstName());
+		author.setFont(new Font("Arial",0,16));
 		author.setLocation(40, 50);
 		author.setSize(250,30);
 		
 		age.setText("Alter: "+profileInformation.getAge());
-		age.setLocation(40,70);
+		age.setFont(new Font("Arial",0,16));
+		age.setLocation(40,80);
 		age.setSize(250, 30);
 		
 		profession.setText("Profession: "+profileInformation.getProfession());
-		profession.setLocation(40,90);
+		profession.setFont(new Font("Arial",0,16));
+		profession.setLocation(40,110);
 		profession.setSize(250,30);
 		
 		notext.setText("Keine Texte vorhanden!");
+		notext.setFont(new Font("Arial",0,16));
 		notext.setSize(200,30);
 		notext.setLocation(280,50);
 		
 		new_analyse.setText("Neue Textanalyse");
-		new_analyse.setSize(200, 50);
+		new_analyse.setSize(180, 50);
 		new_analyse.setLocation(40,170);
+		new_analyse.setFont(new Font("Arial",0,16));
+		new_analyse.setForeground(Color.white);
+		new_analyse.setBackground(Color.red);
 		new_analyse.setFocusPainted(false);
 		new_analyse.addActionListener(new ActionListener() {
 			
@@ -127,9 +136,13 @@ public class ProfileViewer implements IProfileViewer {
 			}
 		});
 		
-		av_analyse.setText("Durchschnittsanalyse starten");
-		av_analyse.setSize(200, 50);
+		String multiLine = "<html>" + "<div align=\"center\">" +  "Durchschnittsanalyse" + "<br>"   + "starten" + "</html>";
+		av_analyse.setText(multiLine);
+		av_analyse.setSize(180, 50);
 		av_analyse.setLocation(40,240);
+		av_analyse.setForeground(Color.white);
+		av_analyse.setBackground(Color.red);
+		av_analyse.setFont(new Font("Arial",0,16));
 		av_analyse.setFocusPainted(false);
 		
 		av_analyse.addActionListener(new ActionListener() {
@@ -145,6 +158,7 @@ public class ProfileViewer implements IProfileViewer {
 		
 		texte.setSize(180, 300);
 		texte.setLocation(280, 50);
+		texte.setFont(new Font("Arial",0,16));
 		
 		Iterator<?> result = resultSets.iterator();
 		if(result != null) {

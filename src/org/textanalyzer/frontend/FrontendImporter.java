@@ -1,5 +1,6 @@
 package org.textanalyzer.frontend;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.io.File;
 import java.util.ArrayList;
@@ -53,6 +54,7 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	        setTitle("Datei importieren...");
 	        setLayout(null);
 	        setBounds(0, 0, 700, 480);
+	        getContentPane().setBackground(Color.white);
 	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	        /*
@@ -62,33 +64,33 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	        textareaPane.setBounds(53, 210, 407, 162);
 
 	        /*
-	         * setting all the elements on the frame
+	         * positioning of all the elements to the frame
 	         */
 	        text_Textanalyse.setBounds(204, 28, 140, 35);
 	        text_EingabeDesTextes.setBounds(195, 68, 160, 25);
 	        text_Dateiimport.setBounds(50, 108, 93, 21);
-	        dataPath.setBounds(52, 133, 312, 20);
-	        browseButton.setBounds(381, 131, 88, 25);
-	        text_TextInTextfeld.setBounds(50, 173, 254, 20);
-	        startAnalysis.setBounds(210, 390, 124, 26);
+	        dataPath.setBounds(52, 133, 300, 20);
+	        browseButton.setBounds(365, 131, 93, 25);
+	        text_TextInTextfeld.setBounds(50, 173, 270, 20);
+	        startAnalysis.setBounds(187, 390, 140, 26);
 
 	        /*
 	         * set the font to the text elements
 	         */
-	        text_Textanalyse.setFont(new Font("Tahoma", 0, 24));
-	        text_EingabeDesTextes.setFont(new Font("Tahoma", 0, 18));
-	        text_Dateiimport.setFont(new Font("Tahoma", 0, 14));
-	        text_TextInTextfeld.setFont(new Font("Tahoma", 0, 14));
+	        text_Textanalyse.setFont(new Font("Arial", 0, 24));
+	        text_EingabeDesTextes.setFont(new Font("Arial", 0, 18));
+	        text_Dateiimport.setFont(new Font("Arial", 0, 14));
+	        text_TextInTextfeld.setFont(new Font("Arial", 0, 14));
 
 	        /*
 	         * give the buttons an standardized look
 	         */
 	        browseButton.setBackground(new java.awt.Color(204, 0, 0));
 	        browseButton.setForeground(new java.awt.Color(255, 255, 255));
-
+	        browseButton.setFont(new Font("Arial", 0, 14));
 	        startAnalysis.setBackground(new java.awt.Color(204, 0, 0));
 	        startAnalysis.setForeground(new java.awt.Color(255, 255, 255));
-
+	        startAnalysis.setFont(new Font("Arial", 0, 14));
 	        /*
 	         * set the textarea
 	         */
@@ -98,7 +100,7 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	        
 	        
 	        
-	        text_customWords.setFont(new Font("Tahoma", 0, 14));
+	        text_customWords.setFont(new Font("Arial", 0, 14));
 	        text_customWords.setBounds(500, 80, 400, 80);
 	       
 	        /*
