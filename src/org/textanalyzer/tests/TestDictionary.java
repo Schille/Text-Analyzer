@@ -27,7 +27,14 @@ import org.textanalyzer.analyzer.dictionary.WordStatus;
  */
 public class TestDictionary {
 
-
+	@Test
+	public void test3(){
+		Dictionary test = new Dictionary();
+		WordStatus one = test.getWordStatus("Berfusgymnasium");
+		assertEquals(WordStatus.WRONG, one);
+	}
+	
+	
 	public void test() {
 		Dictionary test = new Dictionary();
 

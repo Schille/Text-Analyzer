@@ -70,7 +70,7 @@ public class TestFrontendProfileManager {
 		result1.setDocument(doc2);	
 		
 
-		assertEquals(1000,test1.saveProfileInformation(profile));
+		test1.saveProfileInformation(profile);
 		//assertEquals(1001,test1.saveProfileInformation(profile));
 		test1.saveResultSet(1000,result);
 		test1.saveResultSet(1000, result1);

@@ -38,7 +38,7 @@ public class Dictionary implements IDictionary {
 
 		URL url = new URL(requestString);
 		InputStream stream = url.openStream();
-		String dudenResponse = new Scanner(stream).useDelimiter("\\Z").next();
+		String dudenResponse = new Scanner(stream).useDelimiter("\\A").next();
 		
 		if (dudenResponse.contains("<span class=\"wortart\">Adjektiv"))
 			result = WordStatus.ADJECTIV;
@@ -75,7 +75,7 @@ public class Dictionary implements IDictionary {
 		URLConnection connection = url.openConnection();
 		connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
 		InputStream stream = connection.getInputStream();
-		String freeResponse = new Scanner(stream).useDelimiter("\\Z").next();
+		String freeResponse = new Scanner(stream).useDelimiter("\\A").next();
 		
 		freeResponse = freeResponse.replace("/"+myRequest, " ");
 		freeResponse = freeResponse.replace(">"+myRequest, " ");
@@ -99,7 +99,7 @@ public class Dictionary implements IDictionary {
 		
 		URL url_wiktionary = new URL(requestString);
 		InputStream wikiStream = url_wiktionary.openStream();
-		String wikiResponse = new Scanner(wikiStream).useDelimiter("\\Z")
+		String wikiResponse = new Scanner(wikiStream).useDelimiter("\\A")
 					.next();
 
 		if (wikiResponse.contains("Adjektiv (Deutsch)"))
