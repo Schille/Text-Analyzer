@@ -93,9 +93,8 @@ public class TestFrontendProfileManager {
 	 */
 	@After
 	public void tearDown() throws Exception {
-		test1.removeObject(myProfile);
-		test1.removeObject(myResultSets.get(0));
-		test1.removeObject(myResultSets.get(1));
+		test1.removeProfile(myProfile.getId());
+	
 		
 //		myProfile = test1.getProfileInformation(1001);
 //		myResultSets = test1.getAllResultSets(myProfile.getId());

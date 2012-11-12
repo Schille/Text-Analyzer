@@ -9,6 +9,7 @@ import java.util.List;
  * Interface for database connection
  * @author Michael Schilonka
  * @author Maximilian Quellmalz
+ * @version 12.11.2012
  */
 public interface IDatabaseConnector {
 	
