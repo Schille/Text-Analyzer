@@ -158,9 +158,6 @@ public class Analyzer implements IAnalyzer {
 		// Refresh sentenceCounter
 		sentenceCount++;
 		
-		// Mistakes at sentence beginning
-		if(!Character.isUpperCase(sentence.sentence.charAt(0)))
-			wrongWordCount++;
 		return sentence;
 	}
 
@@ -226,27 +223,32 @@ public class Analyzer implements IAnalyzer {
 		
 		// Get Wrong words
 		status = WordStatus.WRONG;
-		status = dict.getWordStatus(word.word);
-		if(status == WordStatus.NOMEN){
-			counter = nomen.remove(word.word);
-			if(counter == null)
-				nomen.put(word.word, 1);
-			else
-				nomen.put(word.word, ++counter);
-		}else if(status == WordStatus.WRONG)
-			if(firstWord == true) {
-				status = dict.getWordStatus(word.word.toLowerCase());
-				if(status == WordStatus.WRONG) {
-					wrongWordCount++;
+		if(firstWord == true && !Character.isUpperCase(word.word.charAt(0)))
+				wrongWordCount++;
+		else{
+			status = dict.getWordStatus(word.word);
+			if(status == WordStatus.NOMEN){
+				counter = nomen.remove(word.word);
+				if(counter == null)
+					nomen.put(word.word, 1);
+				else
+					nomen.put(word.word, ++counter);
+			}else if(status == WordStatus.WRONG)
+				if(firstWord == true) {
+					status = dict.getWordStatus(word.word.toLowerCase());
+					if(status == WordStatus.WRONG) {
+						wrongWordCount++;
+					}
+					else {
+						if(fullWordList.containsKey(word.word.toLowerCase()))
+							fullWordList.put(word.word.toLowerCase(), fullWordList.get(word.word.toLowerCase())+1);
+					}
 				}
 				else {
-					if(fullWordList.containsKey(word.word.toLowerCase()))
-						fullWordList.put(word.word.toLowerCase(), fullWordList.get(word.word.toLowerCase())+1);
+				wrongWordCount++;
 				}
-			}
-			else {
-			wrongWordCount++;
-			}
+		}
+		firstWord = false;
 		return word;
 	}
 
