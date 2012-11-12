@@ -407,7 +407,7 @@ public class ReportCreator implements IReportCreator {
 			  while (iterator2.hasNext()) {
 			  Object key = iterator2.next();
 				mostusedwords.setText(mostusedwords.getText()+"<br> - "+orderFrequent.get(key)+ " ("+key+")");
-				barchartset.setValue(Integer.parseInt(key.toString()),"", orderFrequent.get(key));
+				barchartset.setValue(orderFrequent.get(key),"", key.toString());
 			  }
 			    
 			  
