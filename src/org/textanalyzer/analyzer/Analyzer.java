@@ -80,6 +80,11 @@ public class Analyzer implements IAnalyzer {
 		text = text.replace("|","");
 		text = text.replace("{","");
 		text = text.replace("}","");
+		text = text.replace("\t"," ");
+		text = text.replace("\n", " ");
+		text = text.replace("\r", " ");
+
+		
 		
 	}
 	

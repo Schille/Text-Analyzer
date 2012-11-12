@@ -77,9 +77,9 @@ public class Dictionary implements IDictionary {
 		InputStream stream = connection.getInputStream();
 		String freeResponse = new Scanner(stream).useDelimiter("\\Z").next();
 		
-		freeResponse = freeResponse.replace("/"+myRequest, "");
-		freeResponse = freeResponse.replace(">"+myRequest, "");
-		if(freeResponse.contains("Das Wort konnte im Wörterbuch nicht gefunden werden.") || ! freeResponse.contains(myRequest)){
+		freeResponse = freeResponse.replace("/"+myRequest, " ");
+		freeResponse = freeResponse.replace(">"+myRequest, " ");
+		if(freeResponse.contains("Das Wort konnte im Wörterbuch nicht gefunden werden.")){
 			stream.close();
 			throw new Exception("Word not found!");
 		}
