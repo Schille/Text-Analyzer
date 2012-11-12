@@ -45,6 +45,7 @@ public class DatabaseConnector implements IDatabaseConnector{
 		List<IResultSet> tobedeltedresults = getAllResultSets(myID);
 		for(IResultSet key : tobedeltedresults){
 			removeObject(key);
+			removeObject(key.getDocument());
 		}
 		removeObject(tobedeleted);
 	}
@@ -98,20 +99,9 @@ public class DatabaseConnector implements IDatabaseConnector{
 		 List<IResultSet> result = new LinkedList<IResultSet>();
 		 for (ResultSet p : connector.browseClass(ResultSet.class)){
 			 if(p.getId() == myId){
-				 ResultSet tmp = new ResultSet();
-				 tmp.setAvaragePhraseLength(p.getAvaragePhraseLength());
-				 tmp.setCustomWordCount((HashMap<String, Integer>) p.getCustomWordCount());
-				 tmp.setDocument(p.getDocument());
-				 tmp.setId(p.getId());
-				 tmp.setMostFrequentNomen(p.getMostFrequentNomen());
-				 tmp.setMostFrequentWord(p.getMostFrequentWord());
-				 tmp.setPseudoIQ(p.getPseudoIQ());
-				 tmp.setTextMood(p.getTextMood());
-				 tmp.setWordCount(p.getWordCount());
-				 tmp.setWrongWordCount(p.getWrongWordCount());
-				 result.add(tmp);
+				 result.add(p);
 		 	}
-		 }
+		 } 
 		 return result;
 	}
 
@@ -130,6 +120,4 @@ public class DatabaseConnector implements IDatabaseConnector{
 		((ResultSet)myObject).setId(myProfileID);
 		connector.save(myObject);				
 	}
-
 }
-

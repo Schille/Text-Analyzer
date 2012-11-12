@@ -71,6 +71,7 @@ public class TestDatabaseConnector {
 		assertEquals(1000,test1.saveProfileInformation(profile));
 		//assertEquals(1001,test1.saveProfileInformation(profile));
 		test1.saveResultSet(1000,result);
+		test1.saveResultSet(1000,result);
 //		test1.saveResultSet(1000, result1);
 //		test1.saveResultSet(1001, result1);
 
@@ -79,19 +80,30 @@ public class TestDatabaseConnector {
 		long d = test1.countClass("ResultSet");
 
 		assertEquals(1, c);
-		assertEquals(1, d);
+		assertEquals(2, d);
 
 		ProfileInformation myProfile = test1.getProfileInformation(1000);
 		List<IResultSet> myResultSets = test1.getAllResultSets(myProfile.getId());
+		IResultSet myResultSets1 = myResultSets.get(0);
 		
 		assertNotNull(myResultSets.get(0).getDocument());
 		assertEquals("Datei1.pdf", myResultSets.get(0).getDocument().getFileName());
 
-		test1.removeObject(myResultSets.get(0).getDocument());
-		test1.removeObject(myResultSets.get(0));
+		//test1.removeObject(myResultSets.get(0).getDocument());
+		//test1.removeObject(myResultSets.get(0));
 		//test1.removeObject(myResultSets.get(1));
-		test1.removeObject(myProfile);
+		//test1.removeObject(myProfile);
+		//test1.removeObject(myResultSets.get(0));
+		//test1.removeObject(myResultSets.get(0).getDocument());
 		
+		test1.editProfile(1000, myProfile);
+		System.out.println(test1.getAllProfiles().get(0).getAge());
+		
+		test1.removeProfile(1000);
+		
+		
+		
+
 
 		
 //		myProfile = test1.getProfileInformation(1001);
