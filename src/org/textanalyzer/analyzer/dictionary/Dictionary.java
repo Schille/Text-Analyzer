@@ -102,11 +102,11 @@ public class Dictionary implements IDictionary {
 		String wikiResponse = new Scanner(wikiStream).useDelimiter("\\Z")
 					.next();
 
-		if (wikiResponse.contains("Adjektiv"))
+		if (wikiResponse.contains("Adjektiv (Deutsch)"))
 			result = WordStatus.ADJECTIV;
-		else if (wikiResponse.contains("Substantiv"))
+		else if (wikiResponse.contains("Substantiv (Deutsch)"))
 			result = WordStatus.NOMEN;
-		else if (wikiResponse.contains("Verb"))
+		else if (wikiResponse.contains("Verb (Deutsch"))
 			result = WordStatus.VERB;
 		else if (wikiResponse.contains("Kategorie:Deutsch"))
 			result = WordStatus.OTHER;
