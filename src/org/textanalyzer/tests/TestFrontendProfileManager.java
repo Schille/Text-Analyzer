@@ -1,6 +1,6 @@
 package org.textanalyzer.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -14,7 +14,6 @@ import org.textanalyzer.database.Document;
 import org.textanalyzer.database.IResultSet;
 import org.textanalyzer.database.ProfileInformation;
 import org.textanalyzer.database.ResultSet;
-import org.textanalyzer.documentimporter.DocumentFormat;
 import org.textanalyzer.profilemanager.ProfileManager;
 
 public class TestFrontendProfileManager {

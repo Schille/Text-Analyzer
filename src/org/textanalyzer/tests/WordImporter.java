@@ -1,23 +1,17 @@
 package org.textanalyzer.tests;
 
-import static org.junit.Assert.*;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
 
 import org.junit.Test;
 import org.textanalyzer.analyzer.dictionary.Dictionary;
 import org.textanalyzer.analyzer.dictionary.WordStatus;
 import org.textanalyzer.database.DBDictionary;
-import org.textanalyzer.documentimporter.DocumentFormat;
 
 public class WordImporter {
 
-	@SuppressWarnings("static-access")
 	@Test
 	public void test() {
 		String outputString = "";
