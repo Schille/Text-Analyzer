@@ -26,15 +26,17 @@ public class DocumentImporter implements IDocumentImporter {
 	/**
 	 * This method invokes a new document import and processes the file for relevant information. 
 	 * After that the information is transfered into a Document which is returned.
+	 * @param ProfileViewer
 	 * @return Document
 	 */
 	public void invokeNewDocumentImport(ProfileViewer myProfileViewer) {
 		Document document = new Document();
 		List<String> customWordList;
+		FrontendImporter frontend = new FrontendImporter();
 		
 		//loop for checking if the user entered a correct file
 		do {
-			FrontendImporter frontend = new FrontendImporter();
+			
 			frontend.showImportWindow();
 			
 			// pause thread while the user browses the file
@@ -147,7 +149,7 @@ public class DocumentImporter implements IDocumentImporter {
 				document.setText(frontend.getText());
 				
 			// If non of the conditions was reached set correct false and make the while loop start over again
-			} else {
+			} else if(frontend.isEmptyClose()==false) {
 				correct = false;
 				JOptionPane.showMessageDialog(null,
 						"Fehlerhafte Eingabe, bitte wählen sie neu!", null,
@@ -155,10 +157,13 @@ public class DocumentImporter implements IDocumentImporter {
 			}
 			document.setDocumentPath(frontend.getFilePath());
 			document.setFileName(file.getName());
+			document.setImportDate(new Date());
 			
-		} while (!correct);
+		} while (!correct && (frontend.isEmptyClose() == false));
 		
-		document.setImportDate(new Date());
+		if(frontend.isEmptyClose() == true){
+			document = null;
+		}
 		myProfileViewer.updateContent(document, customWordList);
 
 	}

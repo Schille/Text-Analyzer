@@ -244,6 +244,10 @@ public class ProfileViewer implements IProfileViewer {
 	@Override
 	public void updateContent(IDocument myDocument, List<String> myWordList) {
 		//Start analysis here...
+		if(myDocument==null){
+			new_analyse.setEnabled(true);
+			return;
+		}
 		profileInformation = connector.getProfileInformation(userID);
 		AnalyzeTaskInformation task = new AnalyzeTaskInformation();
 		task.setDocument(myDocument);
