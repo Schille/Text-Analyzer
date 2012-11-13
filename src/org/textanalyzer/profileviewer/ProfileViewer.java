@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
@@ -276,17 +277,28 @@ public class ProfileViewer implements IProfileViewer {
 	 * @param resultlist
 	 */
 	public void buildReport(List<IResultSet> resultlist) {
+		try {
 		ReportCreator reporter = new ReportCreator();
 		JFrame frame = reportFrame();
 	    frame.getContentPane().add(reporter.getGraphPanel(profileInformation, resultlist));
 	    frame.setVisible(true);
+		}
+		catch (NullPointerException e)  {
+			 JOptionPane.showMessageDialog(null, "Es gibts derzeit noch keine analysierten Dokumente des Autors.", "Fehler", JOptionPane.ERROR_MESSAGE);
+		}
+	   
 	}
 	
 	public void buildReport(IResultSet result) {
+		try {
 		ReportCreator reporter = new ReportCreator();
 		JFrame frame = reportFrame();
 	    frame.getContentPane().add(reporter.getGraphPanel(profileInformation, result));
 	    frame.setVisible(true);
+		}
+		catch (NullPointerException e)  {
+			 JOptionPane.showMessageDialog(null, "Es gibts derzeit noch keine analysierten Dokumente des Autors.", "Fehler", JOptionPane.ERROR_MESSAGE);
+		}
 
 	    
 }

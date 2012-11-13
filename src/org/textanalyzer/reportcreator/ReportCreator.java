@@ -387,7 +387,6 @@ public class ReportCreator implements IReportCreator {
 		 }
 		 
 		 if(i==0){
-			 JOptionPane.showMessageDialog(null, "Es gibts derzeit noch keine analysierten Dokumente des Autors.", "Fehler", JOptionPane.ERROR_MESSAGE);
 			 return null;
 		 }
 		 else{
