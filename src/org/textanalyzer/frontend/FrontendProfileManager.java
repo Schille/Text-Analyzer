@@ -6,15 +6,17 @@ import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Iterator;
-import javax.swing.*;
 import java.util.LinkedList;
+
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import org.textanalyzer.profilemanager.ProfileManager;
 import org.textanalyzer.profileviewer.ProfileViewer;

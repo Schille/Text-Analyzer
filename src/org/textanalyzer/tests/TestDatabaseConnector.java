@@ -3,7 +3,8 @@
  */
 package org.textanalyzer.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -89,7 +90,7 @@ public class TestDatabaseConnector {
 
 		ProfileInformation myProfile = test1.getProfileInformation(1000);
 		List<IResultSet> myResultSets = test1.getAllResultSets(myProfile.getId());
-		IResultSet myResultSets1 = myResultSets.get(0);
+		
 		
 		assertNotNull(myResultSets.get(0).getDocument());
 		assertEquals("Datei1.pdf", myResultSets.get(0).getDocument().getFileName());

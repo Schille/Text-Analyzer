@@ -5,7 +5,6 @@
 package org.textanalyzer.analyzer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -55,6 +54,13 @@ public class Analyzer implements IAnalyzer {
 		//protected String punctuation = "";
 	}
 	
+	/**
+	 * Ersetzt sonderzeichen, damit 
+	 * auftretende Fehler in der Analyse 
+	 * behoben werden.
+	 * 
+	 * @author Max Quellmalz
+	 */
 	public void textPreprocess() {
 		text = text.replaceAll("[^a-zA-Z_._!_?_ä_ö_ü_ß_Ä_Ö_Ü]", " ");
 		text = text.replaceAll("[.]+", ". ");
@@ -72,6 +78,12 @@ public class Analyzer implements IAnalyzer {
 		}
 	}
 	
+	/**
+	 * Analysiert den Text
+	 * 
+	 * @param myTask enthält alle informationen zum Text
+	 * @return Gibt das Ergebnis der Analyse als ResultSet zurück
+	 */
 	@Override
 	public IResultSet analyzeText(IAnalyzeTaskInformation myTask) {
 		/* Creating the Result Set */
@@ -85,7 +97,7 @@ public class Analyzer implements IAnalyzer {
 			this.analysis.setDocument(myTask.getDocument());
 		}
 		textPreprocess();
-		System.out.println("Analyzer:99 -> Text: " + text);
+		//System.out.println("Analyzer:99 -> Text: " + text);
 		/* Get the custom Words */
 		customWords = new HashMap<String, Integer>();
 		for (String customWord : myTask.getWordList()) {
@@ -93,45 +105,49 @@ public class Analyzer implements IAnalyzer {
 		}
 		
 		/* Do the analysis */
-		while(analyzeNextSentence() != null)
-
-		this.analysis.setWordCount(wordCount);
-		this.analysis.setWrongWordCount(wrongWordCount);
-		this.analysis.setPseudoIQ(0);
+		while(analyzeNextSentence() != null);
+		
+		/* Calculate the avarage phras length */
 		if(sentenceCount > 0)
 			this.analysis.setAvaragePhraseLength(wordCount/sentenceCount);
 		else
 			this.analysis.setAvaragePhraseLength(0);
-		
+
+		/* Calculate IQ */
 		double wordc = wordCount;
 		double sentc = sentenceCount;
 		double wrongWordc = wrongWordCount;
-		
 		if(wordCount > 0)
 			this.analysis.setPseudoIQ(
 					(int) (100*((sentc*(wordc/sentc)-wrongWordc)/1000F)/((sentc*(wordc/sentc)-wrongWordc)/1000F+0.1F)));
+
+		/* remove really common words */
 		String [] freuquentWordArray = {"der", "die", "das", "dem", "den", "ein", "eine", "und", "oder", "weil", "Der", "Die", "Das", "Dem", "Den", "Ein", "Eine", "Und", "Oder", "Weil"};
-		
-		for (int i=freuquentWordArray.length;i>0;i--){
-		if (fullWordList.containsKey(freuquentWordArray[i-1]))
-			fullWordList.remove(freuquentWordArray[i-1]);
-			}
-		this.analysis.setMostFrequentWord(new HashMap<String, Integer>(fullWordList));
-		
-		this.analysis.setCustomWordCount(new HashMap<String, Integer>(customWords));
-		this.analysis.setTextMood(textAttitude>=POSITIVEBORDER?TextMood.POSITIVE:textAttitude<=NEGATIVEBORDER?TextMood.NEGATIVE:TextMood.NEUTRAL);
-		
-		if(!nomen.isEmpty()) {
-		SortedMap<Integer,String> orderFreNom = new TreeMap<Integer, String>(Collections.reverseOrder()); 		
-		for (Entry<String, Integer> entry : nomen.entrySet()) {
-			orderFreNom.put(entry.getValue(), entry.getKey());
+		for (int i=0;i<freuquentWordArray.length;i++){
+			if (fullWordList.containsValue(freuquentWordArray[i]))
+				fullWordList.remove(freuquentWordArray[i]);
 		}
-		
-		this.analysis.setMostFrequentNomen(orderFreNom.get(orderFreNom.firstKey()));
+
+		/* get the most frequent nomen */
+		if(!nomen.isEmpty()) {
+			SortedMap<Integer,String> orderFreNom = new TreeMap<Integer, String>(Collections.reverseOrder()); 		
+			for (Entry<String, Integer> entry : nomen.entrySet()) {
+				orderFreNom.put(entry.getValue(), entry.getKey());
+			}
+			this.analysis.setMostFrequentNomen(orderFreNom.get(orderFreNom.firstKey()));
 		}
 		else {
 			this.analysis.setMostFrequentNomen("");
 		}
+		
+		/* write results into result set */
+		this.analysis.setWordCount(wordCount);
+		this.analysis.setWrongWordCount(wrongWordCount);
+		this.analysis.setPseudoIQ(0);
+		this.analysis.setMostFrequentWord(new HashMap<String, Integer>(fullWordList));
+		this.analysis.setCustomWordCount(new HashMap<String, Integer>(customWords));
+		this.analysis.setTextMood(textAttitude>=POSITIVEBORDER?TextMood.POSITIVE:textAttitude<=NEGATIVEBORDER?TextMood.NEGATIVE:TextMood.NEUTRAL);
+		
 		return this.analysis;
 	}
 	
@@ -205,7 +221,7 @@ public class Analyzer implements IAnalyzer {
 
 		// Refresh the word counter
 		wordCount++;
-		System.out.println("Analyzer:211 -> WordCount: "+wordCount);
+		//System.out.println("Analyzer:211 -> WordCount: "+wordCount);
 		counter = fullWordList.remove(word.word);
 		if(counter == null)
 			fullWordList.put(word.word, 1);
@@ -244,9 +260,10 @@ public class Analyzer implements IAnalyzer {
 				wrongWordCount++;
 				}
 		}
-		System.out.println("Analyzer:250 -> Wrong words: "+wrongWordCount);
+		//System.out.println("Analyzer:250 -> Wrong words: "+wrongWordCount);
 		firstWord = false;
 		return word;
 	}
 
 }
+	

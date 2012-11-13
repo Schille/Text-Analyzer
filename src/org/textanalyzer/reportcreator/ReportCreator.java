@@ -15,7 +15,6 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 

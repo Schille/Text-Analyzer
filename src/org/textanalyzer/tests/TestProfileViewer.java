@@ -3,8 +3,6 @@
  */
 package org.textanalyzer.tests;
 
-import static org.junit.Assert.*;
-
 import java.awt.Dimension;
 import java.util.Date;
 import java.util.HashMap;
@@ -17,11 +15,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.textanalyzer.database.DatabaseConnector;
 import org.textanalyzer.database.Document;
-import org.textanalyzer.database.IDocument;
 import org.textanalyzer.database.IResultSet;
 import org.textanalyzer.database.ProfileInformation;
 import org.textanalyzer.database.ResultSet;
-import org.textanalyzer.documentimporter.DocumentFormat;
 import org.textanalyzer.profileviewer.ProfileViewer;
 
 /**
