@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.textanalyzer.database;
 
 import java.util.List;

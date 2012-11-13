@@ -1,8 +1,14 @@
 package org.textanalyzer.database;
 
 import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * Profile Information
+ * @author Michael Schilonka
+ * @author Maximilian Quellmalz
+ * @version 12.11.2012
+ * Setters and Getters for ProfileInformation
+ */
 public class ProfileInformation implements IProfileInformation {
 	
 	private long id;
@@ -11,6 +17,7 @@ public class ProfileInformation implements IProfileInformation {
 	private int age;
 	private String profession;
 	private ArrayList<ResultSet> analyzedDocuments = new ArrayList<ResultSet>();
+	
 	@Override
 	public void setId(long myID){
 		this.id = myID;
@@ -66,12 +73,8 @@ public class ProfileInformation implements IProfileInformation {
 	public ArrayList<ResultSet> getAnalyzedDocuments() {
 		return this.analyzedDocuments;
 	}
-	@Override
-	public void setAnalyzedDocuments(List<IResultSet> myResultSet) {
-		// TODO Auto-generated method stub
-		
-	}
 
+	
 
 
 	

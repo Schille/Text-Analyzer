@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.textanalyzer.database;
 
 import java.util.HashMap;
@@ -31,7 +28,7 @@ public class DatabaseConnector implements IDatabaseConnector{
 	/**
 	 * Overrides method removeObject from IDatabaseConnector.
 	 * Removes a given object from database.
-	 * @see IDatabaseConnector
+	 * @see IDatabaseConnector#removeObject(Object)
 	 */
 	@Override
 	public void removeObject(Object myObject) {
@@ -55,7 +52,7 @@ public class DatabaseConnector implements IDatabaseConnector{
 	/**
 	 * Overrides function getAllProfiles from IDatabaseConnector.
 	 * Returns a List of all existing profiles in the database.
-	 * @see IDatabaseConnector
+	 * @see IDatabaseConnector#getAllProfiles()
 	 * @return list of all existing profiles
 	 */
 	@Override
@@ -70,7 +67,7 @@ public class DatabaseConnector implements IDatabaseConnector{
 	/**
 	 * Overrides function getProfileInformation from IDatabaseConnector.
 	 * Returns a an existing profile in the database by id.
-	 * @see IDatabaseConnector
+	 * @see IDatabaseConnector#getProfileInformation(int)
 	 * @return profile by id
 	 */
 	@Override
@@ -87,7 +84,7 @@ public class DatabaseConnector implements IDatabaseConnector{
 	/**
 	 * Overrides method editProfile from IDatabaseConnector.
 	 * Assigns new profile information to a given object of ProfileInformation by id.
-	 * @see IDatabaseConnector
+	 * @see IDatabaseConnector#editProfile(int, ProfileInformation)
 	 */
 	@Override
 	public void editProfile(int myId, ProfileInformation myProfile) {
@@ -112,7 +109,7 @@ public class DatabaseConnector implements IDatabaseConnector{
 	/**
 	 * Overrides function getAllResultSets from IDatabaseConnector.
 	 * Returns a List of all existing ResultSets by id in the database.
-	 * @see IDatabaseConnector
+	 * @see IDatabaseConnector#getAllResultSets(long)
 	 * @return list of all existing result sets for a given id
 	 */
 	@Override
@@ -141,7 +138,7 @@ public class DatabaseConnector implements IDatabaseConnector{
 	/**
 	 * Overrides function saveProfileInformation from IDatabaseConnector.
 	 * Saves new profile information object in the database.
-	 * @see IDatabaseConnector
+	 * @see IDatabaseConnector#saveProfileInformation(IProfileInformation)
 	 * @return id of saved object
 	 */
 	@Override
@@ -155,7 +152,7 @@ public class DatabaseConnector implements IDatabaseConnector{
 	/**
 	 * Overrides function saveResultSet from IDatabaseConnector.
 	 * Saves new result set object in the database.
-	 * @see IDatabaseConnector
+	 * @see IDatabaseConnector#saveResultSet(int, IResultSet)
 	 */
 	@Override
 	public void saveResultSet(int myProfileID, IResultSet myObject) {

@@ -55,11 +55,6 @@ public class TestReportCreator {
 				
 			}
 			
-			@Override
-			public void setAnalyzedDocuments(List<IResultSet> myResultSet) {
-				// TODO Auto-generated method stub
-				
-			}
 			
 			@Override
 			public void setAge(int myAge) {

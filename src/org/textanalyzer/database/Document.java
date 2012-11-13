@@ -3,7 +3,12 @@ package org.textanalyzer.database;
 import java.util.Date;
 
 import org.textanalyzer.documentimporter.DocumentFormat;
-
+/**
+ * Document
+ * @author Michael Schilonka
+ * @version 12.11.2012
+ * Setters and Getters for Document
+ */
 public class Document implements IDocument {
 
 	// private class variables

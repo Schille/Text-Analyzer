@@ -1,15 +1,12 @@
-/**
- * 
- */
 package org.textanalyzer.database;
 
 import java.util.ArrayList;
-import java.util.List;
-
 
 /**
+ * Interface for profile information
  * @author Michael Schilonka
- *
+ * @author Maximilian Quellmalz
+ * @version 12.11.2012
  */
 public interface IProfileInformation {
 
@@ -40,5 +37,4 @@ public interface IProfileInformation {
 
 	void setAnalyzedDocuments(ArrayList<ResultSet> analyzedDocuments);
 
-	void setAnalyzedDocuments(List<IResultSet> myResultSet);
 }

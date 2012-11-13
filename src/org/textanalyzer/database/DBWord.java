@@ -1,15 +1,16 @@
-/**
- * 
- */
 package org.textanalyzer.database;
 
 import org.textanalyzer.analyzer.dictionary.WordStatus;
 
 /**
- * @author Michael Schilonk
- *
+ * Database Word
+ * @author Michael Schilonka
+ * @version 12.11.2012
  */
 public class DBWord {
+	
+	private String word;
+	private WordStatus wordStatus;
 	
 	public DBWord(){}
 	
@@ -24,12 +25,14 @@ public class DBWord {
 	public String getWord() {
 		return word;
 	}
+	
 	/**
 	 * @param word the word to set
 	 */
 	public void setWord(String word) {
 		this.word = word;
 	}
+	
 	/**
 	 * @return the wordStatus
 	 */
@@ -42,7 +45,5 @@ public class DBWord {
 	public void setWordStatus(WordStatus wordStatus) {
 		this.wordStatus = wordStatus;
 	}
-	private String word;
-	private WordStatus wordStatus;
 	
 }
