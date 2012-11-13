@@ -110,6 +110,9 @@ public class Analyzer implements IAnalyzer {
 		
 		this.analysis.setMostFrequentNomen(orderFreNom.get(orderFreNom.firstKey()));
 		}
+		else {
+			this.analysis.setMostFrequentNomen("");
+		}
 		return this.analysis;
 	}
 	

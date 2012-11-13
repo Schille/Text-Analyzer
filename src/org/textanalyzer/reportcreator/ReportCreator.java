@@ -171,7 +171,7 @@ public class ReportCreator implements IReportCreator {
 		Iterator<?> iterator = orderCustom.keySet().iterator();
 		  while (iterator.hasNext()) {
 		  Object key = iterator.next();
-			mostusedcustomwords.setText(mostusedcustomwords.getText()+"<br> - "+orderCustom.get(key)+ " ("+key+")");
+			mostusedcustomwords.setText(mostusedcustomwords.getText()+"<br> - "+key+ " ("+orderCustom.get(key)+")");
 		  }
 		  
 
@@ -214,7 +214,7 @@ public class ReportCreator implements IReportCreator {
 		Iterator<?> iterator2 = orderFrequent.keySet().iterator();
 		  while (iterator2.hasNext()) {
 		  Object key = iterator2.next();
-			mostusedwords.setText(mostusedwords.getText()+"<br> - "+orderFrequent.get(key)+ " ("+key+")");
+			mostusedwords.setText(mostusedwords.getText()+"<br> - "+key+ " ("+orderFrequent.get(key)+")");
 			barchartset.setValue(orderFrequent.get(key),"",(key.toString()));
 		  }
 		
@@ -224,11 +224,11 @@ public class ReportCreator implements IReportCreator {
 		
 		
 		filename.setText("Dateiname: "+myResultset.getDocument().getFileName());
-		filename.setSize(150,30);
+		filename.setSize(350,30);
 		filename.setLocation(10,625);
 		
 		filepath.setText("Verzeichnis: "+myResultset.getDocument().getDocumentPath());
-		filepath.setSize(300,30);
+		filepath.setSize(500,30);
 		filepath.setLocation(10,650);
 		
 		filedate.setText("Importiert: "+myResultset.getDocument().getImportDate().toLocaleString());
@@ -405,7 +405,7 @@ public class ReportCreator implements IReportCreator {
 			Iterator<?> iterator2 = orderFrequent.keySet().iterator();
 			  while (iterator2.hasNext() && l < 10) {
 			  Object key = iterator2.next();
-				mostusedwords.setText(mostusedwords.getText()+"<br> - "+orderFrequent.get(key)+ " ("+key+")");
+				mostusedwords.setText(mostusedwords.getText()+"<br> - "+key+ " ("+orderFrequent.get(key)+")");
 				barchartset.setValue(orderFrequent.get(key),"", key.toString());
 				l++;
 			  }
@@ -431,7 +431,7 @@ public class ReportCreator implements IReportCreator {
 				Iterator<?> iterator = orderCustom.keySet().iterator();
 				  while (iterator.hasNext()) {
 				  Object key = iterator.next();
-					mostusedcustomwords.setText(mostusedcustomwords.getText()+"<br> - "+orderCustom.get(key)+ " ("+key+")");
+					mostusedcustomwords.setText(mostusedcustomwords.getText()+"<br> - "+key+ " ("+orderCustom.get(key)+")");
 				  }
 				  
 				mostusedcustomwords.setText(mostusedcustomwords.getText()+"</html>");
