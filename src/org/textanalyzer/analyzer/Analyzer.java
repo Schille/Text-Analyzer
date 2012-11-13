@@ -110,7 +110,14 @@ public class Analyzer implements IAnalyzer {
 		if(wordCount > 0)
 			this.analysis.setPseudoIQ(
 					(int) (100*((sentc*(wordc/sentc)-wrongWordc)/1000F)/((sentc*(wordc/sentc)-wrongWordc)/1000F+0.1F)));
+		String [] freuquentWordArray = {"der", "die", "das", "dem", "den", "ein", "eine", "und", "oder", "weil", "Der", "Die", "Das", "Dem", "Den", "Ein", "Eine", "Und", "Oder", "Weil"};
+		
+		for (int i=freuquentWordArray.length;i>0;i--){
+		if (fullWordList.containsValue(freuquentWordArray[i]))
+			fullWordList.remove(freuquentWordArray[i]);
+			}
 		this.analysis.setMostFrequentWord(new HashMap<String, Integer>(fullWordList));
+		
 		this.analysis.setCustomWordCount(new HashMap<String, Integer>(customWords));
 		this.analysis.setTextMood(textAttitude>=POSITIVEBORDER?TextMood.POSITIVE:textAttitude<=NEGATIVEBORDER?TextMood.NEGATIVE:TextMood.NEUTRAL);
 		
