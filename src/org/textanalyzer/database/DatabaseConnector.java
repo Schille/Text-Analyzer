@@ -4,6 +4,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.orientechnologies.orient.core.db.ODatabaseRecordThreadLocal;
+import com.orientechnologies.orient.core.db.document.ODatabaseDocument;
+import com.orientechnologies.orient.core.db.record.ODatabaseRecord;
+import com.orientechnologies.orient.object.db.OObjectDatabaseTx;
+
 /**
  * Database Connector
  * 
@@ -14,7 +19,7 @@ import java.util.List;
 
 public class DatabaseConnector implements IDatabaseConnector {
 
-	private DBHandle connector;
+	private OObjectDatabaseTx connector;
 
 	/**
 	 * Creates new instance of database.
@@ -23,7 +28,7 @@ public class DatabaseConnector implements IDatabaseConnector {
 	 *            new instance of database
 	 */
 	public DatabaseConnector() {
-		connector = DBHandle.createDB();
+		connector = DBHandle.getDB();
 	}
 
 	/**
@@ -68,7 +73,14 @@ public class DatabaseConnector implements IDatabaseConnector {
 		List<ProfileInformation> profileList = new LinkedList<ProfileInformation>();
 		for (ProfileInformation p : connector
 				.browseClass(ProfileInformation.class)) {
-			profileList.add(p);
+			ProfileInformation tmp = new ProfileInformation();
+			tmp.setAge(p.getAge());
+			tmp.setAnalyzedDocuments(p.getAnalyzedDocuments());
+			tmp.setFirstName(p.getFirstName());
+			tmp.setId(p.getId());
+			tmp.setLastName(p.getLastName());
+			tmp.setProfession(p.getProfession());
+			profileList.add(tmp);
 		}
 		return profileList;
 	}
@@ -189,5 +201,9 @@ public class DatabaseConnector implements IDatabaseConnector {
 	public void saveResultSet(int myProfileID, IResultSet myObject) {
 		((ResultSet) myObject).setId(myProfileID);
 		connector.save(myObject);
+	}
+	
+	public ODatabaseDocument getUnderlying(){
+		return connector.getUnderlying();
 	}
 }
