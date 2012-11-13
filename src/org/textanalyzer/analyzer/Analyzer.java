@@ -53,6 +53,13 @@ public class Analyzer implements IAnalyzer {
 	}
 	
 	public void textPreprocess() {
+		text = text.replaceAll("[^a-zA-Z_._!_?_ä_ö_ü_ß_Ä_Ö_Ü]", " ");
+		text = text.replaceAll("[.]+", ". ");
+		text = text.replaceAll("[?]+", "? ");
+		text = text.replaceAll("[!]+", "! ");
+		text = text.replaceAll("\\s+"," ");
+
+		/*
 		text = text.replace("<","");
 		text = text.replace(">","");
 		text = text.replace("\"","");
@@ -61,8 +68,7 @@ public class Analyzer implements IAnalyzer {
 		text = text.replace("`","");
 		text = text.replace("(","");
 		text = text.replace(")","");
-		text = text.replace("&","");
-		text = text.replace("$","");
+		text = text.replace("&","")
 		text = text.replace("§","");
 		text = text.replace("%","");
 		text = text.replace("=","");
@@ -83,7 +89,7 @@ public class Analyzer implements IAnalyzer {
 		text = text.replace("\t"," ");
 		text = text.replace("\n", " ");
 		text = text.replace("\r", " ");
-
+*/
 		
 		
 	}
