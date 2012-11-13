@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.orientechnologies.orient.core.db.document.ODatabaseDocument;
+
 /**
  * Database Connector
  * 
@@ -185,5 +187,9 @@ public class DatabaseConnector implements IDatabaseConnector {
 	public void saveResultSet(int myProfileID, IResultSet myObject) {
 		((ResultSet) myObject).setId(myProfileID);
 		connector.save(myObject);
+	}
+	
+	public ODatabaseDocument getUnderlying(){
+		return connector.getUnderlying();
 	}
 }

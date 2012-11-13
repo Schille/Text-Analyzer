@@ -15,6 +15,10 @@ import org.textanalyzer.database.ProfileInformation;
 import org.textanalyzer.database.ResultSet;
 import org.textanalyzer.frontend.FrontendProfileManager;
 
+import com.orientechnologies.orient.core.db.ODatabase;
+import com.orientechnologies.orient.core.db.ODatabaseRecordThreadLocal;
+import com.orientechnologies.orient.core.db.record.ODatabaseRecord;
+
 /**
  * @author Michael Schilonka
  *
@@ -29,6 +33,7 @@ public class ProfileManager implements IProfileManager {
 		connector = new DatabaseConnector();
 		mapper = (LinkedList<ProfileInformation>) connector.getAllProfiles();
 		profileGUI = new FrontendProfileManager(this);
+		ODatabaseRecordThreadLocal.INSTANCE.set((ODatabaseRecord) connector.getUnderlying().getUnderlying());
 	}
 	
 	public void createProfile(ProfileInformation myProfile){
