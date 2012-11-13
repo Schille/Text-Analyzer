@@ -93,7 +93,7 @@ public class TestAnalyzer {
 					@Override
 					public String getText() {
 						
-						return "Asadasder & lilalaune Bär tanzt fröhlich durch Karlsruhe. Dabei denkt er sich: \"Wo ist eigentlich Hans?\" " +
+						return "A C & A lilalaune S Bär tanzt fröhlich durch Karlsruhe. Dabei denkt er sich: \"Wo ist eigentlich Hans?\" " +
 								"Er vermisst ihn wirklich sehr. Manchmal geht er auf seinen Balkon und schaut traurig in die Ferne..." +
 								"Der Bär ist trotzdem sehr zuversichtlich, dass er seinen Freund bald wiedersieht.";
 					}
