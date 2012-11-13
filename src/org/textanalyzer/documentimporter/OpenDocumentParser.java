@@ -82,7 +82,8 @@ public class OpenDocumentParser {
                 processElement(rootElement);
                 break;
             }
-        }                 
+        }     
+        zipFile.close();
         return TextBuffer.toString();        
     }
 }

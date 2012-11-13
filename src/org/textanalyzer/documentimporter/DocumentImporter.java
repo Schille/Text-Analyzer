@@ -72,7 +72,11 @@ public class DocumentImporter implements IDocumentImporter {
 					PDFTextStripper pdfText = new PDFTextStripper();
 					document.setText(pdfText.getText(pdfDocument));
 
+				} catch (FileNotFoundException e1) {
+					correct=false;
+					
 				} catch (IOException e) {
+
 					e.printStackTrace();
 
 				} finally {
@@ -85,6 +89,8 @@ public class DocumentImporter implements IDocumentImporter {
 					}
 				}
 				document.setDocumentFormat(DocumentFormat.PDF);
+				document.setDocumentPath(frontend.getFilePath());
+
 
 				// Import function for *.doc files
 			} else if (extension.equalsIgnoreCase("doc")) {
@@ -92,7 +98,7 @@ public class DocumentImporter implements IDocumentImporter {
 				try {
 					fis = new FileInputStream(file);
 				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
+					correct = false;
 				}
 
 				// try to extract the text of the word file
@@ -105,6 +111,8 @@ public class DocumentImporter implements IDocumentImporter {
 					e.printStackTrace();
 				}
 				document.setDocumentFormat(DocumentFormat.DOC);
+				document.setDocumentPath(frontend.getFilePath());
+
 
 				// Import function for *.odt files
 			} else if (extension.equalsIgnoreCase("odt")) {
@@ -114,9 +122,13 @@ public class DocumentImporter implements IDocumentImporter {
 				try {
 					document.setText(odt.getText(frontend.getFilePath()));
 
+				} catch (FileNotFoundException e1) {
+					correct = false;
 				} catch (Exception e) {
-					e.printStackTrace();
+
 				}
+				document.setDocumentPath(frontend.getFilePath());
+
 
 				// Import function for *.txt files
 			} else if (extension.equalsIgnoreCase("txt")) {
@@ -138,10 +150,12 @@ public class DocumentImporter implements IDocumentImporter {
 						e.printStackTrace();
 					}
 				} catch (FileNotFoundException e) {
-					e.printStackTrace();
+					correct = false;
 				}
 				document.setDocumentFormat(DocumentFormat.TXT);
 				document.setText(outputString);
+				document.setDocumentPath(frontend.getFilePath());
+
 
 				// Import function for plain text
 			} else if (!frontend.getText().isEmpty()) {
@@ -153,6 +167,7 @@ public class DocumentImporter implements IDocumentImporter {
 						"Name des Textes", JOptionPane.PLAIN_MESSAGE);
 				document.setFileName(plainTextName);
 
+
 				// If non of the conditions was reached set correct false and
 				// make the while loop start over again
 			} else if (frontend.isEmptyClose() == false) {
@@ -161,14 +176,13 @@ public class DocumentImporter implements IDocumentImporter {
 						"Fehlerhafte Eingabe, bitte wählen sie neu!", null,
 						JOptionPane.OK_OPTION);
 			}
-			document.setDocumentPath(frontend.getFilePath());
 			if (frontend.getText().isEmpty()) {
 				document.setFileName(file.getName());
 			}
 			document.setImportDate(new Date());
 
 		} while (!correct && (frontend.isEmptyClose() == false));
-
+		
 		if (frontend.isEmptyClose() == true) {
 			document = null;
 		}

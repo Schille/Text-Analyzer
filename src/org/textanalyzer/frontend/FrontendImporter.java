@@ -163,17 +163,19 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	 * field and the method getfilepath is called to pass the filepath
 	 */
 	private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		JFileChooser dc = new JFileChooser();
-		dc.setDialogTitle("Browse...");
-		dc.showOpenDialog(null);
-		File file = dc.getSelectedFile();
-		filepath = file.getAbsolutePath();
-		dataPath.setText(filepath);
+		try{
+			JFileChooser dc = new JFileChooser();
+			dc.setDialogTitle("Browse...");
+			dc.showOpenDialog(null);
+			File file = dc.getSelectedFile();
+			filepath = file.getAbsolutePath();
+			dataPath.setText(filepath);
 
-		filepath = dataPath.getText();
-		getFilePath();
-		System.out.println(filepath);
-
+			filepath = dataPath.getText();
+			getFilePath();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	/**
