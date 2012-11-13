@@ -36,6 +36,10 @@ public class DatabaseConnector implements IDatabaseConnector {
 	public void removeObject(Object myObject) {
 		connector.delete(myObject);
 	}
+	
+	public void closeDB() {
+		connector.close();
+	}
 
 	/**
 	 * Removes a given profile (ProfileInformation & ResultSets) by a given Id

@@ -64,7 +64,11 @@ public class ProfileManager implements IProfileManager {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 		}
+		connector.closeDB();
+		System.out.println("DB closed.");
+		
 	}
 	
 	
