@@ -27,7 +27,7 @@ import org.textanalyzer.analyzer.dictionary.WordStatus;
  */
 public class TestDictionary {
 
-	@Test
+	
 	public void test3(){
 		Dictionary test = new Dictionary();
 		WordStatus one = test.getWordStatus("e");
