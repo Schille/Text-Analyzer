@@ -143,7 +143,6 @@ public class Analyzer implements IAnalyzer {
 		/* write results into result set */
 		this.analysis.setWordCount(wordCount);
 		this.analysis.setWrongWordCount(wrongWordCount);
-		this.analysis.setPseudoIQ(0);
 		this.analysis.setMostFrequentWord(new HashMap<String, Integer>(fullWordList));
 		this.analysis.setCustomWordCount(new HashMap<String, Integer>(customWords));
 		this.analysis.setTextMood(textAttitude>=POSITIVEBORDER?TextMood.POSITIVE:textAttitude<=NEGATIVEBORDER?TextMood.NEGATIVE:TextMood.NEUTRAL);
