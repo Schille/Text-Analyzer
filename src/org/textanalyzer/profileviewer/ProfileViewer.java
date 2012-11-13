@@ -344,6 +344,8 @@ public class ProfileViewer implements IProfileViewer {
 	}
 	
 	public void refreshTextList() {
+		ground.remove(textpane);
+		textpane = null;
 		resultSets = connector.getAllResultSets(userID);
 		Iterator<?> result = resultSets.iterator();
 		dataname.clear();
@@ -354,14 +356,17 @@ public class ProfileViewer implements IProfileViewer {
 			dataname.addElement(temp_res.getDocument().getFileName());	
 		}
 			
+		
+
 		textpane = new JScrollPane(texte);
-		textpane.setSize(180, 300);
 		textpane.setLocation(280,50);
+		textpane.setSize(180, 300);
+
 		
-		
+		textpane.setVisible(true);
+		texte.setVisible(true);
 		ground.add(textpane);
-		
-		texte.repaint();
+
 		textpane.repaint();
 		ground.repaint();
 		
