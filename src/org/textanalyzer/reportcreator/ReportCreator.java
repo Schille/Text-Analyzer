@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -155,7 +156,7 @@ public class ReportCreator implements IReportCreator {
 
 		// Some logic to sort the given map by value
 
-		Map<String, Integer> temp2 = myResultset.getCustomWordCount();
+		Map<String, Integer> temp2 = new HashMap<String,Integer>(myResultset.getCustomWordCount());
 		// Reversed sorted map, start with the largest key
 
 		LinkedHashMap<String, Integer> orderCustom = new LinkedHashMap<String, Integer>();
@@ -198,7 +199,7 @@ public class ReportCreator implements IReportCreator {
 		mostusedwords
 				.setText("<html>Liste der häufigsten Wörter - Wort (Anzahl): ");
 
-		Map<String, Integer> temp3 = myResultset.getMostFrequentWord(10);
+		Map<String, Integer> temp3 = new HashMap<String,Integer>(myResultset.getMostFrequentWord(10));
 
 		LinkedHashMap<String, Integer> orderFrequent = new LinkedHashMap<String, Integer>();
 
