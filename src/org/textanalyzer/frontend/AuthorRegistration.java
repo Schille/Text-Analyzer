@@ -145,6 +145,9 @@ public class AuthorRegistration extends JPanel {
 		String authorLastName = lastNameField.getText();
 		String profession = professionField.getText();
 		
+		authorFirstName = authorFirstName.trim();
+		authorLastName = authorLastName.trim();
+		profession = profession.trim();
 		 
 		// the three variables (authorFirstName, authorLastname, profession) will be checked with the methods validateString
 		// if validateString is true the variables are passed to the ProfileManager
@@ -153,10 +156,11 @@ public class AuthorRegistration extends JPanel {
 		
 		if (validateString(authorFirstName)){
 			myProfileInfo.setFirstName(authorFirstName);
-	
+			
 			
 		} else {
 			JOptionPane.showMessageDialog(null, "Bitte geben Sie den Vornamen des Autors an. Achten Sie bitte dabei darauf, dass er nur Buchstaben enth\u00e4lt und keine Zahlen oder Sonderzeichen.", "Fehler", JOptionPane.ERROR_MESSAGE);
+			return;
 		}
 		
 		if (validateString(authorLastName)){
