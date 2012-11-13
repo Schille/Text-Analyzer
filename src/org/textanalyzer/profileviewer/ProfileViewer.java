@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -53,7 +54,7 @@ public class ProfileViewer implements IProfileViewer {
 	private Analyzer analyzer;
 	WaitingDialog waiter;
 	private HashMap<String,ResultSet> resultmapper;
-	private ArrayList<String> dataname;
+	private DefaultListModel dataname;
 	private JList texte;
 	private JScrollPane textpane;
 
@@ -70,9 +71,8 @@ public class ProfileViewer implements IProfileViewer {
 		importer = new DocumentImporter();
 		this_viewer = this;
 		resultmapper = new HashMap<String,ResultSet>();
-		texte = new JList();
-		dataname = new ArrayList<String>();
-		textpane = new JScrollPane(); 
+		dataname = new DefaultListModel();
+		texte = new JList(dataname);
 		ground = new JPanel();
 		new_analyse = new JButton();
 		
@@ -168,25 +168,29 @@ public class ProfileViewer implements IProfileViewer {
 		});
 		
 		
-		textpane.setSize(180, 300);
-		textpane.setLocation(280,50);
-
-		texte.setFont(new Font("Arial",0,16));
 		
+	
+		texte.setFont(new Font("Arial",0,16));
+		dataname.clear();
 		Iterator<?> result = resultSets.iterator();
 		if(result != null) {
 		while(result.hasNext()) {
 			ResultSet temp_res = (ResultSet)result.next();
 			resultmapper.put(temp_res.getDocument().getFileName(), (ResultSet) temp_res);
-			dataname.add(temp_res.getDocument().getFileName());	
+			dataname.addElement(temp_res.getDocument().getFileName());	
 		}
-		texte.setListData(dataname.toArray());
-		textpane.add(texte);
+		textpane = new JScrollPane(texte);
+		textpane.setSize(180, 300);
+		textpane.setLocation(280,50);
+		texte.setSize(180, 300);
+		texte.setLocation(0,0);
+		
 		ground.add(textpane);
 		}
 		else {
 			ground.add(notext);
 		}
+		
 		
 		
 		texte.addMouseListener(new MouseListener() {
@@ -254,19 +258,15 @@ public class ProfileViewer implements IProfileViewer {
 		task.setProfile(profileInformation);
 		task.setWordList(myWordList);
 		
-		JFrame frame = (JFrame)SwingUtilities.getRoot(this.getProfileViewer());
-		waiter.showWaiting(frame);
+		waiter.showWaiting(null);
 		IResultSet set = analyzer.analyzeText(task);
 		waiter.dispose();
 		
 		connector.saveResultSet(userID, set);
+		
+		ground.remove(textpane);
 		refreshTextList();
-		buildReport(set);
-		
-		
-		
-		
-		
+		buildReport(set);		
 		new_analyse.setEnabled(true);
 		
 	}
@@ -310,13 +310,25 @@ public class ProfileViewer implements IProfileViewer {
 		while(result.hasNext()) {
 			ResultSet temp_res = (ResultSet)result.next();
 			resultmapper.put(temp_res.getDocument().getFileName(), (ResultSet) temp_res);
-			dataname.add(temp_res.getDocument().getFileName());	
-			dataname.add("Hugo");
+			dataname.addElement(temp_res.getDocument().getFileName());	
 		}
+			
+		textpane = new JScrollPane(texte);
+		textpane.setSize(180, 300);
+		textpane.setLocation(280,50);
+		
+		
+		ground.add(textpane);
+		
 		texte.repaint();
+		textpane.repaint();
+		ground.repaint();
 		
 		
 		}
+		
+		
+
 
 	}
 
