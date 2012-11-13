@@ -59,7 +59,7 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 
 		setTitle("Datei importieren...");
 		setLayout(null);
-		setBounds(0, 0, 700, 480);
+		setBounds(75, 75, 700, 480);
 		getContentPane().setBackground(Color.white);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		

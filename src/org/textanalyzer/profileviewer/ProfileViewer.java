@@ -52,17 +52,16 @@ public class ProfileViewer implements IProfileViewer {
 	private ProfileViewer this_viewer;
 	private JButton new_analyse;
 	private Analyzer analyzer;
-	private WaitingDialog waiter;
 	private HashMap<String,ResultSet> resultmapper;
 	private ArrayList<String> dataname;
 	private JList texte;
 	private JScrollPane textpane;
+	private Thread importerWorker;
 
 	
 	
 	//-----------Constructor------------
 	public ProfileViewer(int myUserID){
-		waiter = new WaitingDialog();
 		analyzer = new Analyzer();
 		userID = myUserID;
 		connector = new DatabaseConnector();
@@ -135,16 +134,16 @@ public class ProfileViewer implements IProfileViewer {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				
 				((JButton)arg0.getSource()).setEnabled(false);
-				Thread a = new Thread(new Runnable() {
-					
+				importerWorker = new Thread(new Runnable() {
 					@Override
 					public void run() {
 						importer.invokeNewDocumentImport(this_viewer);
-						
+						System.out.println("ImporterThread ended.");
 					}
-				});
-				a.start();
+				}, "ImporterThread");
+				importerWorker.start();
 			}
 		});
 		
@@ -242,6 +241,7 @@ public class ProfileViewer implements IProfileViewer {
 	
 
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void updateContent(IDocument myDocument, List<String> myWordList) {
 		//Start analysis here...
@@ -256,13 +256,16 @@ public class ProfileViewer implements IProfileViewer {
 		task.setWordList(myWordList);
 		
 		JFrame frame = (JFrame)SwingUtilities.getRoot(this.getProfileViewer());
+		
+		WaitingDialog waiter = new WaitingDialog();
 		waiter.showWaiting(frame);
 	
 		Worker myWorker = new Worker(analyzer, task);
 		
 		Thread job = new Thread(myWorker);
+		
 		job.start();
-		while(!job.isAlive() && waiter.isVisible()){
+		while(job.isAlive() && waiter.isVisible()){
 			try {
 				Thread.currentThread().sleep(20);
 			} catch (InterruptedException e) {
@@ -271,21 +274,22 @@ public class ProfileViewer implements IProfileViewer {
 			}
 		}
 		waiter.dispose();
-		try {
-			Thread.currentThread().sleep(200);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
+		if(job.isAlive()){
+			job.stop();
+			new_analyse.setEnabled(true);
+			return;
 		}
 		
 		IResultSet set = myWorker.getResult();
-		if(set == null)
+		if(set == null){
+			new_analyse.setEnabled(true);
 			return;
+		}
 		
 		connector.saveResultSet(userID, set);
 		refreshTextList();
 		buildReport(set);
-		
 		new_analyse.setEnabled(true);
 		
 	}

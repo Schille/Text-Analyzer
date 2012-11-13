@@ -72,10 +72,4 @@ public class WaitingDialog extends JFrame{
 		
 	}
 	
-	public boolean wasAbort() {
-		return isVisible();
-	}
-	
-
-
 }
