@@ -180,9 +180,9 @@ public class Dictionary implements IDictionary {
 			result = WordStatus.OTHER;
 		else if (wikiResponse.contains("Präposition"))
 			result = WordStatus.OTHER;
-		else if (wikiResponse.contains("Substantiv"))
+		else if (wikiResponse.contains("Kategorie:Substantiv (Deutsch)"))
 			result = WordStatus.NOMEN;
-		else if (wikiResponse.contains("Verb")
+		else if (wikiResponse.contains("Kategorie:Verb (Deutsch)")
 				|| wikiResponse.contains("Konjugierte Form"))
 			result = WordStatus.VERB;
 		else if (wikiResponse.contains("Kategorie:Deutsch"))
@@ -255,7 +255,7 @@ public class Dictionary implements IDictionary {
 	private WordStatus checkWord(String myWord) {
 		/**
 		 * This method check if the word already exists in the locale database,
-		 * if not, different dictionarys are requested.
+		 * if not, different dictionary's are requested.
 		 */
 		System.out.println("\nLook up: " + myWord);
 		/**
@@ -287,7 +287,7 @@ public class Dictionary implements IDictionary {
 				return dbWordStatus;
 			} catch (IOException e1) {
 				// If the Duden request throws a exception(WordStatus could not
-				// be resolved, the free dictonary request is executed
+				// be resolved, the free dictionary request is executed
 				try {
 					dbWordStatus = freeDictionaryRequest(myWord);
 					System.out.println("FreeDictionary: " + myWord + " | "
