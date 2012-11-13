@@ -30,7 +30,7 @@ public class TestDictionary {
 	@Test
 	public void test3(){
 		Dictionary test = new Dictionary();
-		WordStatus one = test.getWordStatus("Berfusgymnasium");
+		WordStatus one = test.getWordStatus("e");
 		assertEquals(WordStatus.WRONG, one);
 	}
 	
