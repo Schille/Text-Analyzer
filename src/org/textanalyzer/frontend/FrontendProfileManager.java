@@ -21,10 +21,10 @@ import org.textanalyzer.profileviewer.ProfileViewer;
 
 /**
  * @author Katharina Sandrock
- * 
+ * @version 13.11.2012
  */
 
-/*
+/**
  * the class FrontendProfileManager defines the GUI of the ProfileManager
  * the class is a frame which is responsible for displaying the main view for the user
  * the interface that it uses is the IFrontendProfileManager
@@ -34,9 +34,9 @@ public class FrontendProfileManager extends JFrame implements
 		IFrontendProfileManager {
 
 	/* set variables for the banner content
-	 * @param bannerPanel JPanel which later gets the banner
-	 * @param icon JLabel that contains an image (image is the icon of analytix)
-	 * @param bannerText JLabel that gets the headline 
+	 * bannerPanel JPanel which later gets the banner
+	 * icon JLabel that contains an image (image is the icon of analytix)
+	 * bannerText JLabel that gets the headline 
 	 */
 	
 	private JPanel bannerPanel = new JPanel();
@@ -45,12 +45,12 @@ public class FrontendProfileManager extends JFrame implements
 	private JLabel borderleft = new JLabel(new ImageIcon("lib/borderleft.jpg"));
 	
 	/* set variables for the navigation container
-	*  @param naviPanel JPanel on which the navigation will be added 
-	*  @param authorList JList of all the authors that are in the data base
-	*  @param listModel sets DefaultListModel which is necessary to refresh if users delete authors
-	*  @param naviScrollPane JScrollPane which is necessary for making the JList scrolling if the authorlist contains to much authors for the JList
-	*  @param addButton JButton with an image of a plus - if clicked on it the user should be allowed to add an author to the list
-	*  @param deleteButton JButton with an image of a minus - if clicked on it the user should be allowed to delete an author fro the list
+	*  naviPanel JPanel on which the navigation will be added 
+	*  authorList JList of all the authors that are in the data base
+	*  listModel sets DefaultListModel which is necessary to refresh if users delete authors
+	*  naviScrollPane JScrollPane which is necessary for making the JList scrolling if the authorlist contains to much authors for the JList
+	*  addButton JButton with an image of a plus - if clicked on it the user should be allowed to add an author to the list
+	*  deleteButton JButton with an image of a minus - if clicked on it the user should be allowed to delete an author fro the list
 	*/
 	private JPanel naviPanel = new JPanel();
 	private JList authorList;
@@ -61,25 +61,25 @@ public class FrontendProfileManager extends JFrame implements
 			"lib/deleteButton.jpg"));
 	private JLabel borderleft2 = new JLabel(new ImageIcon("lib/borderleft2.jpg"));
 
-	/* 
-	 * @param contentPanel JPanel as placeholder for the content
-	 */
+	 
+	//contentPanel JPanel as placeholder for the content
+	
 	private JPanel contentPanel = new JPanel();
 	
-	/* 
-	 * @param profileLogic of type ProfileManager - needed to get the methods of the class ProfileManager
-	 */
+	 
+	// profileLogic of type ProfileManager - needed to get the methods of the class ProfileManager
+	
 	private ProfileManager profileLogic;
 	
-	/*
-	 * @param authorRegistration of type AuthorRegistration needed because the AuthorRegistration has to get access to the ProfileManager, too
-	 */
+	
+	// authorRegistration of type AuthorRegistration needed because the AuthorRegistration has to get access to the ProfileManager, too
+	
 	private AuthorRegistration authorRegistration;
 	
 	private HelpPanel helpPage;
 	
 	
-	/*
+	/**
 	 * constructor of the class FrontendProfileManager gets a ProfileManager
 	 * calls the method showFrontendProfileManager
 	 */
@@ -90,7 +90,7 @@ public class FrontendProfileManager extends JFrame implements
 
 	}
 	
-	/*
+	/**
 	 * the method fillList fills the listModel with the authors that it gets from the ProfileManager (profileLogic)
 	 * it fills the list until no author is available	
 	 */
@@ -105,7 +105,7 @@ public class FrontendProfileManager extends JFrame implements
 		}
 	}
 	
-	/* 
+	/** 
 	 * the method showFrontendProfileManager is responsible for the displaying of all possible functions 
 	 */
 	@Override
@@ -151,7 +151,7 @@ public class FrontendProfileManager extends JFrame implements
 		 */
 		authorList.addMouseListener(new MouseListener() {
 
-			/*
+			/**
 			 * method that show the profileViewer of the selected author of the list
 			 */
 			@Override
@@ -211,7 +211,7 @@ public class FrontendProfileManager extends JFrame implements
 
 
 
-	/*
+	/**
 	 * create an fill the Panel which contains the banner
 	 */
 	private void createBanner() {
@@ -230,7 +230,7 @@ public class FrontendProfileManager extends JFrame implements
 		bannerPanel.setVisible(true);
 	}
 
-	/*
+	/**
 	 *  create and fill the navigation panel
 	 */
 	private void createNavigation() {
@@ -256,7 +256,9 @@ public class FrontendProfileManager extends JFrame implements
 		naviPanel.setVisible(true);
 	}
 
-	// create the content panel
+	/**
+	 *  create the content panel
+	 */
 	private void createContentPanel() {
 		contentPanel.setBounds(250, 150, 500, 400);
 		contentPanel.setBackground(Color.white);
@@ -274,7 +276,7 @@ public class FrontendProfileManager extends JFrame implements
 		
 	}
 
-	/*
+	/**
 	 * the method "addButtonActionPerformed" shows the JPanel of the AuthorRegistration class when clicking on the addButton
 	 * @see AuthorRegistration class
 	 */
@@ -288,7 +290,7 @@ public class FrontendProfileManager extends JFrame implements
 
 	}
 
-	/*
+	/**
 	 * deleteButtonActionPerformed is the method that will be called if the user clicks on the deleteButton
 	 * if the user has not selected an element from the list the user gets the advice to do it
 	 * if the user has selected an element of the list it will be removed (remove an author(

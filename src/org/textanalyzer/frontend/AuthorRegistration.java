@@ -18,10 +18,10 @@ import org.textanalyzer.profilemanager.ProfileManager;
 
 /**
  * @author Katharina Sandrock
- * 
+ * @version 13.11.2012
  */
 
-/*
+/**
  * the class AuthorRegistration acts as a JPanel which should allow the user to add an author to the software
  * therefore the user has to enter four facts of the author: the first name, the last name, the profession an the age
  * by clicking on the submit button the author and his/her characteristics should be added to the list 
@@ -30,7 +30,7 @@ import org.textanalyzer.profilemanager.ProfileManager;
 
 public class AuthorRegistration extends JPanel {
 
-	/*
+	/**
 	 * setting all the variables which should appear on the JLabel
 	 * 
 	 * @param headLine JLabel which gives the user the overview of the
@@ -60,7 +60,7 @@ public class AuthorRegistration extends JPanel {
 
 	private FrontendProfileManager frontendManager;
 
-	/*
+	/**
 	 * constructor which is responsible to create the JPanel which allows to
 	 * input the needed data
 	 */
@@ -73,15 +73,15 @@ public class AuthorRegistration extends JPanel {
 		setSize(500, 400);
 		setBackground(Color.white);
 
-		/*
-		 * set the headline
-		 */
+		
+		//set the headline
+		 
 		headLine.setBounds(86, 27, 317, 33);
 		headLine.setFont(new Font("Arial", 0, 24));
 
-		/*
-		 * set the Labels that inform the users about the needed input
-		 */
+		
+		//set the Labels that inform the users about the needed input
+		 
 		firstNameLabel.setBounds(100, 100, 93, 22);
 		firstNameLabel.setFont(new Font("Arial", 0, 16));
 		lastNameLabel.setBounds(100, 150, 93, 22);
@@ -91,35 +91,35 @@ public class AuthorRegistration extends JPanel {
 		ageLabel.setBounds(100, 250, 93, 22);
 		ageLabel.setFont(new Font("Arial", 0, 16));
 
-		/*
-		 * set the three text fields
-		 */
+		
+		//set the three text fields
+		
 		firstNameField.setBounds(200, 100, 190, 25);
 		lastNameField.setBounds(200, 150, 190, 25);
 		professionField.setBounds(200, 200, 190, 25);
 		ageField.setBounds(200, 250, 190, 25);
 
 
-		/*
-		 * set the Button to submit the input
-		 */
+		
+		// set the Button to submit the input
+		
 		submit.setBounds(200, 300, 130, 30);
 		submit.setForeground(Color.white);
 		submit.setBackground(new Color(209, 0, 0));
 		submit.setFont(new Font("Arial", 0, 15));
 
-		/*
-		 * add an ActionListener to the Button
-		 */
+		
+		// add an ActionListener to the Button
+		
 		submit.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				submitButtonActionPerformed(evt);
 			}
 		});
 
-		/*
-		 * add all created elements to the JPanel and set it visible
-		 */
+		
+		// add all created elements to the JPanel and set it visible
+		
 		add(headLine);
 		add(firstNameField);
 		add(lastNameField);
@@ -134,27 +134,25 @@ public class AuthorRegistration extends JPanel {
 
 	}
 
-	/*
+	/**
 	 * submitButtonActionPerformed is the method performed when the submit
 	 * button is clicked
+	 * @param authorFirstName, authorLastname, profession gets the input that the user writes into the JTextFields
 	 */
 
 	protected void submitButtonActionPerformed(ActionEvent evt) {
 		
 		ProfileInformation myProfileInfo = new ProfileInformation();
 		
-		/*
-		 * @param authorFirstName, authorLastname, profession gets the input that the user writes into the JTextFields
-		 */
 		String authorFirstName = firstNameField.getText();
 		String authorLastName = lastNameField.getText();
 		String profession = professionField.getText();
 		
-		/* 
-		 * the three variables (authorFirstName, authorLastname, profession) will be checked with the methods validateString
-		 * if validateString is true the variables are passed to the ProfileManager
-		 * if not the user gets an error message
-		 */
+		 
+		// the three variables (authorFirstName, authorLastname, profession) will be checked with the methods validateString
+		// if validateString is true the variables are passed to the ProfileManager
+		// if not the user gets an error message
+		
 		
 		if (validateString(authorFirstName)){
 			myProfileInfo.setFirstName(authorFirstName);
@@ -179,11 +177,11 @@ public class AuthorRegistration extends JPanel {
 			return;
 		}
 		
-		/*
-		 * the ageField is validated with the method validateAge
-		 * if it delivers true the text can be passed into an integer without problems and it will be passed to the ProfileManager
-		 * otherwise the user is informed about that problem
-		 */
+		
+		// the ageField is validated with the method validateAge
+		// if it delivers true the text can be passed into an integer without problems and it will be passed to the ProfileManager
+		// otherwise the user is informed about that problem
+		 
 		if (validateAge(ageField.getText())){
 			int age = new Integer(ageField.getText());
 			if (age < 120) {
@@ -201,9 +199,9 @@ public class AuthorRegistration extends JPanel {
 		manager.createProfile(myProfileInfo);
 		frontendManager.fillList();
 		
-		/*
-		 * after the submit the text fields should be empty again
-		 */
+		
+		// after the submit the text fields should be empty again
+		
 		firstNameField.setText("");
 		lastNameField.setText("");
 		professionField.setText("");
@@ -211,7 +209,7 @@ public class AuthorRegistration extends JPanel {
 		
 		}
 
-	/*
+	/**
 	 * the method validateAge checks with a regular expression if the given
 	 * String just contains numbers
 	 */
@@ -221,10 +219,10 @@ public class AuthorRegistration extends JPanel {
 
 	}
 
-	/*
+	/**
 	 * the method validateString checks with a regular expression if the given
 	 * String just contains letter since the software is made for Germans also
-	 * the "umlaute" and the ß is allowed for the inut
+	 * the "umlaute" and the ß is allowed for the input
 	 */
 	private boolean validateString(String input) {
 		return input.matches("^[a-zA-Zäöüß]+$");

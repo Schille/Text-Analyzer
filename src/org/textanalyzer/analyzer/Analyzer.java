@@ -53,34 +53,11 @@ public class Analyzer implements IAnalyzer {
 	}
 	
 	public void textPreprocess() {
-		text = text.replace("<","");
-		text = text.replace(">","");
-		text = text.replace("\"","");
-		text = text.replace("+","");
-		text = text.replace("´","");
-		text = text.replace("`","");
-		text = text.replace("(","");
-		text = text.replace(")","");
-		text = text.replace("&","");
-		text = text.replace("$","");
-		text = text.replace("§","");
-		text = text.replace("%","");
-		text = text.replace("=","");
-		text = text.replace("'","");
-		text = text.replace("*","");
-		text = text.replace("#","");
-		text = text.replace("_","");
-		text = text.replace(";","");
-		text = text.replace(":","");
-		text = text.replace("°","");
-		text = text.replace(",","");
-		text = text.replace("^","");
-		text = text.replace("[","");
-		text = text.replace("]","");
-		text = text.replace("|","");
-		text = text.replace("{","");
-		text = text.replace("}","");
-		
+		text = text.replaceAll("[^a-zA-Z_._!_?_ä_ö_ü_ß_Ä_Ö_Ü]", " ");
+		text = text.replaceAll("[.]+", ". ");
+		text = text.replaceAll("[?]+", "? ");
+		text = text.replaceAll("[!]+", "! ");
+		text = text.replaceAll("\\s+"," ");
 	}
 	
 	@Override

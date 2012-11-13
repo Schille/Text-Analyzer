@@ -3,10 +3,14 @@ package org.textanalyzer.database;
 import java.util.Date;
 
 import org.textanalyzer.documentimporter.DocumentFormat;
+
 /**
  * Document
  * @author Michael Schilonka
  * @version 12.11.2012
+ */
+
+/**
  * Setters and Getters for Document
  */
 public class Document implements IDocument {
@@ -17,7 +21,7 @@ public class Document implements IDocument {
 	private Date importDate;
 	private DocumentFormat documentFormat;
 	private String fileName;
-	
+
 	// ---------------------- Getters -----------------------
 	@Override
 	public String getDocumentPath() {
@@ -43,6 +47,7 @@ public class Document implements IDocument {
 	public String getFileName() {
 		return fileName;
 	}
+
 	// ---------------------- Setters -----------------------
 	public void setDocumentPath(String documentPath) {
 		this.documentPath = documentPath;
@@ -60,7 +65,7 @@ public class Document implements IDocument {
 		this.fileName = fileName;
 	}
 
-	public void setText(String text){
+	public void setText(String text) {
 		this.text = text;
 	}
 }
