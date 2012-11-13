@@ -113,8 +113,8 @@ public class Analyzer implements IAnalyzer {
 		String [] freuquentWordArray = {"der", "die", "das", "dem", "den", "ein", "eine", "und", "oder", "weil", "Der", "Die", "Das", "Dem", "Den", "Ein", "Eine", "Und", "Oder", "Weil"};
 		
 		for (int i=freuquentWordArray.length;i>0;i--){
-		if (fullWordList.containsValue(freuquentWordArray[i]))
-			fullWordList.remove(freuquentWordArray[i]);
+		if (fullWordList.containsKey(freuquentWordArray[i-1]))
+			fullWordList.remove(freuquentWordArray[i-1]);
 			}
 		this.analysis.setMostFrequentWord(new HashMap<String, Integer>(fullWordList));
 		
