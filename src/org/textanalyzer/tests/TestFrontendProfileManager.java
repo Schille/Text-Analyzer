@@ -114,6 +114,7 @@ public class TestFrontendProfileManager {
 	}
 	@Test
 	public void test() {
+		@SuppressWarnings("unused")
 		ProfileManager test = new ProfileManager();
 		System.out.println("Test");
 	}

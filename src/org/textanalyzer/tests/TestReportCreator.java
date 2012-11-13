@@ -3,14 +3,11 @@
  */
 package org.textanalyzer.tests;
 
-import static org.junit.Assert.*;
-
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import javax.swing.JFrame;

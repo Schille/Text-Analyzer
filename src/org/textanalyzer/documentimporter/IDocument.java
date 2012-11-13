@@ -3,7 +3,6 @@
  */
 package org.textanalyzer.documentimporter;
 
-import java.net.URI;
 import java.util.Date;
 
 
