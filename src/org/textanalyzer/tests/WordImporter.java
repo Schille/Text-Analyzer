@@ -33,23 +33,23 @@ public class WordImporter {
 				while ((buffer = out.readLine()) != null) {
 					outputString = outputString + buffer + "\n";
 					//System.out.println(buffer);
-						if(db.getWordStatus(buffer)!=null){
-							System.out.println("DB: "+buffer+" "+db.getWordStatus(buffer));
-						}else{
-						if(Character.isUpperCase(buffer.charAt(0))){
+						//if(db.getWordStatus(buffer)!=null){
+							//System.out.println("DB: "+buffer+" "+db.getWordStatus(buffer));
+						//}else{
+						//if(Character.isUpperCase(buffer.charAt(0))){
 							db.setWordStatus(buffer, WordStatus.NOMEN);
-							System.out.println(buffer);
+							//System.out.println(buffer);
 							i++;
 							System.out.println(i);
-						} else if(Character.isLowerCase(buffer.charAt(0))){
+						/*} else if(Character.isLowerCase(buffer.charAt(0))){
 							db.setWordStatus(buffer, WordStatus.OTHER);
-							System.out.println(buffer);
+							//System.out.println(buffer);
 							i++;
 							System.out.println(i);
-						}
+						*///}
 						}	
 								buffer = null;
-				}
+			//	}
 				
 				
 			} catch (IOException e) {
