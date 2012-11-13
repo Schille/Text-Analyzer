@@ -388,6 +388,7 @@ public class ReportCreator implements IReportCreator {
 		 
 		 if(i==0){
 			 JOptionPane.showMessageDialog(null, "Es gibts derzeit noch keine analysierten Dokumente des Autors.", "Fehler", JOptionPane.ERROR_MESSAGE);
+			 return null;
 		 }
 		 else{
 			 temp_wordcount = temp_wordcount/i;
@@ -511,9 +512,9 @@ public class ReportCreator implements IReportCreator {
 		 reportpanel.add(mostusedwords);
 		 reportpanel.add(mostusedcustomwords);
 		 reportpanel.add(mood);
-		 }
+		 
 		
 		return reportpanel;
-	
+		 }
 	}
 }
