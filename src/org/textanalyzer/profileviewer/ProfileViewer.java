@@ -300,6 +300,10 @@ public class ProfileViewer implements IProfileViewer {
 		new_analyse.setEnabled(true);
 		
 	}
+	
+	public void enableButton() {
+		new_analyse.setEnabled(true);
+	}
 
 	/**
 	 * @param profileinfo

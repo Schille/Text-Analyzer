@@ -23,13 +23,9 @@ import org.textanalyzer.frontend.FrontendImporter;
 import org.textanalyzer.profileviewer.ProfileViewer;
 
 public class DocumentImporter implements IDocumentImporter, ActionListener {
-	private boolean correct = true;
 	private FrontendImporter frontend;
-	private ProfileViewer viewer;
+	public ProfileViewer viewer;
 
-	public DocumentImporter() {
-		
-	}
 
 	@Override
 	/**
@@ -50,9 +46,12 @@ public class DocumentImporter implements IDocumentImporter, ActionListener {
 	 */
 	private void invokeAction() throws HeadlessException {
 
+		String errorMessage = "";
+		boolean correct = true;
 		List<String> customWordList;
+		correct = frontend.checkFields();
 		Document document = new Document();
-
+		boolean fileNotFound = false;
 		// loop for checking if the user entered a correct file
 
 		customWordList = frontend.getCustomWordList();
@@ -64,7 +63,8 @@ public class DocumentImporter implements IDocumentImporter, ActionListener {
 
 		// split the string in order to check which file was selected
 		String filename = file.getName();
-		String extension = filename.substring(filename.lastIndexOf(".") + 1, filename.length());
+		String extension = filename.substring(filename.lastIndexOf(".") + 1,
+				filename.length());
 
 		// Import function for a *.pdf file
 		if (extension.equalsIgnoreCase("pdf")) {
@@ -77,7 +77,8 @@ public class DocumentImporter implements IDocumentImporter, ActionListener {
 				document.setText(pdfText.getText(pdfDocument));
 
 			} catch (FileNotFoundException e1) {
-				correct = false;
+				fileNotFound = true;
+				errorMessage = "Datei konnte nicht gefunden werden!";
 
 			} catch (IOException e) {
 
@@ -111,7 +112,9 @@ public class DocumentImporter implements IDocumentImporter, ActionListener {
 				document.setText(text);
 
 			} catch (IOException e) {
-				e.printStackTrace();
+				fileNotFound = true;
+				errorMessage = "Datei konnte nicht gefunden werden!";
+
 			}
 			document.setDocumentFormat(DocumentFormat.DOC);
 			document.setDocumentPath(frontend.getFilePath());
@@ -125,7 +128,9 @@ public class DocumentImporter implements IDocumentImporter, ActionListener {
 				document.setText(odt.getText(frontend.getFilePath()));
 
 			} catch (FileNotFoundException e1) {
-				correct = false;
+				fileNotFound = true;
+				errorMessage = "Datei konnte nicht gefunden werden!";
+
 			} catch (Exception e) {
 
 			}
@@ -138,7 +143,8 @@ public class DocumentImporter implements IDocumentImporter, ActionListener {
 			String buffer = "";
 
 			try {
-				BufferedReader out = new BufferedReader(new FileReader(frontend.getFilePath()));
+				BufferedReader out = new BufferedReader(new FileReader(
+						frontend.getFilePath()));
 
 				try {
 
@@ -150,7 +156,9 @@ public class DocumentImporter implements IDocumentImporter, ActionListener {
 					e.printStackTrace();
 				}
 			} catch (FileNotFoundException e) {
-				frontend.setVisible(true);
+				fileNotFound = true;
+				errorMessage = "Datei konnte nicht gefunden werden!";
+
 			}
 			document.setDocumentFormat(DocumentFormat.TXT);
 			document.setText(outputString);
@@ -159,37 +167,52 @@ public class DocumentImporter implements IDocumentImporter, ActionListener {
 			// Import function for plain text
 		} else if (!frontend.getText().isEmpty()) {
 			// Plain Text
+			String plainTextName = "";
 			document.setDocumentFormat(DocumentFormat.PLAIN_TEXT);
 			document.setText(frontend.getText());
-			String plainTextName = JOptionPane.showInputDialog(null, "Bitte geben Sie einen Dateinamen für den Text ein!", "Name des Textes", JOptionPane.PLAIN_MESSAGE);
-			document.setFileName(plainTextName);
+			do {
+				plainTextName = JOptionPane.showInputDialog(null,
+						"Bitte geben Sie einen Dateinamen für den Text ein!",
+						"Name des Textes", JOptionPane.PLAIN_MESSAGE);
+				document.setFileName(plainTextName);
+			} while (plainTextName.equals(""));
 
 			// If non of the conditions was reached set correct false and
 			// make the while loop start over again
-		} 
+		}
 		if (frontend.getText().isEmpty()) {
 			document.setFileName(file.getName());
 		}
 		document.setImportDate(new Date());
+		if (!fileNotFound && correct) {
+			Updater updater = new Updater(viewer, document, customWordList);
+			Thread Job = new Thread(updater, "ProfileUpdaThread");
+			Job.start();
+			return;
 
-		Updater updater = new Updater(viewer, document, customWordList);
-		Thread Job = new Thread(updater, "ProfileUpdaThread");
-		Job.start();
+		}
+		frontend.setVisible(true);
+
+		if (!errorMessage.isEmpty()) {
+			JOptionPane.showMessageDialog(null, errorMessage, "Fehler",
+					JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		frontend.setVisible(false);
 		invokeAction();
-		
+
 	}
-	
-	class Updater implements Runnable{
+
+	class Updater implements Runnable {
 		private Document doc;
 		private List<String> custom;
 		private ProfileViewer viewer;
-		
-		public Updater(ProfileViewer myViewer, Document myDocument, List<String> myCustomWordList){
+
+		public Updater(ProfileViewer myViewer, Document myDocument,
+				List<String> myCustomWordList) {
 			viewer = myViewer;
 			custom = myCustomWordList;
 			doc = myDocument;
@@ -198,7 +221,7 @@ public class DocumentImporter implements IDocumentImporter, ActionListener {
 		@Override
 		public void run() {
 			viewer.updateContent(doc, custom);
-			
+
 		}
 	}
 }

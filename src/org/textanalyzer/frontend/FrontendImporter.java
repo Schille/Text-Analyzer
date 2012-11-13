@@ -20,6 +20,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import org.textanalyzer.documentimporter.DocumentImporter;
+
 /**
  * @author Katharina Sandrock
  * @version 13.11.2012
@@ -49,12 +51,12 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	private JScrollPane textareaPane;
 	private String filepath = "";
 	private String blankText = "";
-    private boolean emptyClose = false;
-    private ActionListener listener;
+	private boolean emptyClose = false;
+	private DocumentImporter listener;
 
-    public FrontendImporter(ActionListener myActionListener){
-    	listener = myActionListener;
-    }
+	public FrontendImporter(DocumentImporter myActionListener) {
+		listener = myActionListener;
+	}
 
 	/**
 	 * method showImportWindow displays the JFrame with all the elements that
@@ -67,13 +69,13 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 		setBounds(75, 75, 700, 480);
 		getContentPane().setBackground(Color.white);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
-        class WindowHandler extends WindowAdapter {
-        	public void windowClosing(WindowEvent evt){
-        		setEmptyClose(true);
-        	}
-        }
-        addWindowListener(new WindowHandler());
+
+		class WindowHandler extends WindowAdapter {
+			public void windowClosing(WindowEvent evt) {
+				listener.viewer.enableButton();
+			}
+		}
+		addWindowListener(new WindowHandler());
 
 		// textareaPane is the JScrollPane which is needed to allow scrolling in
 		// the textareaForBlank
@@ -162,7 +164,7 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	 * field and the method getfilepath is called to pass the filepath
 	 */
 	private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		try{
+		try {
 			JFileChooser dc = new JFileChooser();
 			dc.setDialogTitle("Browse...");
 			dc.showOpenDialog(null);
@@ -172,7 +174,7 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 
 			filepath = dataPath.getText();
 			getFilePath();
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -184,27 +186,6 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	 * empty if they both are empty or both are filled the user is informed
 	 * about the wrong input given
 	 */
-	private void startAnalysisActionPerformed(java.awt.event.ActionEvent evt) {
-
-		filepath = dataPath.getText();
-		blankText = textareaForBlank.getText();
-
-		if (filepath.equals("") && blankText.equals("")) {
-			JOptionPane.showMessageDialog(null,
-					"Bitte w�hle eine Textquelle !", "Fehler",
-					JOptionPane.OK_CANCEL_OPTION);
-			return;
-		}
-		if (!filepath.equals("") && !blankText.equals("")) {
-			JOptionPane.showMessageDialog(null,
-					"Bitte nur eine Textquelle w�hlen!", "Fehler",
-					JOptionPane.OK_OPTION);
-			return;
-		}
-
-		setVisible(false);
-
-	}
 
 	/**
 	 * returned the filepath to let it use from the documentimporter e.g.
@@ -239,12 +220,33 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 			return Arrays.asList(customWords.getText().split("\n"));
 		return new ArrayList<String>();
 	}
+
 	public boolean isEmptyClose() {
 		return emptyClose;
 	}
 
 	public void setEmptyClose(boolean emptyClose) {
 		this.emptyClose = emptyClose;
+	}
+
+	public boolean checkFields() {
+
+		filepath = dataPath.getText();
+		blankText = textareaForBlank.getText();
+
+		if (filepath.equals("") && blankText.equals("")) {
+			JOptionPane.showMessageDialog(null,
+					"Bitte wähle eine Textquelle !", "Fehler",
+					JOptionPane.OK_CANCEL_OPTION);
+			return false;
+		}
+		if (!filepath.equals("") && !blankText.equals("")) {
+			JOptionPane.showMessageDialog(null,
+					"Bitte nur eine Textquelle wählen!", "Fehler",
+					JOptionPane.OK_OPTION);
+			return false;
+		}
+		return true;
 	}
 
 }
