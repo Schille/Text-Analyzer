@@ -38,7 +38,7 @@ public class Dictionary implements IDictionary {
 
 		URL url = new URL(requestString);
 		InputStream stream = url.openStream();
-		String dudenResponse = new Scanner(stream).useDelimiter("\\Z").next();
+		String dudenResponse = new Scanner(stream).useDelimiter("\\A").next();
 		
 		if (dudenResponse.contains("<span class=\"wortart\">Adjektiv"))
 			result = WordStatus.ADJECTIV;
@@ -75,11 +75,11 @@ public class Dictionary implements IDictionary {
 		URLConnection connection = url.openConnection();
 		connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
 		InputStream stream = connection.getInputStream();
-		String freeResponse = new Scanner(stream).useDelimiter("\\Z").next();
+		String freeResponse = new Scanner(stream).useDelimiter("\\A").next();
 		
-		freeResponse = freeResponse.replace("/"+myRequest, "");
-		freeResponse = freeResponse.replace(">"+myRequest, "");
-		if(freeResponse.contains("Das Wort konnte im Wörterbuch nicht gefunden werden.") || ! freeResponse.contains(myRequest)){
+		freeResponse = freeResponse.replace("/"+myRequest, " ");
+		freeResponse = freeResponse.replace(">"+myRequest, " ");
+		if(freeResponse.contains("Das Wort konnte im Wörterbuch nicht gefunden werden.")){
 			stream.close();
 			throw new Exception("Word not found!");
 		}
@@ -99,14 +99,18 @@ public class Dictionary implements IDictionary {
 		
 		URL url_wiktionary = new URL(requestString);
 		InputStream wikiStream = url_wiktionary.openStream();
-		String wikiResponse = new Scanner(wikiStream).useDelimiter("\\Z")
+		String wikiResponse = new Scanner(wikiStream).useDelimiter("\\A")
 					.next();
 
 		if (wikiResponse.contains("Adjektiv"))
 			result = WordStatus.ADJECTIV;
+		else if (wikiResponse.contains("Personalpronomen"))
+			result = WordStatus.OTHER;
+		else if (wikiResponse.contains("Präposition"))
+			result = WordStatus.OTHER;
 		else if (wikiResponse.contains("Substantiv"))
 			result = WordStatus.NOMEN;
-		else if (wikiResponse.contains("Verb"))
+		else if (wikiResponse.contains("Verb")||wikiResponse.contains("Konjugierte Form"))
 			result = WordStatus.VERB;
 		else if (wikiResponse.contains("Kategorie:Deutsch"))
 			result = WordStatus.OTHER;

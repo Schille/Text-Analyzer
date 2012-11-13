@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.textanalyzer.database;
 
 import java.util.Map;
@@ -8,9 +5,11 @@ import java.util.Map;
 import org.textanalyzer.analyzer.TextMood;
 
 /**
+ * Interface for ResultSet
  * @author Michael Schilonka
- *
+ * @version 12.11.2012
  */
+
 public interface IResultSet {
 
 	int getWordCount();

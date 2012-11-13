@@ -1,21 +1,16 @@
 package org.textanalyzer.database;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
-import org.apache.pdfbox.pdfviewer.MapEntry;
 import org.textanalyzer.analyzer.TextMood;
-import org.textanalyzer.analyzer.dictionary.WordStatus;
 
 /**
+ * Profile Information
  * @author Michael Schilonka
- *
+ * @version 12.11.2012
+ * Setters and Getters for ResultSet
  */
 public class ResultSet implements IResultSet {
 	

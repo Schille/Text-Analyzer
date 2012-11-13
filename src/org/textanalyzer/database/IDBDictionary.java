@@ -1,13 +1,11 @@
-/**
- * 
- */
 package org.textanalyzer.database;
 
 import org.textanalyzer.analyzer.dictionary.WordStatus;
 
 /**
- * @author Michael Schilonk
- *
+ * Interface for database dictionary
+ * @author Michael Schilonka
+ * @version 12.11.2012
  */
 public interface IDBDictionary {
 

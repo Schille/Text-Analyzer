@@ -70,6 +70,8 @@ public class TestDatabaseConnector {
 
 		assertEquals(1000,test1.saveProfileInformation(profile));
 		//assertEquals(1001,test1.saveProfileInformation(profile));
+		test1.saveProfileInformation(profile);
+		test1.saveProfileInformation(profile);
 		test1.saveResultSet(1000,result);
 		test1.saveResultSet(1000,result);
 //		test1.saveResultSet(1000, result1);
@@ -78,8 +80,11 @@ public class TestDatabaseConnector {
 
 		long c = test1.countClass("ProfileInformation");
 		long d = test1.countClass("ResultSet");
+		System.out.println(c);
+		System.out.println(d);
+	
 
-		assertEquals(1, c);
+		assertEquals(3, c);
 		assertEquals(2, d);
 
 		ProfileInformation myProfile = test1.getProfileInformation(1000);
@@ -100,7 +105,10 @@ public class TestDatabaseConnector {
 		System.out.println(test1.getAllProfiles().get(0).getAge());
 		
 		test1.removeProfile(1000);
-		
+		test1.removeProfile(1001);
+
+		test1.saveProfileInformation(profile);
+
 		
 		
 
@@ -118,7 +126,7 @@ public class TestDatabaseConnector {
 		d = test1.countClass("ResultSet");
 		long e = test1.countClass("Document");
 
-		assertEquals(0, c);
+		assertEquals(2, c);
 		assertEquals(0, d);
 		assertEquals(0, e);
 

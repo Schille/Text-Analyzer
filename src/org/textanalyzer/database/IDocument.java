@@ -3,15 +3,15 @@
  */
 package org.textanalyzer.database;
 
-import java.net.URI;
 import java.util.Date;
 
 import org.textanalyzer.documentimporter.DocumentFormat;
 
 
 /**
- * @author Sebastian 
- *
+ * Interface for Document
+ * @author Sebastian Hirschl
+ * @version 12.11.2012
  */
 public interface IDocument {
 

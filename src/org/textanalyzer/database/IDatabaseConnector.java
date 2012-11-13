@@ -1,13 +1,12 @@
-/**
- * 
- */
 package org.textanalyzer.database;
 
 import java.util.List;
 
 /**
- * @author Maximilian Quellmalz, Michael Schilonka
- *
+ * Interface for database connection
+ * @author Michael Schilonka
+ * @author Maximilian Quellmalz
+ * @version 12.11.2012
  */
 public interface IDatabaseConnector {
 	

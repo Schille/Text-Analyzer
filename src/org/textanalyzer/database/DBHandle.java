@@ -1,27 +1,39 @@
 package org.textanalyzer.database;
 
-import java.util.List;
-
 import com.orientechnologies.orient.core.exception.OStorageException;
 import com.orientechnologies.orient.object.db.OObjectDatabaseTx;
 
+/**
+ * Database Handle
+ * @author Michael Schilonka
+ * @author Maximilian Quellmalz
+ * @version 12.11.2012
+ */
+
 public final class DBHandle extends OObjectDatabaseTx{
-	 
+
 	 private DBHandle(String iURL) {
 		super(iURL);
 	}
-	 	
-	private static DBHandle connector;
-	 
+	
+	 /**
+	  * @param connector object of type DBHandle
+	  */ 
+	 private static DBHandle connector;
+	 /**
+	  * Validation of database.
+	  * First it is tried to open an already existing database.
+	  * If the database already exists, the classes ProfileInformation and ResultSet are registered.
+	  * A new Database is created and opened afterwards.
+	  * Finally the classes ProfileInformation and ResultSet are registered.
+	  * In the end the database is returned.
+	  * @return database
+	  */ 
 	 public static DBHandle createDB(){
 		 if(connector != null){
 			 return connector;
 		 }
 
-		/**
-		  * Tries to open an already existing database.
-		  * If the database already exists, the classes ProfileInformation and ResultSet are registered.
-		  */
 		 try{
 			 connector = new DBHandle("local:db/").open("admin", "admin");
 			 System.out.println("Could open the db.");
@@ -30,9 +42,7 @@ public final class DBHandle extends OObjectDatabaseTx{
 			 connector.getEntityManager().registerEntityClass(DBWord.class);
 			 connector.getEntityManager().registerEntityClass(Document.class);
 		 }
-		 /**
-		  * A new Database is created and opened afterwards.
-		  */
+
 		 catch(OStorageException ex){
 			 System.out.println("Could not open the db.");
 			 connector = new DBHandle("local:db/").create();
@@ -40,9 +50,7 @@ public final class DBHandle extends OObjectDatabaseTx{
 			 connector = new DBHandle("local:db/").open("admin", "admin");
 			 System.out.println("Could open the db.");
 		 }
-		 /**
-		  * Finally the classes ProfileInformation and ResultSet are registered.
-		  */
+
 		 finally{
 			 connector.getEntityManager().registerEntityClass(ProfileInformation.class);
 			 connector.getEntityManager().registerEntityClass(ResultSet.class);
@@ -50,9 +58,7 @@ public final class DBHandle extends OObjectDatabaseTx{
 			 connector.getEntityManager().registerEntityClass(Document.class);
 			 System.out.println("Registered classes.");
 		 }
-		 /**
-		  * In the end the database is returned.
-		  */
+
 		 return connector;
 		 
 	 }
