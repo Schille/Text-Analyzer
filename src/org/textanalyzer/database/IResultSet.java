@@ -6,6 +6,7 @@ import org.textanalyzer.analyzer.TextMood;
 
 /**
  * Interface for ResultSet
+ * 
  * @author Michael Schilonka
  * @version 12.11.2012
  */
@@ -13,21 +14,21 @@ import org.textanalyzer.analyzer.TextMood;
 public interface IResultSet {
 
 	int getWordCount();
-	
+
 	int getWrongWordCount();
-	
-	Map<String,Integer> getMostFrequentWord(int myNumber); 
-	
+
+	Map<String, Integer> getMostFrequentWord(int myNumber);
+
 	int getPseudoIQ();
-	
-	Map<String,Integer> getCustomWordCount();
-	
+
+	Map<String, Integer> getCustomWordCount();
+
 	int getAvaragePhraseLength();
-	
+
 	String getMostFrequentNomen();
-	
+
 	TextMood getTextMood();
-	
+
 	IDocument getDocument();
-		
+
 }

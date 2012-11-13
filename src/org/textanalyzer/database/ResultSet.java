@@ -10,10 +10,13 @@ import org.textanalyzer.analyzer.TextMood;
  * Profile Information
  * @author Michael Schilonka
  * @version 12.11.2012
+ */
+
+/**
  * Setters and Getters for ResultSet
  */
 public class ResultSet implements IResultSet {
-	
+
 	private int wordCount;
 	private int wrongWordCount;
 	private HashMap<String, Integer> mostFrequentWord;
@@ -24,19 +27,19 @@ public class ResultSet implements IResultSet {
 	private TextMood textMood;
 	private IDocument document;
 	private int id;
-	
-	public ResultSet(){
+
+	public ResultSet() {
 		mostFrequentWord = new HashMap<String, Integer>();
 		customWordCount = new HashMap<String, Integer>();
 	}
-	
-	
-	//----------------------------Getter Setter------------------------------------------------------
-	public void setDocument(IDocument myDocument){
+
+	// ----------------------------Getter
+	// Setter------------------------------------------------------
+	public void setDocument(IDocument myDocument) {
 		document = myDocument;
 	}
-	
-	public IDocument getDocument(){
+
+	public IDocument getDocument() {
 		return document;
 	}
 
@@ -63,7 +66,7 @@ public class ResultSet implements IResultSet {
 	public void setAvaragePhraseLength(int avaragePhraseLength) {
 		this.avaragePhraseLength = avaragePhraseLength;
 	}
-	
+
 	public void setMostFrequentNomen(String mostFrequentNomen) {
 		this.mostFrequentNomen = mostFrequentNomen;
 	}
@@ -71,7 +74,6 @@ public class ResultSet implements IResultSet {
 	public void setTextMood(TextMood textMood) {
 		this.textMood = textMood;
 	}
-
 
 	@Override
 	public int getWordCount() {
@@ -85,28 +87,26 @@ public class ResultSet implements IResultSet {
 
 	@Override
 	public Map<String, Integer> getMostFrequentWord(int myNumber) {
-		
-		
+
 		LinkedHashMap<String, Integer> orderWords = new LinkedHashMap<String, Integer>();
-		
-		for(int i = 0; i < myNumber && mostFrequentWord.entrySet().iterator()
-				.hasNext(); i++) {
+
+		for (int i = 0; i < myNumber
+				&& mostFrequentWord.entrySet().iterator().hasNext(); i++) {
 			Map.Entry<String, Integer> temp_entry = null;
-			
+
 			temp_entry = mostFrequentWord.entrySet().iterator().next();
-		
+
 			for (Map.Entry<String, Integer> entry : mostFrequentWord.entrySet()) {
-				if(temp_entry != null && temp_entry.getValue() <= entry.getValue())
+				if (temp_entry != null
+						&& temp_entry.getValue() <= entry.getValue())
 					temp_entry = entry;
 			}
-			
+
 			mostFrequentWord.remove(temp_entry.getKey());
 			orderWords.put(temp_entry.getKey(), temp_entry.getValue());
 		}
-		
-		
-		
-		  return orderWords;
+
+		return orderWords;
 	}
 
 	@Override
@@ -133,22 +133,21 @@ public class ResultSet implements IResultSet {
 	public TextMood getTextMood() {
 		return textMood;
 	}
-	
+
 	public HashMap<String, Integer> getMostFrequentWord() {
 		return mostFrequentWord;
 	}
 
 	public void setId(int id) {
-		this.id=id;
-		
+		this.id = id;
+
 	}
-	
-	public int getId(){
+
+	public int getId() {
 		return this.id;
 	}
 
-
-
-	//END----------------------------Getter Setter------------------------------------------------------
+	// END----------------------------Getter
+	// Setter------------------------------------------------------
 
 }
