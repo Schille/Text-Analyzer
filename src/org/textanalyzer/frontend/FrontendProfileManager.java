@@ -205,6 +205,7 @@ public class FrontendProfileManager extends JFrame implements
 		setPreferredSize(new Dimension(750, 550));
 		setLocation(50, 50);
 		pack();
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 

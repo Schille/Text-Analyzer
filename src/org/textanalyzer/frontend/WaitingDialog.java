@@ -41,9 +41,10 @@ public class WaitingDialog extends JFrame{
 		
 		setUndecorated(true);  			//No top-bar to hide or close this dialog
 		setPreferredSize(new Dimension(300,100));
-		setLocationRelativeTo(parent);
 		setResizable(false);
 		pack();
+		setLocationRelativeTo(null);
+
 		setVisible(true);
 		
 		

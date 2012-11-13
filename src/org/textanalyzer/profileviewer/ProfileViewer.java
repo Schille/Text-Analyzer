@@ -6,6 +6,7 @@ package org.textanalyzer.profileviewer;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -20,6 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import org.textanalyzer.analyzer.AnalyzeTaskInformation;
 import org.textanalyzer.analyzer.Analyzer;
@@ -235,8 +237,8 @@ public class ProfileViewer implements IProfileViewer {
 		task.setProfile(profileInformation);
 		task.setWordList(myWordList);
 		
-
-		waiter.showWaiting(ground);
+		JFrame frame = (JFrame)SwingUtilities.getRoot(this.getProfileViewer());
+		waiter.showWaiting(frame);
 		IResultSet set = analyzer.analyzeText(task);
 		waiter.dispose();
 		
