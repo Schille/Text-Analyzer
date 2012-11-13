@@ -2,6 +2,7 @@ package org.textanalyzer.frontend;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -49,7 +50,11 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	private String filepath = "";
 	private String blankText = "";
     private boolean emptyClose = false;
+    private ActionListener listener;
 
+    public FrontendImporter(ActionListener myActionListener){
+    	listener = myActionListener;
+    }
 
 	/**
 	 * method showImportWindow displays the JFrame with all the elements that
@@ -143,13 +148,7 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 			}
 		});
 
-		startAnalysis.addActionListener(new java.awt.event.ActionListener() {
-
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				startAnalysisActionPerformed(evt);
-
-			}
-		});
+		startAnalysis.addActionListener(listener);
 
 		setVisible(true);
 		setResizable(false);
@@ -228,7 +227,7 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	 */
 	@Override
 	public String getText() {
-		return blankText;
+		return textareaForBlank.getText();
 	}
 
 	/**
