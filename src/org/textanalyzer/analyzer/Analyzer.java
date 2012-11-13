@@ -5,6 +5,7 @@
 package org.textanalyzer.analyzer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +60,16 @@ public class Analyzer implements IAnalyzer {
 		text = text.replaceAll("[.]+", ". ");
 		text = text.replaceAll("[?]+", "? ");
 		text = text.replaceAll("[!]+", "! ");
-		text = text.replaceAll("\\s+"," ");
+		for (int i=0; i<text.length()/2; i++ ){
+			text = text.replaceAll("[^a-zA-Z_ä_ö_ü_ß_Ä_Ö_Ü]{1}[a-zA-Z_ä_ö_ü_ß_Ä_Ö_Ü]{1}[^a-zA-Z_ä_ö_ü_ß_Ä_Ö_Ü]{1}"," ");
+		}
+		if (text.substring(1, 2).matches(" ")){
+			text = text.substring(2, text.length());
+			text = text.replaceAll("\\s+"," ");
+		}
+		else {
+			text = text.replaceAll("\\s+"," ");
+		}
 	}
 	
 	@Override

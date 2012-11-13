@@ -10,7 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.textanalyzer.database.DatabaseConnector;
+import org.textanalyzer.database.IResultSet;
 import org.textanalyzer.database.ProfileInformation;
+import org.textanalyzer.database.ResultSet;
 import org.textanalyzer.frontend.FrontendProfileManager;
 
 /**
@@ -36,7 +38,8 @@ public class ProfileManager implements IProfileManager {
 	
 	public void removeProfile(int myIndex){
 		ProfileInformation tobedeleted = connector.getProfileInformation((int) mapper.remove(myIndex).getId());
-		connector.removeObject(tobedeleted);
+		connector.removeProfile(tobedeleted.getId());
+
 	}
 	
 	public LinkedList<String> getAuthorList(){
