@@ -14,6 +14,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
@@ -385,10 +386,14 @@ public class ReportCreator implements IReportCreator {
 			 i++;
 		 }
 		 
-		 temp_wordcount = temp_wordcount/i;
-		 temp_wrongwords = temp_wrongwords/i;
-		 temp_result = temp_result/i;
-		 temp_avphrase = temp_avphrase/i;
+		 if(i==0){
+			 return null;
+		 }
+		 else{
+			 temp_wordcount = temp_wordcount/i;
+			 temp_wrongwords = temp_wrongwords/i;
+			 temp_result = temp_result/i;
+			 temp_avphrase = temp_avphrase/i;
 		 
 		 
 		 relationwords.setText("<html><center><b>Anteil Rechtschreibfehler</b></center></html>");
@@ -506,9 +511,9 @@ public class ReportCreator implements IReportCreator {
 		 reportpanel.add(mostusedwords);
 		 reportpanel.add(mostusedcustomwords);
 		 reportpanel.add(mood);
-		
+		 
 		
 		return reportpanel;
+		 }
 	}
-
 }

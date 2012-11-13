@@ -242,6 +242,7 @@ public class FrontendProfileManager extends JFrame implements
 		naviPanel.add(borderleft2);
 		
 		authorList = new JList(listModel);
+		
 		naviScrollPane = new JScrollPane(authorList);
 		naviScrollPane.setBounds(30, 65, 200, 280);
 		

@@ -358,6 +358,15 @@ IResultSet results2 = new IResultSet() {
 	        frame.setVisible(true);
 
 	        frame.setAlwaysOnTop(true);
+	        
+	  	  JFrame frame2 = new JFrame("Report");
+		  frame2.setPreferredSize(new Dimension(600, 700));
+	        frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        frame2.getContentPane().add(reporter.getGraphPanel(daprofile, results));
+	        frame2.pack();
+	        frame2.setVisible(true);
+
+	        frame2.setAlwaysOnTop(true);
 	}
 
 }

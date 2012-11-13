@@ -26,7 +26,7 @@ public class WaitingDialog extends JFrame{
 	 * @param parent is needed to place frame in relation to the calling component.
 	 */
 	
-	public void showWaiting(Component parent) {
+	public void showWaiting() {
 		scope = this;
 		setLayout(null);	//Use absolute positioning
 		setAlwaysOnTop(true);
