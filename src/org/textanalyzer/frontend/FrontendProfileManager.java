@@ -87,7 +87,6 @@ public class FrontendProfileManager extends JFrame implements
 		profileLogic = myManager;
 		authorRegistration = new AuthorRegistration(profileLogic, this);
 		showFrontendProfileManager();
-
 	}
 	
 	/**
