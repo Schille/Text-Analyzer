@@ -2,6 +2,8 @@ package org.textanalyzer.frontend;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,6 +48,8 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 	private JScrollPane textareaPane;
 	private String filepath = "";
 	private String blankText = "";
+    private boolean emptyClose = false;
+
 
 	/**
 	 * method showImportWindow displays the JFrame with all the elements that
@@ -57,7 +61,14 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 		setLayout(null);
 		setBounds(0, 0, 700, 480);
 		getContentPane().setBackground(Color.white);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+        class WindowHandler extends WindowAdapter {
+        	public void windowClosing(WindowEvent evt){
+        		setEmptyClose(true);
+        	}
+        }
+        addWindowListener(new WindowHandler());
 
 		// textareaPane is the JScrollPane which is needed to allow scrolling in
 		// the textareaForBlank
@@ -226,6 +237,13 @@ public class FrontendImporter extends JFrame implements IFrontendImporter {
 		if (customWords.getText() != null)
 			return Arrays.asList(customWords.getText().split("\n"));
 		return new ArrayList<String>();
+	}
+	public boolean isEmptyClose() {
+		return emptyClose;
+	}
+
+	public void setEmptyClose(boolean emptyClose) {
+		this.emptyClose = emptyClose;
 	}
 
 }
