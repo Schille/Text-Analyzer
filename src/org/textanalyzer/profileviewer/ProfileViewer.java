@@ -21,6 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
 import org.textanalyzer.analyzer.AnalyzeTaskInformation;
@@ -52,6 +53,9 @@ public class ProfileViewer implements IProfileViewer {
 	private Analyzer analyzer;
 	WaitingDialog waiter;
 	private HashMap<String,ResultSet> resultmapper;
+	private ArrayList<String> dataname;
+	private JList texte;
+	private JScrollPane textpane;
 
 	
 	
@@ -66,6 +70,12 @@ public class ProfileViewer implements IProfileViewer {
 		importer = new DocumentImporter();
 		this_viewer = this;
 		resultmapper = new HashMap<String,ResultSet>();
+		texte = new JList();
+		dataname = new ArrayList<String>();
+		textpane = new JScrollPane(); 
+		ground = new JPanel();
+		new_analyse = new JButton();
+		
 	}
 
 	/*
@@ -73,16 +83,16 @@ public class ProfileViewer implements IProfileViewer {
 	 */
 	@Override
 	public JPanel getProfileViewer() {
-		JPanel ground = new JPanel();
+		
 		JLabel headline = new JLabel();
 		JLabel author = new JLabel();
 		JLabel age = new JLabel();
 		JLabel profession = new JLabel();
 		JButton av_analyse = new JButton();
-		new_analyse = new JButton();
-		JList texte = new JList();
-		ArrayList<String> dataname = new ArrayList<String>();
+		
 		JLabel notext = new JLabel();
+		
+		
 		
 		
 		ground.setLayout(null);
@@ -157,8 +167,10 @@ public class ProfileViewer implements IProfileViewer {
 			}
 		});
 		
-		texte.setSize(180, 300);
-		texte.setLocation(280, 50);
+		
+		textpane.setSize(180, 300);
+		textpane.setLocation(280,50);
+
 		texte.setFont(new Font("Arial",0,16));
 		
 		Iterator<?> result = resultSets.iterator();
@@ -169,7 +181,8 @@ public class ProfileViewer implements IProfileViewer {
 			dataname.add(temp_res.getDocument().getFileName());	
 		}
 		texte.setListData(dataname.toArray());
-		ground.add(texte);
+		textpane.add(texte);
+		ground.add(textpane);
 		}
 		else {
 			ground.add(notext);
@@ -243,10 +256,14 @@ public class ProfileViewer implements IProfileViewer {
 		waiter.dispose();
 		
 		connector.saveResultSet(userID, set);
-		
+		refreshTextList();
 		buildReport(set);
 		
-		this.new_analyse.setEnabled(true);
+		
+		
+		
+		
+		new_analyse.setEnabled(true);
 		
 	}
 
@@ -279,6 +296,22 @@ public class ProfileViewer implements IProfileViewer {
 	    frame.setAlwaysOnTop(true);
 	    
 	    return frame;
+	}
+	
+	public void refreshTextList() {
+		resultSets = connector.getAllResultSets(userID);
+		Iterator<?> result = resultSets.iterator();
+		if(result != null) {
+		while(result.hasNext()) {
+			ResultSet temp_res = (ResultSet)result.next();
+			resultmapper.put(temp_res.getDocument().getFileName(), (ResultSet) temp_res);
+			dataname.add(temp_res.getDocument().getFileName());	
+		}
+		texte.setListData(dataname.toArray());
+		textpane.add(texte);
+		ground.add(textpane);
+		}
+
 	}
 
 
