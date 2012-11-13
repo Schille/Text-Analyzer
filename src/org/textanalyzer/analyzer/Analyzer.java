@@ -102,13 +102,17 @@ public class Analyzer implements IAnalyzer {
 		this.analysis.setCustomWordCount(new HashMap<String, Integer>(customWords));
 		this.analysis.setTextMood(textAttitude>=POSITIVEBORDER?TextMood.POSITIVE:textAttitude<=NEGATIVEBORDER?TextMood.NEGATIVE:TextMood.NEUTRAL);
 		
-				
+		if(!nomen.isEmpty()) {
 		SortedMap<Integer,String> orderFreNom = new TreeMap<Integer, String>(Collections.reverseOrder()); 		
 		for (Entry<String, Integer> entry : nomen.entrySet()) {
 			orderFreNom.put(entry.getValue(), entry.getKey());
 		}
-		this.analysis.setMostFrequentNomen(orderFreNom.get(orderFreNom.firstKey()));
 		
+		this.analysis.setMostFrequentNomen(orderFreNom.get(orderFreNom.firstKey()));
+		}
+		else {
+			this.analysis.setMostFrequentNomen("");
+		}
 		return this.analysis;
 	}
 	

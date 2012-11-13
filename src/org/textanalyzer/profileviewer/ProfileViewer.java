@@ -245,6 +245,10 @@ public class ProfileViewer implements IProfileViewer {
 	@Override
 	public void updateContent(IDocument myDocument, List<String> myWordList) {
 		//Start analysis here...
+		if(myDocument==null){
+			new_analyse.setEnabled(true);
+			return;
+		}
 		profileInformation = connector.getProfileInformation(userID);
 		AnalyzeTaskInformation task = new AnalyzeTaskInformation();
 		task.setDocument(myDocument);
@@ -320,15 +324,17 @@ public class ProfileViewer implements IProfileViewer {
 	public void refreshTextList() {
 		resultSets = connector.getAllResultSets(userID);
 		Iterator<?> result = resultSets.iterator();
+		dataname.clear();
 		if(result != null) {
 		while(result.hasNext()) {
 			ResultSet temp_res = (ResultSet)result.next();
 			resultmapper.put(temp_res.getDocument().getFileName(), (ResultSet) temp_res);
 			dataname.add(temp_res.getDocument().getFileName());	
+			dataname.add("Hugo");
 		}
-		texte.setListData(dataname.toArray());
-		textpane.add(texte);
-		ground.add(textpane);
+		texte.repaint();
+		
+		
 		}
 
 	}
