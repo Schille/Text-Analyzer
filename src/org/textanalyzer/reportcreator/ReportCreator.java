@@ -28,6 +28,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.textanalyzer.database.IProfileInformation;
 import org.textanalyzer.database.IResultSet;
+import org.textanalyzer.documentimporter.DocumentFormat;
 
 /**
  * @author Robert Stein
@@ -247,10 +248,13 @@ public class ReportCreator implements IReportCreator {
 		filedate.setSize(250, 30);
 		filedate.setLocation(380, 625);
 
+		
+		if(myResultset.getDocument().getDocumentFormat() == DocumentFormat.PLAIN_TEXT) {
 		fileformat.setText("Format: "
 				+ myResultset.getDocument().getDocumentFormat());
 		fileformat.setSize(150, 30);
 		fileformat.setLocation(230, 625);
+		}
 
 		// Creating barchart dataset, most likely the piechart
 		ChartPanel pieChart = new ChartPanel(chart);
