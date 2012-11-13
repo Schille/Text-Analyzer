@@ -53,12 +53,33 @@ public class Analyzer implements IAnalyzer {
 	}
 	
 	public void textPreprocess() {
-		text = text.replaceAll("[^a-zA-Z_._!_?_ä_ö_ü_ß_Ä_Ö_Ü]", " ");
-		text = text.replaceAll("[.]+", ". ");
-		text = text.replaceAll("[?]+", "? ");
-		text = text.replaceAll("[!]+", "! ");
-		text = text.replaceAll("\\s+"," ");
-
+		text = text.replace("<","");
+		text = text.replace(">","");
+		text = text.replace("\"","");
+		text = text.replace("+","");
+		text = text.replace("´","");
+		text = text.replace("`","");
+		text = text.replace("(","");
+		text = text.replace(")","");
+		text = text.replace("&","");
+		text = text.replace("$","");
+		text = text.replace("§","");
+		text = text.replace("%","");
+		text = text.replace("=","");
+		text = text.replace("'","");
+		text = text.replace("*","");
+		text = text.replace("#","");
+		text = text.replace("_","");
+		text = text.replace(";","");
+		text = text.replace(":","");
+		text = text.replace("°","");
+		text = text.replace(",","");
+		text = text.replace("^","");
+		text = text.replace("[","");
+		text = text.replace("]","");
+		text = text.replace("|","");
+		text = text.replace("{","");
+		text = text.replace("}","");
 		
 	}
 	
@@ -75,7 +96,7 @@ public class Analyzer implements IAnalyzer {
 			this.analysis.setDocument(myTask.getDocument());
 		}
 		textPreprocess();
-		System.out.println(text);
+		System.out.println("Analyzer:99 -> Text: " + text);
 		/* Get the custom Words */
 		customWords = new HashMap<String, Integer>();
 		for (String customWord : myTask.getWordList()) {
@@ -106,12 +127,9 @@ public class Analyzer implements IAnalyzer {
 		
 				
 		SortedMap<Integer,String> orderFreNom = new TreeMap<Integer, String>(Collections.reverseOrder()); 		
-		for (Entry<String, Integer> entry : fullWordList.entrySet()) {
-			if(dict.getWordStatus(entry.getKey()) == WordStatus.NOMEN)
+		for (Entry<String, Integer> entry : nomen.entrySet()) {
 			orderFreNom.put(entry.getValue(), entry.getKey());
 		}
-		
-				
 		this.analysis.setMostFrequentNomen(orderFreNom.get(orderFreNom.firstKey()));
 		
 		return this.analysis;
@@ -180,15 +198,14 @@ public class Analyzer implements IAnalyzer {
 		}
 		
 		// Get the punctuation
-	
-			for(;textIndex < text.length()-1 && punctuations.contains(text.charAt(textIndex));textIndex++){
-				word.punctuation = word.punctuation.concat(text.substring(textIndex, textIndex+1));
-			}
+		for(;textIndex < text.length() && punctuations.contains(text.charAt(textIndex));textIndex++){
+			word.punctuation = word.punctuation.concat(text.substring(textIndex, textIndex+1));
+		}
 	
 
 		// Refresh the word counter
 		wordCount++;
-		System.out.println(wordCount);
+		System.out.println("Analyzer:211 -> WordCount: "+wordCount);
 		counter = fullWordList.remove(word.word);
 		if(counter == null)
 			fullWordList.put(word.word, 1);
@@ -201,10 +218,10 @@ public class Analyzer implements IAnalyzer {
 			customWords.put(word.word, ++counter);
 		
 		// Get Wrong words
-		status = WordStatus.WRONG;
 		if(firstWord == true && !Character.isUpperCase(word.word.charAt(0)))
 				wrongWordCount++;
 		else{
+			status = WordStatus.WRONG;
 			status = dict.getWordStatus(word.word);
 			if(status == WordStatus.NOMEN){
 				counter = nomen.remove(word.word);
@@ -227,6 +244,7 @@ public class Analyzer implements IAnalyzer {
 				wrongWordCount++;
 				}
 		}
+		System.out.println("Analyzer:250 -> Wrong words: "+wrongWordCount);
 		firstWord = false;
 		return word;
 	}
