@@ -87,7 +87,6 @@ public class FrontendProfileManager extends JFrame implements
 		profileLogic = myManager;
 		authorRegistration = new AuthorRegistration(profileLogic, this);
 		showFrontendProfileManager();
-
 	}
 	
 	/**
@@ -118,7 +117,7 @@ public class FrontendProfileManager extends JFrame implements
 		 * JFrame gets no Layout and with clicking of the close button the JFrame is closed
 		 */
 		setLayout(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		/*
 		 * calls of the methods createBanner(), createNavigation() and createContentPanel() to create all the panel which should be appear on the JFrame

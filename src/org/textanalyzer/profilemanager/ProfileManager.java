@@ -56,5 +56,26 @@ public class ProfileManager implements IProfileManager {
 		return mapper.get(myIndex).getId();
 	}
 	
+	public void run(){
+		while(profileGUI.isVisible()){
+			try {
+				Thread.currentThread().sleep(20);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		connector.closeDB();
+		System.out.println("DB closed.");
+		
+	}
+	
+	
+	public static void main(String[] args){
+		ProfileManager manager = new ProfileManager();
+		manager.run();
+	}
+	
 	
 }

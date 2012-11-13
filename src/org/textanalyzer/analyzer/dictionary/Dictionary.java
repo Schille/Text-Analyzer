@@ -222,7 +222,7 @@ public class Dictionary implements IDictionary {
 		result = checkWord(myWord);
 
 		// Just check other german word classes
-		if (result == WordStatus.WRONG) {
+		if (result == WordStatus.WRONG&&(myWord.length()>3)) {
 
 			// Check whether the word is in participle I
 			result = checkWord(revertParticiple1(myWord));
