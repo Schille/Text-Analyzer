@@ -2,19 +2,9 @@
  * 
  */
 package org.textanalyzer.reportcreator;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.plot.PiePlot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.DefaultPieDataset;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import javax.swing.JLabel;
-import javax.swing.JSeparator;
-
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -23,8 +13,17 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
 import org.textanalyzer.database.IProfileInformation;
 import org.textanalyzer.database.IResultSet;
 
@@ -402,12 +401,13 @@ public class ReportCreator implements IReportCreator {
 			Averager av_cases = new Averager(myResultset);
 			
 			orderFrequent = av_cases.getWordMap();
-			
+			int l = 0;
 			Iterator<?> iterator2 = orderFrequent.keySet().iterator();
-			  while (iterator2.hasNext()) {
+			  while (iterator2.hasNext() && l < 10) {
 			  Object key = iterator2.next();
 				mostusedwords.setText(mostusedwords.getText()+"<br> - "+orderFrequent.get(key)+ " ("+key+")");
 				barchartset.setValue(orderFrequent.get(key),"", key.toString());
+				l++;
 			  }
 			    
 			  
