@@ -1,23 +1,28 @@
 package org.textanalyzer.reportcreator;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.SortedMap;
+import java.util.SortedSet;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.textanalyzer.database.IResultSet;
 
 /**
  * 
  * @author Robert Stein
+ * @param <E>
  *
  */
 
-public class Averager {
+public class Averager<E> {
 	
 	private LinkedList<IResultSet> resultlist;
 	
@@ -29,34 +34,49 @@ public class Averager {
 	 * 
 	 * @return SortedMap which contains a map of the most used words.
 	 */
+	
+	static <K,V extends Comparable<? super V>>
+	SortedSet<Map.Entry<K,V>> entriesSortedByValues(Map<K,V> map) {
+	    SortedSet<Map.Entry<K,V>> sortedEntries = new TreeSet<Map.Entry<K,V>>(
+	        new Comparator<Map.Entry<K,V>>() {
+	            @Override public int compare(Map.Entry<K,V> e1, Map.Entry<K,V> e2) {
+	                int k = e1.getValue().compareTo(e2.getValue());
+	                return -k;
+	            }
+	        }
+	    );
+	    sortedEntries.addAll(map.entrySet());
+	    return sortedEntries;
+	}
+	
 	public LinkedHashMap<String,Integer> getWordMap() {
 		
-		
-		
-		LinkedHashMap<String, Integer> mostWords = new LinkedHashMap<String, Integer>();
+	    Map<String,Integer> mostWords = new TreeMap<String,Integer>();
 		Iterator<?> k = resultlist.iterator();
 		
 		
 		while(k.hasNext()) {
 			Map<String,Integer> temp3 = ((IResultSet) k.next()).getMostFrequentWord(10);
-		for(int i = 0; i < 10 && temp3.entrySet().iterator()
-				.hasNext(); i++) {
-			Map.Entry<String, Integer> temp_entry = null;
-			
-			temp_entry = temp3.entrySet().iterator().next();
-		
-			for (Map.Entry<String, Integer> entry : temp3.entrySet()) {
-				if(temp_entry != null && temp_entry.getValue() <= entry.getValue())
-					temp_entry = entry;
-			}
-			
-			temp3.remove(temp_entry.getKey());
-			mostWords.put(temp_entry.getKey(), temp_entry.getValue());
+			Iterator<String>h = temp3.keySet().iterator();
+				while(h.hasNext()) {
+					String m = h.next();
+					if(mostWords.containsKey(m)) {
+						mostWords.put(m, mostWords.get(m)+temp3.get(m));
+					}
+					else {
+						mostWords.put(m, temp3.get(m));
+					}
+					
 			}
 		}
 		
 		
-		return mostWords;
+		SortedSet<Entry<String, Integer>> theone = entriesSortedByValues(mostWords);
+		LinkedHashMap<String, Integer> result = new LinkedHashMap<String, Integer>();
+		for(Entry<String,Integer> key : theone) {
+			result.put(key.getKey(), key.getValue());
+		}
+		return result;
 		
 	}
 	
@@ -64,27 +84,36 @@ public class Averager {
 	 * 
 	 * @return a map which contains the most used words from custom lists.
 	 */
-	public SortedMap<String,Integer> getListMap() {
+	public LinkedHashMap<String,Integer> getListMap() {
 		
-		SortedMap<String,Integer> listWord = new TreeMap<String,Integer>();
 		
-		Iterator<?> iterator = resultlist.iterator();
-		while(iterator.hasNext()) {
-			IResultSet temp_res = (IResultSet)iterator.next();
-			Map<String,Integer> temp_most = temp_res.getCustomWordCount();
-			
-			for (Map.Entry<String, Integer> entry : temp_most.entrySet()) {
-				if(listWord.containsKey(entry.getKey())){
-				listWord.put(entry.getKey(), listWord.get(entry.getKey()) + entry.getValue());
-				}
-				else {
-					listWord.put(entry.getKey() , entry.getValue() );
-				}
+		Map<String,Integer> mostWords = new TreeMap<String,Integer>();
+		Iterator<?> k = resultlist.iterator();
+		
+		
+		while(k.hasNext()) {
+			Map<String,Integer> temp3 = ((IResultSet) k.next()).getCustomWordCount();
+			Iterator<String>h = temp3.keySet().iterator();
+				while(h.hasNext()) {
+					String m = h.next();
+					if(mostWords.containsKey(m)) {
+						mostWords.put(m, mostWords.get(m)+temp3.get(m));
+					}
+					else {
+						mostWords.put(m, temp3.get(m));
+					}
+					
 			}
-			
 		}
 		
-		return listWord;
+		
+		SortedSet<Entry<String, Integer>> theone = entriesSortedByValues(mostWords);
+		LinkedHashMap<String, Integer> result = new LinkedHashMap<String, Integer>();
+		for(Entry<String,Integer> key : theone) {
+			result.put(key.getKey(), key.getValue());
+		}
+		return result;
+		
 	}
 	
 	/**
