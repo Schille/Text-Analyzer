@@ -18,6 +18,13 @@ import org.textanalyzer.database.DBDictionary;
  */
 
 public class Dictionary implements IDictionary {
+	
+	/**
+	 * This class checks the correctness of a given word. After the check, the result is written into the database
+	 * to process faster in the future
+	 * @param String Word
+	 * @return WordStatus
+	 */
 
 	DBDictionary db;
 	int i=0;
@@ -27,7 +34,11 @@ public class Dictionary implements IDictionary {
 
 	@SuppressWarnings("resource")
 	public WordStatus dudenRequest(String myRequest) throws IOException {
-
+		
+		/**
+		 * This method checks the word in the online dictionary "Duden.de" 
+		 */
+		
 		WordStatus result;
 		String requestString;
 		try {
@@ -64,6 +75,11 @@ public class Dictionary implements IDictionary {
 	}
 	
 	public WordStatus freeDictionaryRequest(String myRequest) throws Exception {
+		
+		/**
+		 * This method checks the word in the online dictionary "the free dictionary"
+		 */
+		
 		String requestString;
 		try {
 			requestString = URLDecoder.decode("http://de.thefreedictionary.com/" + myRequest, "UTF-8");
@@ -89,6 +105,10 @@ public class Dictionary implements IDictionary {
 	}
 	
 	private WordStatus wiktionaryRequest(String myRequest) throws Exception{
+		
+		/**
+		 * This method checks the word in the online dictionary "Wiktionary" 
+		 */
 		WordStatus result;
 		String requestString;
 		try {
