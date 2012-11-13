@@ -33,8 +33,10 @@ public class Analyzer implements IAnalyzer {
 	private boolean firstWord;
 
 	IDictionary dict = new Dictionary();
-	private String[] positiveWords = {"freudig"};
-	private String[] negativeWords = {"traurig"};
+
+	private String[] positiveWords = {"freudig", "gut", "hervorragend", "schön", "glücklich", "froh", "begeistert", "fröhlich", "glücklich","sorgenfrei", "sorgenlos", "fidel", "heiter", "vergnügt", "optimistisch", "unbetrübt","besonnen", "harmonisch", "zufrieden", "siegreich", "vielversprechend", "günstig", "positiv", "lieb", "freundlich", "lebenslustig", "lustig", "froh", "beflüglet", "drollig"};
+	private String[] negativeWords = {"Hass","traurig", "schlecht", "bedrückt", "bekümmert", "betroffen", "betrübt", "depressiv", "deprimiert", "desolat", "düster", "freudlos", "negativ", "unangenehm", "quälend", "Schmerz", "Qual", "Jammer", "enttäuscht", "elend", "schwermütig", "Tod", "tot", "verzweifelt", "wütend", "zornig", "katastrophal", "trist", "trüb", "pessimistisch", "grauenvoll"};
+	
 	
 	private Map<String, Integer> customWords = new HashMap<String, Integer>();
 	private Map<String, Integer> fullWordList = new HashMap<String, Integer>();
@@ -166,13 +168,13 @@ public class Analyzer implements IAnalyzer {
 		
 		// Text Attitude
 		for (String attWord : positiveWords) {
-			if(attWord.equals(word.word)){
+			if(attWord.contains(word.word)){
 				textAttitude++;
 				break;
 			}
 		}
 		for (String attWord : negativeWords) {
-			if(attWord.equals(word.word)){
+			if(attWord.contains(word.word)){
 				textAttitude--;
 				break;
 			}
