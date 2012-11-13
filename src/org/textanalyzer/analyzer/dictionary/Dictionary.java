@@ -106,7 +106,7 @@ public class Dictionary implements IDictionary {
 			result = WordStatus.ADJECTIV;
 		else if (wikiResponse.contains("Personalpronomen"))
 			result = WordStatus.OTHER;
-		else if (wikiResponse.contains("Pr‰position"))
+		else if (wikiResponse.contains("Pr√§position"))
 			result = WordStatus.OTHER;
 		else if (wikiResponse.contains("Substantiv"))
 			result = WordStatus.NOMEN;
