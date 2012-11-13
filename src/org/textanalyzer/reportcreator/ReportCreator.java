@@ -511,9 +511,9 @@ public class ReportCreator implements IReportCreator {
 		 reportpanel.add(mostusedwords);
 		 reportpanel.add(mostusedcustomwords);
 		 reportpanel.add(mood);
-		
+		 }
 		
 		return reportpanel;
-	}
+	
 	}
 }
