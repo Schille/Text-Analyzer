@@ -35,17 +35,16 @@ public class Dictionary implements IDictionary {
 		db = new DBDictionary();
 	}
 
+	/**
+	 * This method checks the word in the online dictionary "Duden.de"
+	 */
 	@SuppressWarnings("resource")
 	public WordStatus dudenRequest(String myRequest) throws IOException {
-
-		/**
-		 * This method checks the word in the online dictionary "Duden.de"
-		 */
 
 		WordStatus result;
 		String requestString;
 		try {
-			/**
+			/*
 			 * URL to access the dictionary
 			 */
 			requestString = URLDecoder
@@ -56,7 +55,7 @@ public class Dictionary implements IDictionary {
 		}
 
 		URL url = new URL(requestString);
-		/**
+		/*
 		 * The data of the website is written into the input stream, after that
 		 * scanner checks which information the site contains about the
 		 * word(verb, noun etc.)
@@ -87,7 +86,7 @@ public class Dictionary implements IDictionary {
 			result = WordStatus.VERB;
 		else
 			result = WordStatus.OTHER;
-		/**
+		/*
 		 * The result of the request is written into the database and the
 		 * WordStatus is returned
 		 */
@@ -95,16 +94,17 @@ public class Dictionary implements IDictionary {
 		return result;
 	}
 
+	/**
+	 * This method checks the word in the online dictionary
+	 * "the free dictionary"
+	 */
 	public WordStatus freeDictionaryRequest(String myRequest) throws Exception {
 
-		/**
-		 * This method checks the word in the online dictionary
-		 * "the free dictionary"
-		 */
+
 
 		String requestString;
 		try {
-			/**
+			/*
 			 * URL to access the dictionary
 			 */
 			requestString = URLDecoder.decode(
@@ -115,7 +115,7 @@ public class Dictionary implements IDictionary {
 
 		URL url = new URL(requestString);
 		URLConnection connection = url.openConnection();
-		/**
+		/*
 		 * The user-agent is set to a specific browser so the content is
 		 * accessible. If this won't happen the website recognize that this
 		 * request is opened by other software and so the access is reclined
@@ -124,7 +124,7 @@ public class Dictionary implements IDictionary {
 				.setRequestProperty(
 						"User-Agent",
 						"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
-		/**
+		/*
 		 * The data of the website is written into the input stream, after that
 		 * scanner checks which information the site contains about the
 		 * word(verb, noun etc.)
@@ -134,8 +134,7 @@ public class Dictionary implements IDictionary {
 
 		freeResponse = freeResponse.replace("/" + myRequest, " ");
 		freeResponse = freeResponse.replace(">" + myRequest, " ");
-		if (freeResponse
-				.contains("Das Wort konnte im Wörterbuch nicht gefunden werden.")) {
+		if (freeResponse.contains("Das Wort konnte im") && freeResponse.contains("nicht gefunden werden.")||!freeResponse.contains(myRequest)) {
 			stream.close();
 			throw new Exception("Word not found!");
 		}
@@ -145,15 +144,15 @@ public class Dictionary implements IDictionary {
 		return WordStatus.OTHER;
 	}
 
+	/**
+	 * This method checks the word in the online dictionary "Wiktionary"
+	 */
 	private WordStatus wiktionaryRequest(String myRequest) throws Exception {
 
-		/**
-		 * This method checks the word in the online dictionary "Wiktionary"
-		 */
 		WordStatus result;
 		String requestString;
 		try {
-			/**
+			/*
 			 * URL to access the dictionary
 			 */
 			requestString = URLDecoder
@@ -165,7 +164,7 @@ public class Dictionary implements IDictionary {
 		}
 
 		URL url_wiktionary = new URL(requestString);
-		/**
+		/*
 		 * The data of the website is written into the input stream, after that
 		 * scanner checks which information the site contains about the
 		 * word(verb, noun etc.)
@@ -185,7 +184,7 @@ public class Dictionary implements IDictionary {
 		else if (wikiResponse.contains("Kategorie:Verb (Deutsch)")
 				|| wikiResponse.contains("Konjugierte Form"))
 			result = WordStatus.VERB;
-		else if (wikiResponse.contains("Kategorie:Deutsch"))
+		else if (wikiResponse.contains("Kategorie:Deutsch")&&!wikiResponse.contains("Kategorie:Buchstabe"))
 			result = WordStatus.OTHER;
 		else if (wikiResponse.contains("missing\" \"")) {
 			wikiStream.close();
@@ -207,22 +206,17 @@ public class Dictionary implements IDictionary {
 		return myWord.substring(2, myWord.length() - 1) + "en";
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.textanalyzer.analyzer.dictionary.IDictionary#getWordStatus(java.lang
-	 * .String)
+	/** 
+	 * This method starts the process with calling checkWord. If the result
+	 * is wrong the word is checked again if it is a participle 1/2 and if
+	 * so it's checked again
+	 * @see org.textanalyzer.analyzer.dictionary.IDictionary#getWordStatus(java.lang.String)
 	 */
 
 	@SuppressWarnings("resource")
 	@Override
 	public WordStatus getWordStatus(String myWord) {
-		/**
-		 * This method starts the process with calling checkWord. If the result
-		 * is wrong the word is checked again if it is a participle 1/2 and if
-		 * so it's checked again
-		 */
+
 		WordStatus result = WordStatus.OTHER;
 		// check the word status
 		result = checkWord(myWord);
@@ -249,16 +243,15 @@ public class Dictionary implements IDictionary {
 	}
 
 	/**
+	 * This method check if the word already exists in the locale database,
+	 * if not, different dictionary's are requested.
 	 * @param myWord
-	 * @return
+	 * @return WordStatus
 	 */
 	private WordStatus checkWord(String myWord) {
-		/**
-		 * This method check if the word already exists in the locale database,
-		 * if not, different dictionary's are requested.
-		 */
+
 		System.out.println("\nLook up: " + myWord);
-		/**
+		/*
 		 * lookup the word in locale database
 		 */
 		WordStatus dbWordStatus = db.getWordStatus(myWord);
