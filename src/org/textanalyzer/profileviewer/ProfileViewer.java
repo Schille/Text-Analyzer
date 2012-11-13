@@ -26,6 +26,7 @@ import javax.swing.SwingUtilities;
 
 import org.textanalyzer.analyzer.AnalyzeTaskInformation;
 import org.textanalyzer.analyzer.Analyzer;
+import org.textanalyzer.analyzer.IAnalyzeTaskInformation;
 import org.textanalyzer.database.DatabaseConnector;
 import org.textanalyzer.database.IDocument;
 import org.textanalyzer.database.IProfileInformation;
@@ -51,7 +52,7 @@ public class ProfileViewer implements IProfileViewer {
 	private ProfileViewer this_viewer;
 	private JButton new_analyse;
 	private Analyzer analyzer;
-	WaitingDialog waiter;
+	private WaitingDialog waiter;
 	private HashMap<String,ResultSet> resultmapper;
 	private ArrayList<String> dataname;
 	private JList texte;
@@ -252,16 +253,34 @@ public class ProfileViewer implements IProfileViewer {
 		
 		JFrame frame = (JFrame)SwingUtilities.getRoot(this.getProfileViewer());
 		waiter.showWaiting(frame);
-		IResultSet set = analyzer.analyzeText(task);
+	
+		Worker myWorker = new Worker(analyzer, task);
+		
+		Thread job = new Thread(myWorker);
+		job.start();
+		while(!job.isAlive() && waiter.isVisible()){
+			try {
+				Thread.currentThread().sleep(20);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		waiter.dispose();
+		try {
+			Thread.currentThread().sleep(200);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		IResultSet set = myWorker.getResult();
+		if(set == null)
+			return;
 		
 		connector.saveResultSet(userID, set);
 		refreshTextList();
 		buildReport(set);
-		
-		
-		
-		
 		
 		new_analyse.setEnabled(true);
 		
@@ -312,6 +331,26 @@ public class ProfileViewer implements IProfileViewer {
 		ground.add(textpane);
 		}
 
+	}
+	
+	class Worker implements Runnable{
+		
+		private Analyzer analyzer;
+		IAnalyzeTaskInformation task;
+		private IResultSet result = null;
+		public Worker(Analyzer myAnalyzer, IAnalyzeTaskInformation myTaskInformation){
+			analyzer = myAnalyzer;
+			task = myTaskInformation;
+		}
+		
+		@Override
+		public void run() {
+			result = analyzer.analyzeText(task);
+		}
+		
+		public IResultSet getResult(){
+			return result;
+		}
 	}
 
 
