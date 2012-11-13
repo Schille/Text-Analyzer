@@ -10,10 +10,8 @@ public class TestWaitingDialog {
 	public void test() {
 		WaitingDialog testdia = new WaitingDialog();
 		
-		FrontendImporter k = new FrontendImporter();
-		k.showImportWindow();
-		k.setLocation(100, 100);
-		testdia.showWaiting(k);
+
+		testdia.showWaiting();
 		
 		
 		System.out.println("test");

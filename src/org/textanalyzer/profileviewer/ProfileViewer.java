@@ -21,12 +21,14 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
 import org.textanalyzer.analyzer.AnalyzeTaskInformation;
 import org.textanalyzer.analyzer.Analyzer;
+import org.textanalyzer.analyzer.IAnalyzeTaskInformation;
 import org.textanalyzer.database.DatabaseConnector;
 import org.textanalyzer.database.IDocument;
 import org.textanalyzer.database.IProfileInformation;
@@ -52,17 +54,16 @@ public class ProfileViewer implements IProfileViewer {
 	private ProfileViewer this_viewer;
 	private JButton new_analyse;
 	private Analyzer analyzer;
-	WaitingDialog waiter;
 	private HashMap<String,ResultSet> resultmapper;
 	private DefaultListModel dataname;
 	private JList texte;
 	private JScrollPane textpane;
+	private Thread importerWorker;
 
 	
 	
 	//-----------Constructor------------
 	public ProfileViewer(int myUserID){
-		waiter = new WaitingDialog();
 		analyzer = new Analyzer();
 		userID = myUserID;
 		connector = new DatabaseConnector();
@@ -130,20 +131,23 @@ public class ProfileViewer implements IProfileViewer {
 		new_analyse.setForeground(Color.white);
 		new_analyse.setBackground(new Color(209,0,0));
 		new_analyse.setFocusPainted(false);
+		if(new_analyse.getActionListeners().length != 0){
+			new_analyse.removeActionListener(new_analyse.getActionListeners()[0]);
+		}
 		new_analyse.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				
 				((JButton)arg0.getSource()).setEnabled(false);
-				Thread a = new Thread(new Runnable() {
-					
+				importerWorker = new Thread(new Runnable() {
 					@Override
 					public void run() {
 						importer.invokeNewDocumentImport(this_viewer);
-						
+						System.out.println("ImporterThread ended.");
 					}
-				});
-				a.start();
+				}, "ImporterThread");
+				importerWorker.start();
 			}
 		});
 		
@@ -245,6 +249,7 @@ public class ProfileViewer implements IProfileViewer {
 	
 
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void updateContent(IDocument myDocument, List<String> myWordList) {
 		//Start analysis here...
@@ -258,15 +263,40 @@ public class ProfileViewer implements IProfileViewer {
 		task.setProfile(profileInformation);
 		task.setWordList(myWordList);
 		
-		waiter.showWaiting(null);
-		IResultSet set = analyzer.analyzeText(task);
+		
+		WaitingDialog waiter = new WaitingDialog();
+		waiter.showWaiting();
+	
+		Worker myWorker = new Worker(analyzer, task);
+		
+		Thread job = new Thread(myWorker);
+		
+		job.start();
+		while(job.isAlive() && waiter.isVisible()){
+			try {
+				Thread.currentThread().sleep(20);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		waiter.dispose();
 		
-		connector.saveResultSet(userID, set);
+		if(job.isAlive()){
+			job.stop();
+			new_analyse.setEnabled(true);
+			return;
+		}
 		
-		ground.remove(textpane);
+		IResultSet set = myWorker.getResult();
+		if(set == null){
+			new_analyse.setEnabled(true);
+			return;
+		}
+		
+		connector.saveResultSet(userID, set);
 		refreshTextList();
-		buildReport(set);		
+		buildReport(set);
 		new_analyse.setEnabled(true);
 		
 	}
@@ -276,17 +306,28 @@ public class ProfileViewer implements IProfileViewer {
 	 * @param resultlist
 	 */
 	public void buildReport(List<IResultSet> resultlist) {
+		try {
 		ReportCreator reporter = new ReportCreator();
 		JFrame frame = reportFrame();
 	    frame.getContentPane().add(reporter.getGraphPanel(profileInformation, resultlist));
 	    frame.setVisible(true);
+		}
+		catch (NullPointerException e)  {
+			 JOptionPane.showMessageDialog(null, "Es gibts derzeit noch keine analysierten Dokumente des Autors.", "Fehler", JOptionPane.ERROR_MESSAGE);
+		}
+	   
 	}
 	
 	public void buildReport(IResultSet result) {
+		try {
 		ReportCreator reporter = new ReportCreator();
 		JFrame frame = reportFrame();
 	    frame.getContentPane().add(reporter.getGraphPanel(profileInformation, result));
 	    frame.setVisible(true);
+		}
+		catch (NullPointerException e)  {
+			 JOptionPane.showMessageDialog(null, "Es gibts derzeit noch keine analysierten Dokumente des Autors.", "Fehler", JOptionPane.ERROR_MESSAGE);
+		}
 
 	    
 }
@@ -303,6 +344,8 @@ public class ProfileViewer implements IProfileViewer {
 	}
 	
 	public void refreshTextList() {
+		ground.remove(textpane);
+		textpane = null;
 		resultSets = connector.getAllResultSets(userID);
 		Iterator<?> result = resultSets.iterator();
 		dataname.clear();
@@ -313,14 +356,17 @@ public class ProfileViewer implements IProfileViewer {
 			dataname.addElement(temp_res.getDocument().getFileName());	
 		}
 			
+		
+
 		textpane = new JScrollPane(texte);
-		textpane.setSize(180, 300);
 		textpane.setLocation(280,50);
+		textpane.setSize(180, 300);
+
 		
-		
+		textpane.setVisible(true);
+		texte.setVisible(true);
 		ground.add(textpane);
-		
-		texte.repaint();
+
 		textpane.repaint();
 		ground.repaint();
 		
@@ -330,6 +376,26 @@ public class ProfileViewer implements IProfileViewer {
 		
 
 
+	}
+	
+	class Worker implements Runnable{
+		
+		private Analyzer analyzer;
+		IAnalyzeTaskInformation task;
+		private IResultSet result = null;
+		public Worker(Analyzer myAnalyzer, IAnalyzeTaskInformation myTaskInformation){
+			analyzer = myAnalyzer;
+			task = myTaskInformation;
+		}
+		
+		@Override
+		public void run() {
+			result = analyzer.analyzeText(task);
+		}
+		
+		public IResultSet getResult(){
+			return result;
+		}
 	}
 
 
