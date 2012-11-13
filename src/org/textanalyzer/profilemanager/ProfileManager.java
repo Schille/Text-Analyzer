@@ -9,11 +9,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.textanalyzer.database.DBHandle;
 import org.textanalyzer.database.DatabaseConnector;
 import org.textanalyzer.database.IResultSet;
 import org.textanalyzer.database.ProfileInformation;
 import org.textanalyzer.database.ResultSet;
 import org.textanalyzer.frontend.FrontendProfileManager;
+
+import com.orientechnologies.orient.core.db.ODatabase;
+import com.orientechnologies.orient.core.db.ODatabaseRecordThreadLocal;
+import com.orientechnologies.orient.core.db.record.ODatabaseRecord;
 
 /**
  * @author Michael Schilonka
@@ -29,6 +34,7 @@ public class ProfileManager implements IProfileManager {
 		connector = new DatabaseConnector();
 		mapper = (LinkedList<ProfileInformation>) connector.getAllProfiles();
 		profileGUI = new FrontendProfileManager(this);
+
 	}
 	
 	public void createProfile(ProfileInformation myProfile){
@@ -73,6 +79,7 @@ public class ProfileManager implements IProfileManager {
 	
 	
 	public static void main(String[] args){
+		DBHandle.createDB();
 		ProfileManager manager = new ProfileManager();
 		manager.run();
 	}

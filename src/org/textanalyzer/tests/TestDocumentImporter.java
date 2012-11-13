@@ -1,7 +1,5 @@
 package org.textanalyzer.tests;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 import org.textanalyzer.database.Document;
 import org.textanalyzer.database.IDocument;

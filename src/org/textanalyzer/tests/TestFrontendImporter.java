@@ -3,8 +3,6 @@
  */
 package org.textanalyzer.tests;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 import org.textanalyzer.documentimporter.DocumentImporter;
 import org.textanalyzer.frontend.FrontendImporter;

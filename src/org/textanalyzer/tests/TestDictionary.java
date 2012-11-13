@@ -3,23 +3,20 @@
  */
 package org.textanalyzer.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
-//import junit.framework.Assert;
 
 import org.junit.Test;
 import org.textanalyzer.analyzer.dictionary.Dictionary;
 import org.textanalyzer.analyzer.dictionary.WordStatus;
+//import junit.framework.Assert;
 
 /**
  * @author Brab

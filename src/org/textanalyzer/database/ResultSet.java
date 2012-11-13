@@ -1,7 +1,6 @@
 package org.textanalyzer.database;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.textanalyzer.analyzer.TextMood;
@@ -88,25 +87,25 @@ public class ResultSet implements IResultSet {
 	@Override
 	public Map<String, Integer> getMostFrequentWord(int myNumber) {
 
-		LinkedHashMap<String, Integer> orderWords = new LinkedHashMap<String, Integer>();
+//		LinkedHashMap<String, Integer> orderWords = new LinkedHashMap<String, Integer>();
+//
+//		for (int i = 0; i < myNumber
+//				&& mostFrequentWord.entrySet().iterator().hasNext(); i++) {
+//			Map.Entry<String, Integer> temp_entry = null;
+//
+//			temp_entry = mostFrequentWord.entrySet().iterator().next();
+//
+//			for (Map.Entry<String, Integer> entry : mostFrequentWord.entrySet()) {
+//				if (temp_entry != null
+//						&& temp_entry.getValue() <= entry.getValue())
+//					temp_entry = entry;
+//			}
+//
+//			mostFrequentWord.remove(temp_entry.getKey());
+//			orderWords.put(temp_entry.getKey(), temp_entry.getValue());
+//		}
 
-		for (int i = 0; i < myNumber
-				&& mostFrequentWord.entrySet().iterator().hasNext(); i++) {
-			Map.Entry<String, Integer> temp_entry = null;
-
-			temp_entry = mostFrequentWord.entrySet().iterator().next();
-
-			for (Map.Entry<String, Integer> entry : mostFrequentWord.entrySet()) {
-				if (temp_entry != null
-						&& temp_entry.getValue() <= entry.getValue())
-					temp_entry = entry;
-			}
-
-			mostFrequentWord.remove(temp_entry.getKey());
-			orderWords.put(temp_entry.getKey(), temp_entry.getValue());
-		}
-
-		return orderWords;
+		return mostFrequentWord;
 	}
 
 	@Override

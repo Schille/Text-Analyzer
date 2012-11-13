@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -15,7 +16,6 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
@@ -28,6 +28,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.textanalyzer.database.IProfileInformation;
 import org.textanalyzer.database.IResultSet;
+import org.textanalyzer.documentimporter.DocumentFormat;
 
 /**
  * @author Robert Stein
@@ -156,7 +157,7 @@ public class ReportCreator implements IReportCreator {
 
 		// Some logic to sort the given map by value
 
-		Map<String, Integer> temp2 = myResultset.getCustomWordCount();
+		Map<String, Integer> temp2 = new HashMap<String,Integer>(myResultset.getCustomWordCount());
 		// Reversed sorted map, start with the largest key
 
 		LinkedHashMap<String, Integer> orderCustom = new LinkedHashMap<String, Integer>();
@@ -199,7 +200,7 @@ public class ReportCreator implements IReportCreator {
 		mostusedwords
 				.setText("<html>Liste der häufigsten Wörter - Wort (Anzahl): ");
 
-		Map<String, Integer> temp3 = myResultset.getMostFrequentWord(10);
+		Map<String, Integer> temp3 = new HashMap<String,Integer>(myResultset.getMostFrequentWord(10));
 
 		LinkedHashMap<String, Integer> orderFrequent = new LinkedHashMap<String, Integer>();
 
@@ -247,10 +248,13 @@ public class ReportCreator implements IReportCreator {
 		filedate.setSize(250, 30);
 		filedate.setLocation(380, 625);
 
+		
+		if(myResultset.getDocument().getDocumentFormat() == DocumentFormat.PLAIN_TEXT) {
 		fileformat.setText("Format: "
 				+ myResultset.getDocument().getDocumentFormat());
 		fileformat.setSize(150, 30);
 		fileformat.setLocation(230, 625);
+		}
 
 		// Creating barchart dataset, most likely the piechart
 		ChartPanel pieChart = new ChartPanel(chart);

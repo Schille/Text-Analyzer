@@ -6,12 +6,10 @@ package org.textanalyzer.profileviewer;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -24,7 +22,6 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
 
 import org.textanalyzer.analyzer.AnalyzeTaskInformation;
 import org.textanalyzer.analyzer.Analyzer;
@@ -37,6 +34,9 @@ import org.textanalyzer.database.ResultSet;
 import org.textanalyzer.documentimporter.DocumentImporter;
 import org.textanalyzer.frontend.WaitingDialog;
 import org.textanalyzer.reportcreator.ReportCreator;
+
+import com.orientechnologies.orient.core.db.ODatabaseRecordThreadLocal;
+import com.orientechnologies.orient.core.db.record.ODatabaseRecord;
 
 /**
  * @author Michael Schilonka & Robert Stein

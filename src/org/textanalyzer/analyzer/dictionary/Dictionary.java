@@ -38,7 +38,6 @@ public class Dictionary implements IDictionary {
 	/**
 	 * This method checks the word in the online dictionary "Duden.de"
 	 */
-	@SuppressWarnings("resource")
 	public WordStatus dudenRequest(String myRequest) throws IOException {
 
 		WordStatus result;
@@ -213,7 +212,6 @@ public class Dictionary implements IDictionary {
 	 * @see org.textanalyzer.analyzer.dictionary.IDictionary#getWordStatus(java.lang.String)
 	 */
 
-	@SuppressWarnings("resource")
 	@Override
 	public WordStatus getWordStatus(String myWord) {
 
