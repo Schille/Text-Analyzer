@@ -1,6 +1,9 @@
 package org.textanalyzer.database;
 
+import com.orientechnologies.orient.core.db.ODatabaseRecordThreadLocal;
+import com.orientechnologies.orient.core.db.record.ODatabaseRecord;
 import com.orientechnologies.orient.core.exception.OStorageException;
+import com.orientechnologies.orient.object.db.OObjectDatabasePool;
 import com.orientechnologies.orient.object.db.OObjectDatabaseTx;
 
 /**
@@ -63,9 +66,12 @@ public final class DBHandle extends OObjectDatabaseTx {
 			connector.getEntityManager().registerEntityClass(Document.class);
 			System.out.println("Registered classes.");
 		}
-
 		return connector;
 
+	}
+	
+	public static OObjectDatabaseTx getDB(){
+		return OObjectDatabasePool.global().acquire("local:db/","admin","admin");
 	}
 
 }

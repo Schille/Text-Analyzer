@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.textanalyzer.database.DBHandle;
 import org.textanalyzer.database.DatabaseConnector;
 import org.textanalyzer.database.IResultSet;
 import org.textanalyzer.database.ProfileInformation;
@@ -33,7 +34,7 @@ public class ProfileManager implements IProfileManager {
 		connector = new DatabaseConnector();
 		mapper = (LinkedList<ProfileInformation>) connector.getAllProfiles();
 		profileGUI = new FrontendProfileManager(this);
-		ODatabaseRecordThreadLocal.INSTANCE.set((ODatabaseRecord) connector.getUnderlying().getUnderlying());
+
 	}
 	
 	public void createProfile(ProfileInformation myProfile){
@@ -78,6 +79,7 @@ public class ProfileManager implements IProfileManager {
 	
 	
 	public static void main(String[] args){
+		DBHandle.createDB();
 		ProfileManager manager = new ProfileManager();
 		manager.run();
 	}
