@@ -10,6 +10,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.util.Scanner;
+
 import org.textanalyzer.database.DBDictionary;
 
 /**

@@ -35,9 +35,6 @@ import org.textanalyzer.documentimporter.DocumentImporter;
 import org.textanalyzer.frontend.WaitingDialog;
 import org.textanalyzer.reportcreator.ReportCreator;
 
-import com.orientechnologies.orient.core.db.ODatabaseRecordThreadLocal;
-import com.orientechnologies.orient.core.db.record.ODatabaseRecord;
-
 /**
  * @author Michael Schilonka & Robert Stein
  * 

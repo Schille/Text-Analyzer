@@ -3,22 +3,12 @@
  */
 package org.textanalyzer.profilemanager;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
 import org.textanalyzer.database.DBHandle;
 import org.textanalyzer.database.DatabaseConnector;
-import org.textanalyzer.database.IResultSet;
 import org.textanalyzer.database.ProfileInformation;
-import org.textanalyzer.database.ResultSet;
 import org.textanalyzer.frontend.FrontendProfileManager;
-
-import com.orientechnologies.orient.core.db.ODatabase;
-import com.orientechnologies.orient.core.db.ODatabaseRecordThreadLocal;
-import com.orientechnologies.orient.core.db.record.ODatabaseRecord;
 
 /**
  * @author Michael Schilonka
