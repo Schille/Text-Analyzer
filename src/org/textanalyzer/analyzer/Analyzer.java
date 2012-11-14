@@ -124,7 +124,7 @@ public class Analyzer implements IAnalyzer {
 		/* remove really common words */
 		String [] freuquentWordArray = {"der", "die", "das", "dem", "den", "ein", "eine", "und", "oder", "weil", "Der", "Die", "Das", "Dem", "Den", "Ein", "Eine", "Und", "Oder", "Weil"};
 		for (int i=0;i<freuquentWordArray.length;i++){
-			if (fullWordList.containsValue(freuquentWordArray[i]))
+			if (fullWordList.containsKey(freuquentWordArray[i]))
 				fullWordList.remove(freuquentWordArray[i]);
 		}
 
