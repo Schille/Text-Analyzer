@@ -22,25 +22,19 @@ import org.textanalyzer.profilemanager.ProfileManager;
  * the class AuthorRegistration acts as a JPanel which should allow the user to add an author to the software
  * therefore the user has to enter four facts of the author: the first name, the last name, the profession an the age
  * by clicking on the submit button the author and his/her characteristics should be added to the list 
- * therefore the class need the class ProfileManager which the AuthorRegistration class pass the author and his/her characteristics
- */
+ * therefore the class need the class ProfileManager which the AuthorRegistration class pass the author and his/her characteristics * first: setting all the variables which should appear on the JLabel
+ * @param headLine JLabel which gives the user the overview of the
+ * functionality of the side 
+ * @param firstNameLabel, lastNameLabel, professionLabel, ageLabel : JLabels
+ * which inform the user which input they should type in the text field aside
+ * @param firstNameField, lastNameField, professionNameField, ageField :
+ * JFields which will get the input of the user that will describe the author
+
+*/
 
 public class AuthorRegistration extends JPanel {
 
-	/**
-	 * setting all the variables which should appear on the JLabel
-	 * 
-	 * @param headLine JLabel which gives the user the overview of the
-	 * functionality of the side
-	 * 
-	 * @param firstNameLabel, lastNameLabel, professionLabel, ageLabel : JLabels
-	 * which inform the user which input they should type in the text field
-	 * aside
-	 * 
-	 * @param firstNameField, lastNameField, professionNameField, ageField :
-	 * JFields which will get the input of the user that will describe the
-	 * author
-	 */
+
 	private javax.swing.JLabel headLine = new JLabel(
 			"Anlegen eines neuen Autors");
 	private javax.swing.JLabel firstNameLabel = new JLabel("Vorname: ");
@@ -63,7 +57,7 @@ public class AuthorRegistration extends JPanel {
 	 */
 
 	public AuthorRegistration(ProfileManager myManager,
-			FrontendProfileManager myProfManager) {
+		FrontendProfileManager myProfManager) {
 		manager = myManager;
 		frontendManager = myProfManager;
 		setLayout(null);
