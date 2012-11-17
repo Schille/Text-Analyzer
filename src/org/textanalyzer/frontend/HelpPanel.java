@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 /**
  * @author Katharina Sandrock
- * 
+ * @version 18.11.2012
  */
 
 /* 
@@ -17,10 +17,6 @@ import javax.swing.JPanel;
  * it works like a welcome page
  */
 public class HelpPanel extends JPanel{
-	
-	/*
-	 * initialize all elements needed for the JPanel
-	 */
 	
 	JLabel helpAddButton = new JLabel("<html><body>Drücke diesen Button um einen Autor zur Liste<br> hinzuzufügen.</body></html>");
 	JLabel addIcon = new JLabel(new ImageIcon("lib/addButton.jpg"));
@@ -35,9 +31,8 @@ public class HelpPanel extends JPanel{
 		setLayout(null);
 		
 
-		/*
-		 * set the position of all the elements
-		 */
+		//set the position of all the elements
+		 
 		helpAddButton.setBounds(110,53,350,45);
 		helpAddButton.setFont(new Font("Arial",0,16));
 		addIcon.setBounds(40,50,50,50);
@@ -48,9 +43,8 @@ public class HelpPanel extends JPanel{
 		helpList.setBounds(110,231,360,65);
 		arrow.setBounds(40,245,54,31);
 		
-		/*
-		 * add the elements to the panel
-		 */
+		// add the elements to the panel
+		 
 		add(helpAddButton);
 		add(addIcon);
 		add(helpDeleteButton);
