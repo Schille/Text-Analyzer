@@ -16,6 +16,10 @@ import org.textanalyzer.database.ProfileInformation;
 import org.textanalyzer.database.ResultSet;
 import org.textanalyzer.profilemanager.ProfileManager;
 
+/**
+* @author Michael Schilonka
+*/
+
 public class TestFrontendProfileManager {
 	DatabaseConnector test1;
 	ProfileInformation profile;
