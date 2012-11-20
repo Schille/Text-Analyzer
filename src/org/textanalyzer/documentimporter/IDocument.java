@@ -7,7 +7,7 @@ import java.util.Date;
 
 
 /**
- * @author Sebastian 
+ * @author Sebastian Hirschl
  *
  */
 public interface IDocument {
