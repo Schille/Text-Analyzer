@@ -19,7 +19,7 @@ import org.textanalyzer.analyzer.dictionary.WordStatus;
 //import junit.framework.Assert;
 
 /**
- * @author Brab
+ * @author Fabian Brabänder
  *
  */
 public class TestDictionary {
