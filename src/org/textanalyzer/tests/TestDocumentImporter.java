@@ -7,6 +7,10 @@ import org.textanalyzer.documentimporter.DocumentFormat;
 import org.textanalyzer.documentimporter.DocumentImporter;
 import org.textanalyzer.profileviewer.ProfileViewer;
 
+/**
+* @author Sebstian Hirschl
+*/
+
 public class TestDocumentImporter {
 
 	@Test
