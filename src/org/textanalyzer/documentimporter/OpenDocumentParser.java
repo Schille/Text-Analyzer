@@ -1,4 +1,7 @@
 package org.textanalyzer.documentimporter;
+/**
+* @author Sebstian Hirschl
+*/
 
 import org.jdom2.Document;
 import org.jdom2.Element;
