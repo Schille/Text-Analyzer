@@ -4,7 +4,7 @@
 package org.textanalyzer.documentimporter;
 
 /**
- * @author mschilonka
+ * @author Michael Schilonka
  *
  */
 public enum DocumentFormat {
