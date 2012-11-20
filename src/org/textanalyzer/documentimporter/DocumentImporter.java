@@ -1,3 +1,7 @@
+/**
+* @author Sebstian Hirschl
+*/
+
 package org.textanalyzer.documentimporter;
 
 import java.awt.HeadlessException;
