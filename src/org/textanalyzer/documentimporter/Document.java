@@ -2,6 +2,10 @@ package org.textanalyzer.documentimporter;
 
 import java.util.Date;
 
+/**
+* @author Sebastian Hirschl
+*/
+
 public class Document implements IDocument {
 
 	// private class variables
