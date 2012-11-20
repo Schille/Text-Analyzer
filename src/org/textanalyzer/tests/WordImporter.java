@@ -10,6 +10,11 @@ import org.textanalyzer.analyzer.dictionary.Dictionary;
 import org.textanalyzer.analyzer.dictionary.WordStatus;
 import org.textanalyzer.database.DBDictionary;
 
+/**
+* @author Michael Schilonka
+* @author Fabian Brabänder
+*/
+
 public class WordImporter {
 
 	@Test
