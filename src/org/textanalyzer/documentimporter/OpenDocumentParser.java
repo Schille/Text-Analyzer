@@ -1,7 +1,5 @@
 package org.textanalyzer.documentimporter;
-/**
-* @author Sebstian Hirschl
-*/
+
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -13,6 +11,9 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+* @author Sebstian Hirschl
+*/
 public class OpenDocumentParser {
     
     StringBuffer TextBuffer;

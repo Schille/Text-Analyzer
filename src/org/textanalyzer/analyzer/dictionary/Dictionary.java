@@ -14,7 +14,8 @@ import java.util.Scanner;
 import org.textanalyzer.database.DBDictionary;
 
 /**
- * @author Fabian Brabänder & Michael Schilonka
+ * @author Fabian Brabänder
+ * @author Michael Schilonka
  * 
  */
 

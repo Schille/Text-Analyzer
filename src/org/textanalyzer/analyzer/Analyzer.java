@@ -1,5 +1,7 @@
 /**
- * @author Andreas Neumann, Robert Stein, Max Quellmalz
+ * @author Andreas Neumann,
+ * @author Robert Stein
+ * @author Max Quellmalz
  */
 
 package org.textanalyzer.analyzer;

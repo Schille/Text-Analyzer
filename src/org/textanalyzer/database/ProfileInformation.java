@@ -10,6 +10,7 @@ import java.util.ArrayList;
  */
 
 /**
+ * @author Michael Schilonka
  * Setters and Getters for ProfileInformation
  */
 public class ProfileInformation implements IProfileInformation {

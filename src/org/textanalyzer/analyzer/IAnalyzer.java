@@ -7,6 +7,7 @@ import org.textanalyzer.database.IResultSet;
 
 /**
  * @author Andreas Neumann
+ * @author Michael Schilonka
  *
  */
 public interface IAnalyzer {

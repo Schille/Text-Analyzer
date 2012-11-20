@@ -11,6 +11,7 @@ import org.textanalyzer.documentimporter.DocumentFormat;
  */
 
 /**
+ * @author Michael Schilonka
  * Setters and Getters for Document
  */
 public class Document implements IDocument {

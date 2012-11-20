@@ -7,6 +7,7 @@ import org.textanalyzer.database.IProfileInformation;
 
 /**
 *@author Andreas Neumann
+*@author Michael Schilonka
 */
 
 public class AnalyzeTaskInformation implements IAnalyzeTaskInformation {

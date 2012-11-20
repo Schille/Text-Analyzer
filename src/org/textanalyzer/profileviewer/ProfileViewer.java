@@ -36,7 +36,9 @@ import org.textanalyzer.frontend.WaitingDialog;
 import org.textanalyzer.reportcreator.ReportCreator;
 
 /**
- * @author Michael Schilonka & Robert Stein
+ * @author Robert Stein
+ * @author Michael Schilonka
+ * 
  * 
  */
 public class ProfileViewer implements IProfileViewer {

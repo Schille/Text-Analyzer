@@ -12,6 +12,8 @@ import org.textanalyzer.analyzer.TextMood;
  */
 
 /**
+ * @author Michael Schilonka
+ * @author Maximilian Quellmalz
  * Setters and Getters for ResultSet
  */
 public class ResultSet implements IResultSet {
