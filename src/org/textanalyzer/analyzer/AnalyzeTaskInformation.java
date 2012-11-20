@@ -5,6 +5,10 @@ import java.util.List;
 import org.textanalyzer.database.IDocument;
 import org.textanalyzer.database.IProfileInformation;
 
+/**
+*@author Andreas Neumann
+*/
+
 public class AnalyzeTaskInformation implements IAnalyzeTaskInformation {
 	IDocument document;
 	IProfileInformation profile;
